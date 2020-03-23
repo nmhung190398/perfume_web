@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {HomeComponent} from "./home/home.component";
 import {WebRoutingModule} from "./web-routing.module";
@@ -17,18 +17,24 @@ import {CheckoutComponent} from "./checkout/checkout.component";
 import {LoginComponent} from "./login/login.component";
 import {AlertComponent} from "../alert/alert.component";
 import {FilterComponent} from "./list-product/filter/filter.component";
+import { BlogComponent } from './blog/blog.component';
+import { RegisterComponent } from './register/register.component';
+import { ContactComponent } from './contact/contact.component';
+import { BlogSingleComponent } from './blog-single/blog-single.component';
+import {CollapseModule} from "ngx-bootstrap";
 
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         WebRoutingModule,
         ReactiveFormsModule,
         Ng5SliderModule,
         NgbModule,
         NgbPaginationModule,
         NgbCarouselModule,
-
+        CollapseModule,
     ],
     declarations: [
         WebComponent,
@@ -43,6 +49,10 @@ import {FilterComponent} from "./list-product/filter/filter.component";
         LoginComponent,
         AlertComponent,
         FilterComponent,
+        BlogComponent,
+        RegisterComponent,
+        ContactComponent,
+        BlogSingleComponent,
     ],
     exports: [],
     bootstrap: []

@@ -8,7 +8,12 @@ import {LoginComponent} from "./login/login.component";
 import {ListProductComponent} from "./list-product/list-product.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {WebComponent} from "./web.component";
-
+import {DetailProductComponent} from "./detail-product/detail-product.component";
+import {CONSTANT_PATH} from './../../comom/constant/base.constant';
+import {CheckoutComponent} from "./checkout/checkout.component";
+import {RegisterComponent} from "../admin/register/register.component";
+import {BlogComponent} from "./blog/blog.component";
+import {ContactComponent} from "./contact/contact.component";
 
 const routes: Routes = [
 
@@ -17,37 +22,52 @@ const routes: Routes = [
         component: WebComponent,
         children: [
             {
-                path: 'home',
+                path: CONSTANT_PATH.HOME,
                 component: HomeComponent,
 
             },
             {
                 path: '',
-                redirectTo: 'home',
+                redirectTo: CONSTANT_PATH.HOME,
                 pathMatch: 'full'
             },
             {
-                path: 'about',
+                path: CONSTANT_PATH.ABOUT,
                 component: AboutComponent,
-                canActivate: [AuthGuard]
             },
             {
-                path: 'cart',
+                path: CONSTANT_PATH.CART,
                 component: CartComponent,
                 canActivate: [AuthGuard]
             },
             {
-                path: 'checkout',
-                component: CartComponent,
+                path: CONSTANT_PATH.CHECKOUT,
+                component: CheckoutComponent,
                 canActivate: [AuthGuard]
             },
             {
-                path: 'login',
+                path: CONSTANT_PATH.LOGIN,
                 component: LoginComponent
             },
             {
-                path: 'products/:category',
+                path: CONSTANT_PATH.REGISTER,
+                component: RegisterComponent
+            },
+            {
+                path: CONSTANT_PATH.BLOG,
+                component: BlogComponent
+            },
+            {
+                path: CONSTANT_PATH.CONTACT,
+                component: ContactComponent
+            },
+            {
+                path: CONSTANT_PATH.LIST_PRODUCT + '/:category',
                 component: ListProductComponent
+            },
+            {
+                path: CONSTANT_PATH.DETAIL_PRODUCT + '/:code',
+                component: DetailProductComponent
             },
             {
                 path: '404',

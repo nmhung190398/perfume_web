@@ -1,6 +1,6 @@
 import {Category} from "../../model/category.model";
 
-const CATEGORIES_DEFAUT: Array<Category> = [
+export const CATEGORIES_DEFAUT: Array<Category> = [
     {
         id: 1,
         code: 'hot',
@@ -12,3 +12,16 @@ const CATEGORIES_DEFAUT: Array<Category> = [
         name: 'Bán Chạy'
     }
 ]
+
+export const CONSTANT_PATH = {
+    LIST_PRODUCT: 'products',
+    DETAIL_PRODUCT: 'product',
+    CHECKOUT: 'checkout',
+    CART: 'cart',
+    BLOG: 'blog',
+    ABOUT: 'about',
+    LOGIN: 'login',
+    REGISTER: 'register',
+    CONTACT: 'contact',
+    HOME: 'home'
+}
