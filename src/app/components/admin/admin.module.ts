@@ -10,6 +10,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BsDropdownModule} from "ngx-bootstrap";
 import {ChartsModule} from 'ng2-charts';
 import {AdminRoutingModule} from "./admin-routing.module";
+import { CategoryComponent } from './category/category.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -30,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ],
     declarations: [
         AdminLayoutComponent,
+        CategoryComponent,
     ],
     providers: [{
         provide: LocationStrategy,

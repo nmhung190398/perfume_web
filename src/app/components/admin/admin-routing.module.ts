@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AdminLayoutComponent} from './admin-layout';
+import {CategoryComponent} from "./category/category.component";
 
 const routes: Routes = [
 
@@ -8,6 +9,10 @@ const routes: Routes = [
         path: '',
         component: AdminLayoutComponent,
         children: [
+            {
+                path: 'category',
+                component: CategoryComponent
+            },
             {
                 path: 'base',
                 loadChildren: () => import('./base/base.module').then(m => m.BaseModule)

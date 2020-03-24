@@ -28,6 +28,15 @@ export const navItems: INavData[] = [
     },
     {
         title: true,
+        name: 'Admin'
+    },
+    {
+        name: 'Category',
+        url: '/admin/category',
+        icon: 'icon-phone'
+    },
+    {
+        title: true,
         name: 'Theme'
     },
     {
