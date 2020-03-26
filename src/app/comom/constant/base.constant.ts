@@ -1,5 +1,12 @@
 import {Category} from "../../model/category.model";
 
+export const PAGING_PER_PAGE = [
+    {label: 5, value: 5},
+    {label: 10, value: 10},
+    {label: 20, value: 20},
+    {label: 50, value: 50},
+    {label: 100, value: 100}];
+
 export const CATEGORIES_DEFAUT: Array<Category> = [
     {
         id: 1,
@@ -25,3 +32,4 @@ export const CONSTANT_PATH = {
     CONTACT: 'contact',
     HOME: 'home'
 }
+

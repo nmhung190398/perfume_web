@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {INavData} from '@coreui/angular';
+
 
 @Component({
     selector: 'app-dashboard',
@@ -9,6 +10,11 @@ import {INavData} from '@coreui/angular';
 export class AdminLayoutComponent {
     public sidebarMinimized = false;
     public navItems = navItems;
+
+    constructor(private elRef: ElementRef) {
+        const tmp = this.elRef.nativeElement.querySelector('link[tag="web"]');
+        console.log(tmp);
+    }
 
     toggleMinimize(e) {
         this.sidebarMinimized = e;

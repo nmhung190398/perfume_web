@@ -4,13 +4,12 @@ import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, A
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {AdminLayoutComponent} from "./admin-layout";
-import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "../../app-routing.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {BsDropdownModule} from "ngx-bootstrap";
+import {BsDropdownModule, PaginationModule} from "ngx-bootstrap";
 import {ChartsModule} from 'ng2-charts';
 import {AdminRoutingModule} from "./admin-routing.module";
 import { CategoryComponent } from './category/category.component';
+import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -18,6 +17,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
     imports: [
+        ReactiveFormsModule,
+        CommonModule,
         AdminRoutingModule,
         AppAsideModule,
         AppBreadcrumbModule.forRoot(),
@@ -27,7 +28,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         PerfectScrollbarModule,
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
-        ChartsModule
+        ChartsModule,
+        PaginationModule.forRoot(),
+        NgbPaginationModule,
+        FormsModule,
     ],
     declarations: [
         AdminLayoutComponent,
