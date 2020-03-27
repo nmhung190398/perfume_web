@@ -12,7 +12,6 @@ const routes: Routes = [
     {
         path: '',
         loadChildren: () => import('./components/web/web.module').then(m => m.WebModule),
-
     }
 ];
 
