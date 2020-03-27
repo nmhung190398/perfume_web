@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <i class="fa fa-globe"></i>Product
                     <span class="float-right">
-            <button [routerLink]="['detail/']"
+            <button [routerLink]="['add']"
                     class="btn btn-block btn-primary">Add</button></span>
                 </div>
                 <div class="card-body">
@@ -67,14 +67,13 @@
                                 <!--acction-->
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button (click)="showEdit(product)"
+                                        <button [routerLink]="['edit/' + product.id]"
                                                 type="submit"
                                                 class="btn btn-success btn-sm">
                                             <i class="icon-pencil"></i>
                                             <span class="d-none d-md-inline">edit</span>
                                         </button>
                                         <button type="submit"
-                                                (click)="remove(deleteModal, product)"
                                                 class="btn btn-danger btn-sm">
                                             <i class="icon-trash"></i>
                                             <span class="d-none d-md-inline">delete</span>

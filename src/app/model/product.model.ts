@@ -10,10 +10,10 @@ export class Product {
     id?: number;
     name?: string;
     code?: string;
-    highlight?: Array<string>;
+    highlights?: Array<string>;
     MFG: any;
     EXP: any;
-    image;
+    image: string;
     description: any;
     category: Category;
     versions: Array<Version>;
@@ -21,4 +21,5 @@ export class Product {
     amount: Amount;
     fragrant: Fragrant;
     targets: Array<Target>;
+    imageBase64?: string;
 }

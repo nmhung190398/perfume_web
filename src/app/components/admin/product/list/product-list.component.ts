@@ -46,11 +46,7 @@ export class ProductListComponent implements OnInit {
     initForm() {
         return this.fb.group({
             id: [],
-            name: ['', [
-                Validators.required,
-                Validators.minLength(5),
-                Validators.maxLength(20)]
-            ],
+            name: [''],
             code: ['', [Validators.required, Validators.minLength(8),
                 Validators.required, Validators.maxLength(30)
             ]
@@ -134,58 +130,7 @@ export class ProductListComponent implements OnInit {
         console.log(this.productFormGroup.value);
     }
 
-    save(modal, product: Product) {
-        this.modalService.open(modal, {
-            ariaLabelledBy: 'modal-basic-title',
-            size: 'lg',
-            backdrop: 'static'
-        }).result.then((result) => {
-            if (result === 'save') {
-                this.isAcction = true;
-                console.log("save");
-                // if (product.id) {
-                //     this.productService.update(product).subscribe(res => {
-                //         console.log(res.body);
-                //         this.loadAll();
-                //     });
-                // } else {
-                //     this.productService.create(product).subscribe(res => {
-                //         console.log(res.body);
-                //         this.loadAll();
-                //     });
-                // }
-            }
 
-        });
-    }
-
-    remove(modal, product: Product) {
-        this.modalService.open(modal, {
-            ariaLabelledBy: 'modal-basic-title',
-            size: 'lg',
-            backdrop: 'static'
-        }).result.then((result) => {
-            if (result === 'delete') {
-                console.log("delete");
-                console.log(this.selectedProduct);
-                if (product.id) {
-                    // this.productService.delete(product.id).subscribe(res => {
-                    //     // control.removeAt(index);
-                    //     if (res.status === 200) {
-                    //         if ((this.paging.offset + this.products.length) - this.paging.offset === 1 && this.paging.page !== 1) {
-                    //             this.paging.page = this.paging.page - 1;
-                    //             this.loadAll();
-                    //         } else {
-                    //             this.loadAll();
-                    //         }
-                    //     }
-                    // });
-                } else {
-                }
-            }
-        }, (reason) => {
-        });
-    }
 
     openViewCertPopup(modal, product) {
         this.selectedProduct = product;

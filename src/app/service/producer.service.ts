@@ -5,6 +5,7 @@ import {Producer} from "../model/producer.model";
 import {Observable} from "rxjs";
 import {createRequestOption} from "../utils/request.utils";
 import {IPaging} from "../model/base-respone.model";
+import {Product} from "../model/product.model";
 
 type EntityResponseType = HttpResponse<Producer>;
 type EntityArrayResponseType = HttpResponse<Producer[]>;
@@ -25,6 +26,14 @@ export class ProducerService {
         const options = createRequestOption(req);
         return this.http
             .get<PagingResponse>(`${this.resourceUrl}`, {params: options, observe: 'response'});
+    }
+
+    filterAll(filter?: any): Observable<EntityArrayResponseType> {
+        if (filter == null) {
+            filter = {};
+        }
+        return this.http
+            .post<Producer[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
     }
 
 

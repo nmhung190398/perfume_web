@@ -46,6 +46,13 @@ export class CategoryService {
             .post<PagingResponse>(`${this.resourceUrl}/filter/${paging.page}/${paging.limit}`, filter, {observe: 'response'});
     }
 
+    filterAll(filter?: any): Observable<EntityArrayResponseType> {
+        if (filter == null) {
+            filter = {};
+        }
+        return this.http
+            .post<Category[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
+    }
 
     create(category: Category): Observable<HttpResponse<any>> {
         return this.http

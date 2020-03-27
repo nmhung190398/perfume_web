@@ -1,5 +1,6 @@
 export class Version {
     id?: number;
     name?: string;
-    description?: string;
+    price?: number;
+    total?: number;
 }
