@@ -3,11 +3,12 @@ import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/com
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AuthenticationService} from '../service/authentication.service';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authenticationService: AuthenticationService) {
+    constructor(private authenticationService: AuthenticationService, protected router: Router, state: RouterStateSnapshot) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -20,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.authenticationService.logout();
                 location.reload();
             } else if (err.status === 403) {
-                location.href = '/403';
+                this.router.navigate(['/403']);
             }
 
             const error = err.error.message || err.statusText;

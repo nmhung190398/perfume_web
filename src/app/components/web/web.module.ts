@@ -22,6 +22,8 @@ import { RegisterComponent } from './register/register.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogSingleComponent } from './blog-single/blog-single.component';
 import {CollapseModule} from "ngx-bootstrap";
+import { PermissionComponentComponent } from './permission-component/permission-component.component';
+import { PermissionComponent } from './permission/permission.component';
 
 
 @NgModule({
@@ -53,6 +55,8 @@ import {CollapseModule} from "ngx-bootstrap";
         RegisterComponent,
         ContactComponent,
         BlogSingleComponent,
+        PermissionComponentComponent,
+        PermissionComponent,
     ],
     exports: [],
     bootstrap: []

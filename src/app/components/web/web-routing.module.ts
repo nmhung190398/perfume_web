@@ -14,6 +14,7 @@ import {CheckoutComponent} from "./checkout/checkout.component";
 import {RegisterComponent} from "../admin/register/register.component";
 import {BlogComponent} from "./blog/blog.component";
 import {ContactComponent} from "./contact/contact.component";
+import {PermissionComponent} from "./permission/permission.component";
 
 const routes: Routes = [
 
@@ -72,6 +73,10 @@ const routes: Routes = [
             {
                 path: '404',
                 component: NotFoundComponent
+            },
+            {
+                path: '403',
+                component: PermissionComponent
             },
             {
                 path: '**',

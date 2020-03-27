@@ -1,6 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AdminLayoutComponent} from './admin-layout';
+import {CategoryComponent} from "./category/category.component";
+import {ProductListComponent} from "./product/list/product-list.component";
+import {ProductDetailComponent} from "./product/detail/product-detail.component";
+import {ProducerComponent} from "./producer/producer.component";
 
 const routes: Routes = [
 
@@ -8,6 +12,26 @@ const routes: Routes = [
         path: '',
         component: AdminLayoutComponent,
         children: [
+            {
+                path: 'category',
+                component: CategoryComponent
+            },
+            {
+                path: 'product',
+                component: ProductListComponent
+            },
+            {
+                path: 'product/add',
+                component: ProductDetailComponent
+            },
+            {
+                path: 'product/edit/:id',
+                component: ProductDetailComponent
+            },
+            {
+                path: 'producer',
+                component: ProducerComponent
+            },
             {
                 path: 'base',
                 loadChildren: () => import('./base/base.module').then(m => m.BaseModule)
