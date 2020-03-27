@@ -42,6 +42,11 @@ export const navItems: INavData[] = [
         icon: 'icon-phone'
     },
     {
+        name: 'Category',
+        url: '/admin/producer',
+        icon: 'icon-phone'
+    },
+    {
         title: true,
         name: 'Theme'
     },

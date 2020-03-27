@@ -10,6 +10,11 @@ import {AdminRoutingModule} from "./admin-routing.module";
 import { CategoryComponent } from './category/category.component';
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ProductDetailComponent} from "./product/detail/product-detail.component";
+import {ProductListComponent} from "./product/list/product-list.component";
+import { ProducerComponent } from './producer/producer.component';
+import { AmountComponent } from './amount/amount.component';
+import { FragrantComponent } from './fragrant/fragrant.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -36,6 +41,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     declarations: [
         AdminLayoutComponent,
         CategoryComponent,
+        ProductDetailComponent,
+        ProductListComponent,
+        ProducerComponent,
+        AmountComponent,
+        FragrantComponent
     ],
     providers: [{
         provide: LocationStrategy,

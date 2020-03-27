@@ -38,6 +38,14 @@ export class CategoryService {
             .get<Category>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
+    filter(paging: IPaging, filter: any): Observable<HttpResponse<PagingResponse>> {
+        if (filter == null) {
+            filter = {};
+        }
+        return this.http
+            .post<PagingResponse>(`${this.resourceUrl}/filter/${paging.page}/${paging.limit}`, filter, {observe: 'response'});
+    }
+
 
     create(category: Category): Observable<HttpResponse<any>> {
         return this.http
