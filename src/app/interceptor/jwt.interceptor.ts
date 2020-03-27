@@ -17,11 +17,11 @@ export class JwtInterceptor implements HttpInterceptor {
     });
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser && currentUser.token) {
-      // request = request.clone({
-      //   setHeaders: {
-      //     Authorization: `Bearer ${currentUser.token}`
-      //   }
-      // });
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${currentUser.token}`
+        }
+      });
     }
 
     return next.handle(request);
