@@ -51,14 +51,14 @@
                        aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a *ngFor="let category of categories" class="dropdown-item"
-                           [routerLink]="['/' + [CONSTANT_PATH.LIST_PRODUCT,category].join('/')]">{{category}}</a>
+                           [routerLink]="['/' + [CONSTANT_PATH.LIST_PRODUCT,category.code].join('/')]">{{category.name}}</a>
                     </div>
                 </li>
                 <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.ABOUT]" class="nav-link">About</a></li>
                 <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.BLOG]" class="nav-link">Blog</a></li>
                 <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.CONTACT]" class="nav-link">Contact</a></li>
                 <li class="nav-item cta cta-colored"><a [routerLink]="['/' + CONSTANT_PATH.CART]" class="nav-link"><i
-                        class="fa fa-cart-arrow-down"></i>[0]</a></li>
+                        class="fa fa-lg fa-cart-arrow-down"></i>[{{lengthCartItem}}]</a></li>
 
             </ul>
         </div>

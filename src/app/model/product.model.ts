@@ -34,6 +34,7 @@ export class ProductSearch {
     amountId?: number;
     fragrantId?: number;
     targetsId?: number;
-    priceMin: number;
-    pricemax: number;
+    maxPrice?: number;
+    minPrice?: number;
+    categoryCode?: string;
 }

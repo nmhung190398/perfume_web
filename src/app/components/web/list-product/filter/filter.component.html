@@ -10,33 +10,34 @@
         </div>
 
     </div>
+<!--    Nồng Độ Mùi Hương-->
     <div class="row">
         <div class="col-3">
-            <select class="form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select class="form-control" [formControl]="filterFormGroup.get('producer')">
+                <option [ngValue]="null">==NSX==</option>
+                <option *ngFor="let producer of producers" [ngValue]="producer">{{producer.name}}</option>
             </select>
         </div>
         <div class="col-3">
             <select class="form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option>==Nồng Độ==</option>
             </select>
         </div>
-        <div class="col-3"></div>
         <div class="col-3">
-            <button class="btn btn-success w-100">Tìm</button>
+            <select class="form-control">
+                <option>==Mùi Hương==</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <button (click)="filterAction()" class="btn btn-success w-100">Tìm</button>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12 d-flex  align-items-baseline justify-content-between">
             <div class="d-inline">
+                <span (click)="clearFilter()" class="filter-elements tag-elements">Clear Filter
+                     <a href="#" data-key="capa_id"><i class="fa fa-times"></i></a>
+                  </span>
                   <span class="filter-elements tag-elements">Tag Filter
                      <a href="#" data-key="capa_id"><i class="fa fa-times"></i></a>
                   </span>
@@ -46,9 +47,7 @@
                 <select class="form-control">
                     <option>Tăng Dần</option>
                     <option>Giảm dần</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option> Ban chay</option>
                 </select>
             </div>
         </div>

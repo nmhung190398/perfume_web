@@ -1,5 +1,9 @@
+import { User } from "./user";
+import { Version } from "./version.model";
+
 export class Cart {
-    id?: number;
-    name?: string;
-    code?: string;
+  id?: number;
+  quantity?: number;
+  user?: User;
+  version?: Version;
 }
