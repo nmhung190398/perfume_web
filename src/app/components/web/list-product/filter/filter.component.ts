@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Options, LabelType} from 'ng5-slider';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
@@ -6,12 +6,17 @@ const FILTER_CONST = {
     minPrice: 0,
     maxPrice: 1000,
 }
+
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
+
+    @Input()
+    test;
+
     filterFormGroup: FormGroup;
     minPrice = FILTER_CONST.minPrice;
     maxPrice = FILTER_CONST.maxPrice;
@@ -34,6 +39,7 @@ export class FilterComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.test);
         this.initFilterForm();
     }
 

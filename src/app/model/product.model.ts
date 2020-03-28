@@ -23,3 +23,17 @@ export class Product {
     targets: Array<Target>;
     imageBase64?: string;
 }
+
+export class ProductSearch {
+    id?: number;
+    name?: string;
+    code?: string;
+    highlights?: Array<string>;
+    categoryId?: number;
+    producerId?: number;
+    amountId?: number;
+    fragrantId?: number;
+    targetsId?: number;
+    priceMin: number;
+    pricemax: number;
+}
