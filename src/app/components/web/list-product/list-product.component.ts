@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {IPaging, Paging} from '../../../model/base-respone.model';
 import {CONSTANT_PATH} from '../../../comom/constant/base.constant';
-import {Product} from "../../../model/product.model";
-import {ProductService} from "../../../service/product.service";
-import {SERVER_API_URL, SERVER_URL} from "../../../app.constants";
-
+import {Product, ProductSearch} from '../../../model/product.model';
+import {ProductService} from '../../../service/product.service';
+import {SERVER_API_URL, SERVER_URL} from '../../../app.constants';
+import {CartService} from 'src/app/service/cart.service';
+import {AuthenticationService} from 'src/app/service/authentication.service';
 
 @Component({
     selector: 'app-list-product',
@@ -17,9 +18,17 @@ export class ListProductComponent implements OnInit {
     CONSTANT_PATH = CONSTANT_PATH;
     categoryCode;
     products: Array<Product>;
+    SERVER_URL = SERVER_URL;
+    filterProduct: ProductSearch = {};
 
-    constructor(private route: ActivatedRoute, private productService: ProductService) {
-        this.categoryCode = this.route.snapshot.paramMap.get('category');
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private productService: ProductService,
+        private cartService: CartService,
+        private authenticationService: AuthenticationService,
+        private router: Router,
+    ) {
+        this.categoryCode = this.activatedRoute.snapshot.paramMap.get('category');
         this.paging = new Paging();
     }
 
@@ -27,12 +36,37 @@ export class ListProductComponent implements OnInit {
         this.loadAll();
     }
 
+    addCartItem(idVersion, buyNow = false) {
+        if (idVersion) {
+            if (this.authenticationService.currentUserValue) {
+                const user = this.authenticationService.currentUserValue.user;
+                this.cartService
+                    .create({
+                        user: user,
+                        version: {
+                            id: idVersion
+                        }
+                    })
+                    .subscribe(res => {
+                        this.cartService.findByUserLogin(user.id).subscribe(res1 => {
+
+                        });
+                        if (buyNow) {
+                            this.router.navigate(['/cart']);
+                        }
+                    });
+            } else {
+                alert(' bạn chưa đăng nhập vui lòng đăng nhập ');
+            }
+        } else {
+            alert(' Hết Hàng ');
+        }
+    }
+
     loadAll() {
-        this.productService.filterAll().subscribe(res => {
-            this.products = res.body.map(item => {
-                item.image = SERVER_URL + item.image;
-                return item;
-            });
+        this.filterProduct.categoryCode = this.categoryCode;
+        this.productService.filterAll(this.filterProduct).subscribe(res => {
+            this.products = res.body;
         });
     }
 
@@ -40,4 +74,8 @@ export class ListProductComponent implements OnInit {
         console.log(page);
     }
 
+    filter($event) {
+        this.filterProduct = $event;
+        this.loadAll();
+    }
 }

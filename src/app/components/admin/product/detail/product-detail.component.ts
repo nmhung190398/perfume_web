@@ -7,13 +7,12 @@ import {Product} from "../../../../model/product.model";
 import {Category} from "../../../../model/category.model";
 import {Version} from "../../../../model/version.model";
 import {Producer} from "../../../../model/producer.model";
-import {Amount} from "../../../../model/amount.model";
-import {Fragrant} from "../../../../model/fragrant.model";
 import {Target} from "../../../../model/target.model";
 import * as _ from 'lodash';
 import {CategoryService} from "../../../../service/category.service";
 import {TargetService} from "../../../../service/target.service";
 import {ProducerService} from "../../../../service/producer.service";
+import {xoaDau} from "./../../../../comom/utils/base.utils";
 
 @Component({
     selector: 'app-detail',
@@ -208,7 +207,8 @@ export class ProductDetailComponent implements OnInit {
         this.productService.create(tmp).subscribe(res => {
             if (res.status === 200) {
                 //chuyển hướng
-            }else{
+                this.router.navigate(['/admin/product']);
+            } else {
                 console.log("error");
             }
         });
@@ -239,9 +239,8 @@ export class ProductDetailComponent implements OnInit {
     focusoutName() {
         if (this.isCustomUri) {
             const name: string = this.productFormGroup.get("name").value;
-            this.productFormGroup.get("code").setValue(encodeURI(name.trim()));
+            this.productFormGroup.get("code").setValue(xoaDau(name));
         }
-
     }
 
     isSave() {

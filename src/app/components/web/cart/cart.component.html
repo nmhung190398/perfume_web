@@ -25,25 +25,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
-                            <td class="product-remove"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                        <tr class="text-center" *ngFor="let cartItem of cartItems">
+                            <td class="product-remove"><a (click)="removeCartItem(cartItem.id)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 
-                            <td class="image-prod"><div class="img" style="background-image:url(assets/images/product-3.jpg);"></div></td>
+                            <td class="image-prod"><div class="img" [style.background]="getUrlBackground(cartItem.version.product?.image)"></div></td>
 
                             <td class="product-name">
-                                <h3>Nike Free RN 2019 iD</h3>
-                                <p>Far far away, behind the word mountains, far from the countries</p>
+                                <h3>{{cartItem.version.product?.name}}</h3>
+                                <p> Phien ban {{cartItem.version.name}} </p>
                             </td>
 
-                            <td class="price">$4.90</td>
+                            <td class="price">{{cartItem.version.price}} VND</td>
 
                             <td class="quantity">
                                 <div class="input-group mb-3">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                    <input [(ngModel)]="cartItem.quantity" type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
                                 </div>
                             </td>
 
-                            <td class="total">$4.90</td>
+                            <td class="total">{{cartItem.version.price * cartItem.quantity}} VND</td>
                         </tr><!-- END TR-->
                         </tbody>
                     </table>

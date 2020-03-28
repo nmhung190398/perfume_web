@@ -59,7 +59,7 @@ import {PermissionComponent} from './permission/permission.component';
         PermissionComponent,
         HomeWebComponent
     ],
-    exports: [],
+    exports: [FilterComponent],
     bootstrap: []
 })
 export class WebModule {

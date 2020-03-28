@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {IPaging, Paging} from "../../../model/base-respone.model";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Category} from "../../../model/category.model";
+import {IPaging, Paging} from '../../../model/base-respone.model';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Category} from '../../../model/category.model';
 import {PAGING_PER_PAGE} from './../../../comom/constant/base.constant';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ActivatedRoute, Router} from "@angular/router";
-import {CategoryService} from "../../../service/category.service";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CategoryService} from '../../../service/category.service';
+import {xoaDau} from '../../../comom/utils/base.utils';
 
 @Component({
     selector: 'app-category',
@@ -22,6 +23,7 @@ export class CategoryComponent implements OnInit {
     txtSearch: string;
     limits = PAGING_PER_PAGE;
     isAcction = true;
+    isCustomUri = true;
 
     constructor(public categoryService: CategoryService,
                 protected router: Router,
@@ -80,7 +82,7 @@ export class CategoryComponent implements OnInit {
                 // this.paging.offset = res.body.paging.offset;
                 this.paging.total = res.body.paging.total;
             } else {
-                console.warn("can not load mail sender");
+                console.warn('can not load mail sender');
             }
         });
     }
@@ -89,6 +91,13 @@ export class CategoryComponent implements OnInit {
         if (page !== this.paging.previousPage) {
             this.paging.previousPage = page;
             this.loadAll();
+        }
+    }
+
+    focusoutName() {
+        if (this.isCustomUri) {
+            const name: string = this.categoryFormGroup.get('name').value;
+            this.categoryFormGroup.get('code').setValue(xoaDau(name));
         }
     }
 
@@ -141,7 +150,7 @@ export class CategoryComponent implements OnInit {
         }).result.then((result) => {
             if (result === 'save') {
                 this.isAcction = true;
-                console.log("save");
+                console.log('save');
                 if (category.id) {
                     this.categoryService.update(category).subscribe(res => {
                         console.log(res.body);
@@ -165,7 +174,7 @@ export class CategoryComponent implements OnInit {
             backdrop: 'static'
         }).result.then((result) => {
             if (result === 'delete') {
-                console.log("delete");
+                console.log('delete');
                 console.log(this.selectedCategory);
                 if (category.id) {
                     this.categoryService.delete(category.id).subscribe(res => {

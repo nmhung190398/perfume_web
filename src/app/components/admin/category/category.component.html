@@ -6,13 +6,20 @@
                     <div class="row">
 
                         <div class="col-6">
-                            <input [formControl]="categoryFormGroup.get('name')" class="form-control"
+                            <input [formControl]="categoryFormGroup.get('name')" class="form-control" focusoutName()
                                    placeholder="name">
                             <span class="text-danger" *ngIf="categoryFormGroup.get('name').invalid">Name invalid</span>
                         </div>
                         <div class="col-6">
-                            <input [formControl]="categoryFormGroup.get('code')" class="form-control"
-                                   placeholder="code">
+                            <div class="input-group">
+                                <input type="text" [readOnly]="isCustomUri"
+                                       [formControl]="categoryFormGroup.get('code')"
+                                       placeholder="Đường dẫn" class="form-control">
+                                <div class="input-group-append">
+                                            <span (click)="isCustomUri = !isCustomUri" class="input-group-text"><i
+                                                    class="fa fa-user"></i></span>
+                                </div>
+                            </div>
                             <span class="text-danger" *ngIf="categoryFormGroup.get('code').invalid">Name invalid</span>
                         </div>
 
