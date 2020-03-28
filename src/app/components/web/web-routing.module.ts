@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from "./home/home.component";
+import {HomeWebComponent} from "./home/home-web.component";
 import {AboutComponent} from "./about/about.component";
 import {AuthGuard} from "../../comom/auth/auth.guard";
 import {CartComponent} from "./cart/cart.component";
@@ -24,7 +24,7 @@ const routes: Routes = [
         children: [
             {
                 path: CONSTANT_PATH.HOME,
-                component: HomeComponent,
+                component: HomeWebComponent,
 
             },
             {

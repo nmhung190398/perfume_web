@@ -33,3 +33,9 @@ export const CONSTANT_PATH = {
     HOME: 'home'
 }
 
+export const HIGHLIGHT = {
+    HOT: 'HOT',
+    NEW: 'NEW'
+}
+
+
