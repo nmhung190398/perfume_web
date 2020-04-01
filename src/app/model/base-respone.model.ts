@@ -18,3 +18,9 @@ export class Paging implements IPaging {
         this.page = page ? this.page : 1;
     }
 }
+
+
+export class OderBy {
+    name: string;
+    type: string;
+}

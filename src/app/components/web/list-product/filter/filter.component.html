@@ -44,10 +44,8 @@
             </div>
 
             <div class="d-inline">
-                <select class="form-control">
-                    <option>Tăng Dần</option>
-                    <option>Giảm dần</option>
-                    <option> Ban chay</option>
+                <select class="form-control" formControlName="oderBy">
+                    <option *ngFor="let oderBy of oderBys" [ngValue]="oderBy.value">{{oderBy.label}}</option>
                 </select>
             </div>
         </div>

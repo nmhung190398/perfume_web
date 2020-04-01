@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AuthenticationService} from '../service/authentication.service';
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
+import {AlertService} from "../service/alert.service";
 
 
 @Injectable()
@@ -15,7 +16,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log({
             msg: 'ErrorInterceptor'
         });
+        // this.alertService.success("hDz");
+        // console.log(request.body !== null &&);
+        // // if (request.body.status) {
+        // //     console.log(request.body);
+        // //     this.alertService.success(request.body.msg);
+        // // }
         return next.handle(request).pipe(catchError(err => {
+
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
                 this.authenticationService.logout();

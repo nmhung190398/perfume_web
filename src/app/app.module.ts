@@ -13,10 +13,13 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
+import {AlertService} from "./service/alert.service";
+import {AlertComponent} from "./components/alert/alert.component";
 
 @NgModule({
     declarations: [
         AppComponent,
+        // AlertComponent
     ],
     imports: [
         CommonModule,

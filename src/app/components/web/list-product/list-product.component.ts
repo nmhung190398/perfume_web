@@ -65,6 +65,7 @@ export class ListProductComponent implements OnInit {
 
     loadAll() {
         this.filterProduct.categoryCode = this.categoryCode;
+        console.log(this.filterProduct);
         this.productService.filterAll(this.filterProduct).subscribe(res => {
             this.products = res.body;
         });

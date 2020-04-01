@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {SERVER_API_URL, USER_LOGIN} from '../app.constants';
+import {CART_ITEM, SERVER_API_URL, USER_LOGIN} from '../app.constants';
 import {AuthModel} from "../model/auth.model";
+import {CartService} from "./cart.service";
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +12,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<AuthModel>;
   public currentUser: Observable<AuthModel>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private cartService: CartService) {
     this.currentUserSubject = new BehaviorSubject<AuthModel>(JSON.parse(localStorage.getItem(USER_LOGIN)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -35,5 +36,6 @@ export class AuthenticationService {
     // remove user from local storage and set current user to null
     localStorage.removeItem(USER_LOGIN);
     this.currentUserSubject.next(null);
+    this.cartService.removeCartItem();
   }
 }

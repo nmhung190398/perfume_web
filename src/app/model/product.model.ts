@@ -4,6 +4,7 @@ import {Fragrant} from "./fragrant.model";
 import {Target} from "./target.model";
 import {Amount} from "./amount.model";
 import {Version} from "./version.model";
+import {OderBy} from "./base-respone.model";
 
 
 export class Product {
@@ -37,4 +38,6 @@ export class ProductSearch {
     maxPrice?: number;
     minPrice?: number;
     categoryCode?: string;
+    oderBy?: OderBy;
 }
+

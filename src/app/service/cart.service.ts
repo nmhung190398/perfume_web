@@ -53,6 +53,12 @@ export class CartService {
         });
     }
 
+    removeCartItem() {
+        // remove user from local storage and set current user to null
+        localStorage.removeItem(CART_ITEM);
+        this.currentCartSubject.next(null);
+    }
+
     // findAndProduct(id): Observable<EntityArrayResponseType> {
     //     return this.filterAll({
     //         userId: id

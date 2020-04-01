@@ -38,6 +38,10 @@ export const HIGHLIGHT = {
     NEW: 'NEW'
 }
 
-
+export class ResponData {
+    status: number;
+    msg: string;
+    data: any;
+}
 
 

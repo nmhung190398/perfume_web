@@ -2,15 +2,15 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Options, LabelType} from 'ng5-slider';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CategoryService} from "../../../../service/category.service";
-import {ProductService} from "../../../../service/product.service";
 import {ProducerService} from "../../../../service/producer.service";
 import {Category} from "../../../../model/category.model";
 import {Producer} from "../../../../model/producer.model";
 import {ProductSearch} from "../../../../model/product.model";
+import {OderBy} from "../../../../model/base-respone.model";
 
 const FILTER_CONST = {
     minPrice: 0,
-    maxPrice: 1000,
+    maxPrice: 1000000,
 }
 
 
@@ -24,6 +24,33 @@ export class FilterComponent implements OnInit {
     @Input()
     test;
 
+    oderBys: OderByView[] = [
+        {
+            label: 'Tất cả',
+            value: null
+        },
+        {
+            label: 'Giá giảm dần',
+            value: {
+                name: 'price',
+                type: 'asc'
+            }
+        },
+        {
+            label: 'Giá tăng dần',
+            value: {
+                name: 'price',
+                type: 'desc'
+            }
+        },
+        {
+            label: 'Bán chạy',
+            value: {
+                name: 'countCheckoutItem',
+                type: 'desc'
+            }
+        }
+    ]
     @Output()
     filter: EventEmitter<ProductSearch> = new EventEmitter<ProductSearch>();
 
@@ -31,7 +58,8 @@ export class FilterComponent implements OnInit {
 
     filterFormGroup: FormGroup = this.fb.group({
         category: [],
-        producer: []
+        producer: [],
+        oderBy: [null]
     });
     minPrice = FILTER_CONST.minPrice;
     maxPrice = FILTER_CONST.maxPrice;
@@ -41,11 +69,11 @@ export class FilterComponent implements OnInit {
         translate: (value: number, label: LabelType): string => {
             switch (label) {
                 case LabelType.Low:
-                    return '<b>Min price:</b> $' + value;
+                    return '<b>Min price:</b>' + value + 'VNĐ';
                 case LabelType.High:
-                    return '<b>Max price:</b> $' + value;
+                    return '<b>Max price:</b>' + value + 'VNĐ';
                 default:
-                    return '$' + value;
+                    return value + 'VNĐ';
             }
         }
     };
@@ -77,7 +105,7 @@ export class FilterComponent implements OnInit {
     filterAction() {
         this.output.maxPrice = this.maxPrice;
         this.output.minPrice = this.minPrice;
-
+        this.output.oderBy = this.filterFormGroup.get("oderBy").value
         this.output.producerId = this.filterFormGroup.get("producer")?.value?.id;
         console.log(this.filterFormGroup.value);
         console.log(this.output);
@@ -88,4 +116,10 @@ export class FilterComponent implements OnInit {
         this.filter.emit({});
     }
 
+}
+
+
+export class OderByView {
+    label: string;
+    value: OderBy;
 }
