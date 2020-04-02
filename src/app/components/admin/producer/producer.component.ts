@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {IPaging, Paging} from "../../../model/base-respone.model";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Producer} from "../../../model/producer.model";
-import {PAGING_PER_PAGE} from './../../../comom/constant/base.constant';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ProducerService} from "../../../service/producer.service";
-
+import { Component, OnInit } from "@angular/core";
+import { IPaging, Paging } from "../../../model/base-respone.model";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Producer } from "../../../model/producer.model";
+import { PAGING_PER_PAGE } from "./../../../comom/constant/base.constant";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ProducerService } from "../../../service/producer.service";
+import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 @Component({
-  selector: 'app-producer',
-  templateUrl: './producer.component.html',
-  styleUrls: ['./producer.component.scss']
+  selector: "app-producer",
+  templateUrl: "./producer.component.html",
+  styleUrls: ["./producer.component.scss"]
 })
 export class ProducerComponent implements OnInit {
-
+  public Editor = ClassicEditor;
   producers: Producer[];
   paging: IPaging;
   producerFormGroup: FormGroup;
@@ -23,19 +23,19 @@ export class ProducerComponent implements OnInit {
   limits = PAGING_PER_PAGE;
   isAcction = true;
 
-  constructor(public producerService: ProducerService,
-              protected router: Router,
-              protected activatedRoute: ActivatedRoute,
-              private modalService: NgbModal,
-              private fb: FormBuilder) {
-  }
+  constructor(
+    public producerService: ProducerService,
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute,
+    private modalService: NgbModal,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.paging = new Paging();
     this.producers = [];
     this.initTable();
   }
-
 
   initTable() {
     this.producerFormGroup = this.initForm();
@@ -45,15 +45,11 @@ export class ProducerComponent implements OnInit {
   initForm() {
     return this.fb.group({
       id: [],
-      name: ['', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(20)]
+      name: [
+        "",
+        [Validators.required, Validators.minLength(5), Validators.maxLength(20)]
       ],
-      description: ['', [Validators.required, Validators.minLength(8),
-        Validators.required, Validators.maxLength(30)
-      ]
-      ],
+      description: ["", [Validators.required]],
       isUpdate: [true],
       isShow: [false]
     });
@@ -65,7 +61,7 @@ export class ProducerComponent implements OnInit {
   }
 
   loadAll() {
-    console.log('loadAll');
+    console.log("loadAll");
     const parameters = {
       page: this.paging.page,
       limit: this.paging.limit
@@ -92,7 +88,6 @@ export class ProducerComponent implements OnInit {
     }
   }
 
-
   // transition() {
   //   const parameters = {
   //     offset: this.paging.offset - 1,
@@ -111,12 +106,11 @@ export class ProducerComponent implements OnInit {
   //   // this.loadAll();
   // }
 
-
   addProducer() {
     this.producerFormGroup.setValue({
       id: null,
-      description: '',
-      name: '',
+      description: "",
+      name: "",
       isUpdate: false,
       isShow: true
     });
@@ -134,67 +128,81 @@ export class ProducerComponent implements OnInit {
   }
 
   save(modal, producer: Producer) {
-    this.modalService.open(modal, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-      backdrop: 'static'
-    }).result.then((result) => {
-      if (result === 'save') {
-        this.isAcction = true;
-        console.log("save");
-        if (producer.id) {
-          this.producerService.update(producer).subscribe(res => {
-            console.log(res.body);
-            this.loadAll();
-          });
-        } else {
-          this.producerService.create(producer).subscribe(res => {
-            console.log(res.body);
-            this.loadAll();
-          });
+    this.modalService
+      .open(modal, {
+        ariaLabelledBy: "modal-basic-title",
+        size: "lg",
+        backdrop: "static"
+      })
+      .result.then(result => {
+        if (result === "save") {
+          this.isAcction = true;
+          console.log("save");
+          if (producer.id) {
+            this.producerService.update(producer).subscribe(res => {
+              console.log(res.body);
+              this.loadAll();
+            });
+          } else {
+            this.producerService.create(producer).subscribe(res => {
+              console.log(res.body);
+              this.loadAll();
+            });
+          }
         }
-      }
-
-    });
+      });
   }
 
   remove(modal, producer: Producer) {
-    this.modalService.open(modal, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-      backdrop: 'static'
-    }).result.then((result) => {
-      if (result === 'delete') {
-        console.log("delete");
-        console.log(this.selectedProducer);
-        if (producer.id) {
-          this.producerService.delete(producer.id).subscribe(res => {
-            // control.removeAt(index);
-            if (res.status === 200) {
-              if ((this.paging.offset + this.producers.length) - this.paging.offset === 1 && this.paging.page !== 1) {
-                this.paging.page = this.paging.page - 1;
-                this.loadAll();
-              } else {
-                this.loadAll();
-              }
+    this.modalService
+      .open(modal, {
+        ariaLabelledBy: "modal-basic-title",
+        size: "lg",
+        backdrop: "static"
+      })
+      .result.then(
+        result => {
+          if (result === "delete") {
+            console.log("delete");
+            console.log(this.selectedProducer);
+            if (producer.id) {
+              this.producerService.delete(producer.id).subscribe(res => {
+                // control.removeAt(index);
+                if (res.status === 200) {
+                  if (
+                    this.paging.offset +
+                      this.producers.length -
+                      this.paging.offset ===
+                      1 &&
+                    this.paging.page !== 1
+                  ) {
+                    this.paging.page = this.paging.page - 1;
+                    this.loadAll();
+                  } else {
+                    this.loadAll();
+                  }
+                }
+              });
+            } else {
             }
-          });
-        } else {
-        }
-      }
-    }, (reason) => {
-    });
+          }
+        },
+        reason => {}
+      );
   }
 
   openViewCertPopup(modal, producer) {
     this.selectedProducer = producer;
-    this.modalService.open(modal, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-      backdrop: 'static'
-    }).result.then((result) => {
-    }, (reason) => {
-    });
+    this.modalService
+      .open(modal, {
+        ariaLabelledBy: "modal-basic-title",
+        size: "lg",
+        backdrop: "static"
+      })
+      .result.then(
+        result => {},
+        reason => {}
+      );
   }
 
   changeLimit() {
@@ -202,8 +210,8 @@ export class ProducerComponent implements OnInit {
     this.loadAll();
   }
 
-  pagingInfo = (paging) => {
-    return `Show ${paging.offset + 1} to ${(paging.offset + this.producers.length)} of ${paging.total} entries`;
-  }
-
+  pagingInfo = paging => {
+    return `Show ${paging.offset + 1} to ${paging.offset +
+      this.producers.length} of ${paging.total} entries`;
+  };
 }
