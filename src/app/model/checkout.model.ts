@@ -1,5 +1,6 @@
 import {User} from "./user";
 import {Version} from "./version.model";
+import {Address} from "./address.model";
 
 export class Checkout {
     id?: number;
@@ -9,6 +10,7 @@ export class Checkout {
     phone?: string;
     email?: string;
     address?: string;
+    address1?: Address;
     paymentMethod?: number;
     provinceId?: number;
     districtId?: number;

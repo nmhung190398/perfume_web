@@ -5,7 +5,7 @@ import {Category} from "../model/category.model";
 import {Observable} from "rxjs";
 import {createRequestOption} from "../utils/request.utils";
 import {IPaging} from "../model/base-respone.model";
-import {District, Province, Ward} from "../model/address.model";
+import {Address, District, Province, Ward} from "../model/address.model";
 
 type EntityResponseType = HttpResponse<Category>;
 type EntityArrayResponseType = HttpResponse<Category[]>;
@@ -35,6 +35,11 @@ export class AddressService {
     findWard(districtId): Observable<HttpResponse<Ward[]>> {
         return this.http
             .get<Ward[]>(`${this.resourceUrl}/ward/${districtId}`, {observe: 'response'});
+    }
+
+    findAllByWard(wardId): Observable<HttpResponse<Address>> {
+        return this.http
+            .get<Address>(`${this.resourceUrl}/${wardId}`, {observe: 'response'});
     }
 
 }

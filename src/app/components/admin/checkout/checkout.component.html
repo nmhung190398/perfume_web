@@ -77,7 +77,8 @@
                                 </td>
                                 <td>
                                     <span>{{checkout.address}}</span><br>
-                                    <span>{{checkout.wardId}},{{checkout.wardId}},{{checkout.provinceId}}</span>
+                                    <span *ngIf="checkout.address1">{{addressTrue(checkout)}}</span>
+<!--                                    <span>{{checkout.wardId}},{{checkout.wardId}},{{checkout.provinceId}}</span>-->
                                 </td>
                                 <td>
                                     <span>{{paymentMethod(checkout)}}</span>

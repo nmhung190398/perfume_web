@@ -18,3 +18,8 @@ export class Ward {
     districtId?: number;
 }
 
+export class Address {
+    province?: Province;
+    district?: District;
+    ward?: Ward;
+}

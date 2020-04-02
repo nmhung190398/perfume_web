@@ -9,6 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {xoaDau} from '../../../comom/utils/base.utils';
 import {CHECKOUT_STATUS, PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
 import {__param} from 'tslib';
+import {AddressService} from "../../../service/address.service";
 
 @Component({
     selector: 'app-checkout',
@@ -32,6 +33,7 @@ export class CheckoutComponent implements OnInit {
                 protected router: Router,
                 protected activatedRoute: ActivatedRoute,
                 private modalService: NgbModal,
+                private addressService: AddressService,
                 private fb: FormBuilder) {
         // this.activatedRoute.snapshot.paramMap.
         // router.events.subscribe(value => {
@@ -104,10 +106,15 @@ export class CheckoutComponent implements OnInit {
         this.checkoutService.filter(this.paging, checkout).subscribe(res => {
             if (res.status === 200) {
                 this.checkouts = res.body.data;
+
+                this.checkouts.forEach(value => {
+                    this.addressService.findAllByWard(value.wardId).subscribe(resAddress => {
+                        value.address1 = resAddress.body;
+                    });
+                });
+
                 console.log(res.body.paging);
                 console.log(this.checkouts);
-                // this.paging = res.body.paging;
-                // this.paging.limit = res.body.paging.limit;
                 this.paging.offset = res.body.paging.offset;
                 this.paging.total = res.body.paging.total;
             } else {
@@ -141,6 +148,15 @@ export class CheckoutComponent implements OnInit {
         return rs;
     }
 
+    addressTrue(checkout: Checkout) {
+        let rs = '';
+        if (checkout.address1) {
+            rs += `${checkout.address1.ward.prefix} ${checkout.address1.ward.name}, `;
+            rs += `${checkout.address1.district.prefix} ${checkout.address1.district.name}, `;
+            rs += `${checkout.address1.province.name}`;
+        }
+        return rs;
+    }
 
     // transition() {
     //   const parameters = {
