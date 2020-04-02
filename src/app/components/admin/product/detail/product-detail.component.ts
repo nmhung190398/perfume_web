@@ -14,6 +14,10 @@ import { TargetService } from "../../../../service/target.service";
 import { ProducerService } from "../../../../service/producer.service";
 import { xoaDau } from "./../../../../comom/utils/base.utils";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Amount } from "src/app/model/amount.model";
+import { Fragrant } from "src/app/model/fragrant.model";
+import { AmountService } from "src/app/service/amount.service";
+import { FragrantService } from "src/app/service/fragrant.service";
 @Component({
   selector: "app-detail",
   templateUrl: "./product-detail.component.html",
@@ -31,6 +35,8 @@ export class ProductDetailComponent implements OnInit {
   categories: Array<Category>;
   producers: Array<Producer>;
   targets: Array<Target>;
+  amounts: Array<Amount>;
+  fragrants: Array<Fragrant>;
   versions: Array<Version> = [];
   isHot = true;
   isNew = true;
@@ -43,6 +49,8 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     public producerService: ProducerService,
     public categoryService: CategoryService,
+    public amountService: AmountService,
+    public fragrantService: FragrantService,
     public targetService: TargetService,
     public productService: ProductService,
     protected router: Router,
@@ -108,6 +116,19 @@ export class ProductDetailComponent implements OnInit {
     this.targetService.filterAll().subscribe(res => {
       this.targets = res.body;
     });
+
+    this.fragrantService.filterAll().subscribe(res => {
+      this.fragrants = res.body;
+      if (this.fragrants.length > 0 && !this.isUpdate) {
+        this.productFormGroup.get("fragrant").setValue(this.fragrants[0]);
+      }
+    });
+    this.amountService.filterAll().subscribe(res => {
+      this.amounts = res.body;
+      if (this.amounts.length > 0 && !this.isUpdate) {
+        this.productFormGroup.get("amount").setValue(this.amounts[0]);
+      }
+    });
   }
 
   initForm() {
@@ -123,8 +144,8 @@ export class ProductDetailComponent implements OnInit {
       category: [null, [Validators.required]],
       versions: [null, []],
       producer: [null, [Validators.required]],
-      amount: [null, []],
-      fragrant: [null, []],
+      amount: [null, [Validators.required]],
+      fragrant: [null, [Validators.required]],
       targets: [null, [Validators.required]],
       imageBase64: []
     });
@@ -204,12 +225,18 @@ export class ProductDetailComponent implements OnInit {
       tmp.imageBase64 = this.cardImageBase64;
     }
     console.log(tmp);
-    this.productService.create(tmp).subscribe(res => {
-      if (res.status === 200) {
-        //chuyển hướng
-        this.router.navigate(["/admin/product"]);
+    this.productService.findByCode(tmp.code).subscribe(resCode => {
+      if (resCode.body.status === 200) {
+        alert("Đã tồn tại đường dẫn cho sản phẩm khác ");
       } else {
-        console.log("error");
+        this.productService.create(tmp).subscribe(res => {
+          if (res.status === 200) {
+            //chuyển hướng
+            this.router.navigate(["/admin/product"]);
+          } else {
+            console.log("error");
+          }
+        });
       }
     });
   }

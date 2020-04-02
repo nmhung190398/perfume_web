@@ -5,7 +5,7 @@
         <div class="card-header"><strong>Basic Form</strong> Elements</div>
         <div class="card-body">
           <form [formGroup]="productFormGroup">
-            <div class="col-sm-4" style="display: inline-block">
+            <div class="col-4" style="display: inline-block">
               <div class="form-group">
                 <fieldset class="form-group text-center">
                   <span class="text-danger">
@@ -38,7 +38,7 @@
                 >Remove</a
               >
             </div>
-            <div class="col-sm-8" style="display: inline-block">
+            <div class="col-8" style="display: inline-block">
               <div class="form-group row">
                 <label class="col-md-3 col-form-label">name</label>
                 <div class="col-md-7">
@@ -228,13 +228,12 @@
                   >Mùi Hương
                 </label>
                 <div class="col-md-9">
-                  <select name="select1" class="form-control">
-                    <option value="0" ng-reflect-value="0"
-                      >Please select</option
+                  <select formControlName="fragrant" class="form-control">
+                    <option
+                      *ngFor="let fragrant of fragrants"
+                      [ngValue]="fragrant"
+                      >{{ fragrant.name }}</option
                     >
-                    <option value="1" ng-reflect-value="1">Option #1</option>
-                    <option value="2" ng-reflect-value="2">Option #2</option>
-                    <option value="3" ng-reflect-value="3">Option #3</option>
                   </select>
                 </div>
               </div>
@@ -244,13 +243,10 @@
                   >Nồng Độ
                 </label>
                 <div class="col-md-9">
-                  <select id="select1" name="select1" class="form-control">
-                    <option value="0" ng-reflect-value="0"
-                      >Please select</option
-                    >
-                    <option value="1" ng-reflect-value="1">Option #1</option>
-                    <option value="2" ng-reflect-value="2">Option #2</option>
-                    <option value="3" ng-reflect-value="3">Option #3</option>
+                  <select formControlName="amount" class="form-control">
+                    <option *ngFor="let amount of amounts" [ngValue]="amount">
+                      {{ amount.name }}
+                    </option>
                   </select>
                 </div>
               </div>
