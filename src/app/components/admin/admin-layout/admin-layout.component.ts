@@ -53,6 +53,30 @@ export const navItems: INavData[] = [
     },
     {
         title: true,
+        name: 'Đơn Hàng'
+    },
+    {
+        name: 'Đơn Mới',
+        url: '/admin/checkout/active',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Đang Vận Chuyển',
+        url: '/admin/checkout/delivery',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Hoàn Thành',
+        url: '/admin/checkout/done',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Hủy',
+        url: '/admin/checkout/deleted',
+        icon: 'icon-phone'
+    },
+    {
+        title: true,
         name: 'Theme'
     },
     {

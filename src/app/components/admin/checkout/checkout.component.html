@@ -1,59 +1,12 @@
 <div class="animated fadeIn">
     <div class="row">
-        <div class="col-lg-12" *ngIf="categoryFormGroup.get('isShow').value">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
 
-                        <div class="col-6">
-                            <input [formControl]="categoryFormGroup.get('name')" class="form-control"
-                                   (focusout)="focusoutName()"
-                                   placeholder="name">
-                            <span class="text-danger" *ngIf="categoryFormGroup.get('name').invalid">Name invalid</span>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group">
-                                <input type="text" [readOnly]="isCustomUri"
-                                       [formControl]="categoryFormGroup.get('code')"
-                                       placeholder="Đường dẫn" class="form-control">
-                                <div class="input-group-append">
-                                            <span (click)="isCustomUri = !isCustomUri" class="input-group-text"><i
-                                                    class="fa fa-user"></i></span>
-                                </div>
-                            </div>
-                            <span class="text-danger" *ngIf="categoryFormGroup.get('code').invalid">Name invalid</span>
-                        </div>
-
-                        <div class="col-12 mt-3 text-right">
-                            <div class="btn-group">
-                                <button [disabled]="categoryFormGroup.invalid"
-                                        (click)="save(saveModal,categoryFormGroup.value)"
-                                        type="submit"
-                                        class="btn btn-success btn-sm">
-                                    <i class="icon-pencil"></i>
-                                    <span class="d-none d-md-inline">{{categoryFormGroup.get('isUpdate').value ? 'edit' : 'add'}}</span>
-                                </button>
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm">
-                                    <i class="icon-trash"></i>
-                                    <span (click)="categoryFormGroup.get('isShow').setValue(false)"
-                                          class="d-none d-md-inline">cancel</span>
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-globe"></i>Mail Sender
                     <span class="float-right">
-            <button (click)="addCategory()" [disabled]="!isAcction"
-                    class="btn btn-block btn-primary">Add</button></span>
+                    </span>
                 </div>
                 <div class="card-body">
                     <div class="row mb-2">
@@ -82,49 +35,93 @@
                     <table class="table table-bordered table-sort-icon">
                         <thead>
                         <tr>
+                            <th>STT</th>
                             <th class="text-center">
-                                Name
+                                Thông tin nhận hàng
                             </th>
 
                             <th class="text-center">
-                                Đường dẫn
+                                Địa chỉ
                             </th>
+
+                            <th class="text-center">
+                                Hình thức thanh toán
+                            </th>
+
+                            <th class="text-center">
+                                Mã giảm giá
+                            </th>
+                            <th>
+                                Tổng tiền
+                            </th>
+                            <th> Giá cuối</th>
+                            <th *ngIf="checkoutStatus === 0">Lý do hủy đơn</th>
                             <th class="text-center" style="width: 200px">
-                                Acction
+                                #
                             </th>
                         </tr>
                         </thead>
-                        <ng-container *ngIf="categories && categories.length >= 0">
-                            <tbody *ngFor="let category of categories; let i=index">
-                            <tr *ngIf="category"
-                                [style]="category.id === categoryFormGroup.get('id').value && categoryFormGroup.get('isShow').value? 'background : #dbcc8f' : ''">
+                        <ng-container *ngIf="checkouts && checkouts.length >= 0">
+                            <tbody *ngFor="let checkout of checkouts; let i=index">
+                            <tr *ngIf="checkout"
+                                [style]="checkout.id === checkoutFormGroup.get('id').value && checkoutFormGroup.get('isShow').value? 'background : #dbcc8f' : ''">
                                 <!--name -->
                                 <td>
-                                      <span>
-                                        {{category.name}}
-                                      </span>
+                                    {{i + 1 + paging.offset}}
                                 </td>
 
                                 <td>
-                                      <span>
-                                        {{category.code}}
-                                      </span>
+                                    <span>{{checkout.lastname}} {{checkout.firstname}}</span><br>
+                                    <span>{{checkout.email}}</span><br>
+                                    <span>{{checkout.phone}}</span>
                                 </td>
+                                <td>
+                                    <span>{{checkout.address}}</span><br>
+                                    <span>{{checkout.wardId}},{{checkout.wardId}},{{checkout.provinceId}}</span>
+                                </td>
+                                <td>
+                                    <span>{{paymentMethod(checkout)}}</span>
+                                </td>
+
+                                <td>
+                                    <span>{{checkout.coupon ? checkout.coupon : 'Không có'}}</span>
+                                </td>
+
+                                <td>
+                                    <span>12000 VND</span><br>
+                                    <span>{{checkout.checkoutItems?.length}} Sản phẩm</span>
+                                </td>
+
+                                <td>
+                                    <span>12000 VND</span>
+                                </td>
+                                <td *ngIf="checkoutStatus === 0">{{checkout.note}}</td>
 
                                 <!--acction-->
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button (click)="showEdit(category)"
+                                        <button (click)="changeStatus(checkout)"
+                                                *ngIf="checkoutStatus && checkoutStatus !== 0 && checkoutStatus !== 3"
                                                 type="submit"
                                                 class="btn btn-success btn-sm">
-                                            <i class="icon-pencil"></i>
-                                            <span class="d-none d-md-inline">edit</span>
+                                            <!--                                            <i class="icon-pencil"></i>-->
+                                            <span *ngIf="checkoutStatus === 1"
+                                                  class="d-none d-md-inline">Vận chuyển</span>
+                                            <span *ngIf="checkoutStatus === 2"
+                                                  class="d-none d-md-inline">Hoàn thành</span>
                                         </button>
                                         <button type="submit"
-                                                (click)="remove(deleteModal, category)"
+                                                *ngIf="checkoutStatus && checkoutStatus !== 0 && checkoutStatus !== 3"
+                                                (click)="remove(deleteModal, checkout)"
                                                 class="btn btn-danger btn-sm">
                                             <i class="icon-trash"></i>
-                                            <span class="d-none d-md-inline">delete</span>
+                                            <span class="d-none d-md-inline">Hủy đơn</span>
+                                        </button>
+
+                                        <button
+                                                type="submit"
+                                                class="btn btn-info btn-sm">
+                                            <span class="d-none d-md-inline">Chi tiết</span>
                                         </button>
 
                                     </div>
@@ -136,16 +133,16 @@
                     <div class="row">
                         <div class="col-12">
 
-              <span *ngIf="categories.length !== 0 " style="line-height: 33px"
+              <span *ngIf="checkouts.length !== 0 " style="line-height: 33px"
                     class="float-left">{{pagingInfo(paging)}}
                   </span>
-                            <ngb-pagination *ngIf="categories.length !== 0 " class="float-right" [boundaryLinks]="true"
+                            <ngb-pagination *ngIf="checkouts.length !== 0 " class="float-right" [boundaryLinks]="true"
                                             [collectionSize]="paging.total"
                                             [pageSize]="paging.limit" [maxSize]="5" [rotate]="true"
                                             [(page)]="paging.page"
                                             (pageChange)="loadPage(paging.page)">
                             </ngb-pagination>
-                            <div *ngIf="!categories || categories.length === 0" class="text-center">
+                            <div *ngIf="!checkouts || checkouts.length === 0" class="text-center">
                                 <span>No Record</span>
                             </div>
                         </div>
@@ -161,18 +158,18 @@
 <ng-template #deleteModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title"
-            id="modal-comfirm-delete-title">Delete</h4>
+            id="modal-comfirm-delete-title">Lý do hủy đơn</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        Delete
+        <textarea [(ngModel)]="nodeDelete" class="form-control" rows="5"></textarea>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close('delete')">Delete
+        <button type="button" class="btn btn-danger" (click)="modal.close('delete')">Hủy đơn
         </button>
-        <button type="button" class="btn btn-secondary" (click)="modal.close('Close')">Close
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close')">Đóng
         </button>
     </div>
 </ng-template>

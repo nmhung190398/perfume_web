@@ -10,6 +10,7 @@ import {District, Province, Ward} from '../../../model/address.model';
 import {AddressService} from '../../../service/address.service';
 import validate = WebAssembly.validate;
 import {CheckoutService} from "../../../service/checkout.service";
+import {PAYMENT_METHOD} from "../../../comom/constant/checkout.constant";
 
 @Component({
     selector: 'app-cart',
@@ -21,11 +22,12 @@ export class CartComponent implements OnInit {
     cartItems: Cart[] = [];
     userLogin: User;
     SERVER_URL = SERVER_URL;
-
+    PAYMENT_METHOD = PAYMENT_METHOD;
     wards: Ward[] = [];
     districts: District[] = [];
     provinces: Province[] = [];
     coupon;
+    objectKeys = Object.keys;
 
     constructor(private fb: FormBuilder, private cartService: CartService, private productService: ProductService,
                 private authenticationService: AuthenticationService,
@@ -46,7 +48,8 @@ export class CartComponent implements OnInit {
             coupon: [null],
             provinceId: [null],
             districtId: [null],
-            wardId: [null]
+            wardId: [null],
+            paymentMethod: [null],
         });
         console.log(this.checkoutForm.value);
         this.loadAll();
@@ -122,7 +125,7 @@ export class CartComponent implements OnInit {
         this.checkoutService.create(this.checkoutForm.value).subscribe(res => {
             console.log(res.body);
             if (res.body.status === 200) {
-                alert("Thành công");
+                alert("Thành công! Vui lòng check mail ");
                 this.loadAll();
             } else {
                 alert(res.body.msg);

@@ -7,9 +7,17 @@ import {Category} from '../model/category.model';
 import {map} from 'rxjs/operators';
 import {ProductService} from './product.service';
 import {ResponData} from "../comom/constant/base.constant";
+import {IPaging, Paging} from "../model/base-respone.model";
+import {Fragrant} from "../model/fragrant.model";
+import {createRequestOption} from "../utils/request.utils";
 
 type EntityResponseType = HttpResponse<Checkout>;
 type EntityArrayResponseType = HttpResponse<Checkout[]>;
+
+interface PagingResponse {
+    data: Checkout[];
+    paging: IPaging;
+}
 
 @Injectable({providedIn: 'root'})
 export class CheckoutService {
@@ -24,11 +32,23 @@ export class CheckoutService {
         return this.http.post<ResponData>(this.resourceUrl, checkout, {observe: 'response'});
     }
 
-    delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {
-            observe: 'response'
-        });
-    }
+    // delete(id: number, node: string): Observable<HttpResponse<any>> {
+    //     const tmp: any = {
+    //         node: node
+    //     };
+    //     const options = createRequestOption(tmp);
+    //     return this.http.put<any>(`${this.resourceUrl}/deleted/${id}`, {
+    //         observe: 'response', params: options
+    //     });
+    // }
+
+    // deleteCheckout(id: number, node: string): Observable<HttpResponse<any>> {
+    //     const tmp = {
+    //         node: node
+    //     }
+    //     return this.http
+    //         .put<any>(`${this.resourceUrl}/${id}`, tmp, {observe: 'response'});
+    // }
 
 
     filterAll(filter?: any): Observable<EntityArrayResponseType> {
@@ -36,7 +56,21 @@ export class CheckoutService {
             filter = {};
         }
         return this.http
-            .post<Category[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
+            .post<Checkout[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
+    }
+
+    filter(paging: IPaging, filter: any): Observable<HttpResponse<PagingResponse>> {
+        if (filter == null) {
+            filter = {};
+        }
+        return this.http
+            .post<PagingResponse>(`${this.resourceUrl}/filter/${paging.page}/${paging.limit}`, filter, {observe: 'response'});
+    }
+
+
+    update(checkoout: Checkout): Observable<HttpResponse<any>> {
+        return this.http
+            .put<any>(`${this.resourceUrl}/${checkoout.id}`, checkoout, {observe: 'response'});
     }
 
     findByUserLogin(id): Observable<EntityArrayResponseType> {

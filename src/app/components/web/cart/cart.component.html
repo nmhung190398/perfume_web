@@ -50,31 +50,6 @@
                 </div>
             </div>
         </div>
-<!--        <div class="row justify-content-start">-->
-<!--            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate fadeInUp ftco-animated">-->
-<!--                <div class="cart-total mb-3">-->
-<!--                    <h3>Cart Totals</h3>-->
-<!--                    <p class="d-flex">-->
-<!--                        <span>Subtotal</span>-->
-<!--                        <span>$20.60</span>-->
-<!--                    </p>-->
-<!--                    <p class="d-flex">-->
-<!--                        <span>Delivery</span>-->
-<!--                        <span>$0.00</span>-->
-<!--                    </p>-->
-<!--                    <p class="d-flex">-->
-<!--                        <span>Discount</span>-->
-<!--                        <span>$3.00</span>-->
-<!--                    </p>-->
-<!--                    <hr>-->
-<!--                    <p class="d-flex total-price">-->
-<!--                        <span>Total</span>-->
-<!--                        <span>$17.60</span>-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--                <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>-->
-<!--            </div>-->
-<!--        </div>-->
         <div *ngIf="cartItems.length > 0" class="row justify-content-center mt-5 ">
             <div class="col-xl-10 ftco-animate fadeInUp ftco-animated">
                 <form [formGroup]="checkoutForm" class="billing-form">
@@ -187,31 +162,13 @@
                     <div class="col-md-6">
                         <div class="cart-detail bg-light p-3 p-md-4">
                             <h3 class="billing-heading mb-4">Payment Method</h3>
-                            <div class="form-group">
+                            <div class="form-group" *ngFor="let key of objectKeys(PAYMENT_METHOD)">
                                 <div class="col-md-12">
                                     <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2">Banking</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Thanh toán khi giao hàng </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2">Paypal</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+                                        <label><input type="radio"
+                                                      [value]="PAYMENT_METHOD[key].value" name="optradio" class="mr-2"
+                                                        [formControl]="checkoutForm.get('paymentMethod')"
+                                        >{{PAYMENT_METHOD[key].label}}</label>
                                     </div>
                                 </div>
                             </div>

@@ -8,13 +8,14 @@ import {BsDropdownModule, CollapseModule, PaginationModule} from "ngx-bootstrap"
 import {ChartsModule} from 'ng2-charts';
 import {AdminRoutingModule} from "./admin-routing.module";
 import { CategoryComponent } from './category/category.component';
-import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbButtonsModule, NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductDetailComponent} from "./product/detail/product-detail.component";
 import {ProductListComponent} from "./product/list/product-list.component";
 import { ProducerComponent } from './producer/producer.component';
 import { AmountComponent } from './amount/amount.component';
 import { FragrantComponent } from './fragrant/fragrant.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -38,6 +39,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         NgbPaginationModule,
         FormsModule,
         CollapseModule,
+        NgbButtonsModule,
     ],
     declarations: [
         AdminLayoutComponent,
@@ -46,7 +48,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ProductListComponent,
         ProducerComponent,
         AmountComponent,
-        FragrantComponent
+        FragrantComponent,
+        CheckoutComponent
     ],
     providers: [{
         provide: LocationStrategy,

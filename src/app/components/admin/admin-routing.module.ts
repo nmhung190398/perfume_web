@@ -5,6 +5,7 @@ import {CategoryComponent} from "./category/category.component";
 import {ProductListComponent} from "./product/list/product-list.component";
 import {ProductDetailComponent} from "./product/detail/product-detail.component";
 import {ProducerComponent} from "./producer/producer.component";
+import {CheckoutComponent} from "./checkout/checkout.component";
 
 const routes: Routes = [
 
@@ -31,6 +32,10 @@ const routes: Routes = [
             {
                 path: 'producer',
                 component: ProducerComponent
+            },
+            {
+                path: 'checkout/:status',
+                component: CheckoutComponent
             },
             {
                 path: 'base',
