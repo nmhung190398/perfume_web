@@ -18,7 +18,8 @@ import {Amount} from 'src/app/model/amount.model';
 import {Fragrant} from 'src/app/model/fragrant.model';
 import {AmountService} from 'src/app/service/amount.service';
 import {FragrantService} from 'src/app/service/fragrant.service';
-import {CKEDITOR_CONFIG} from '../../../../comom/constant/base.constant';
+import {CKEDITOR_CONFIG, COMMENT_TYPE} from '../../../../comom/constant/base.constant';
+import {SERVER_URL} from '../../../../app.constants';
 
 @Component({
     selector: 'app-detail',
@@ -30,7 +31,7 @@ export class ProductDetailComponent implements OnInit {
     isUpdate: boolean;
     productFormGroup: FormGroup;
     product: Product;
-
+    imageDefault = 'assets/images/upload-file.png';
     imageError: string;
     isImageSaved: boolean;
     cardImageBase64: string;
@@ -60,6 +61,11 @@ export class ProductDetailComponent implements OnInit {
         private modalService: NgbModal,
         private fb: FormBuilder
     ) {
+        this.activatedRoute.paramMap.subscribe(param => {
+            this.productId = this.route.snapshot.paramMap.get('id');
+            this.isUpdate = this.productId !== null;
+            this.loadAll();
+        });
         this.productFormGroup = this.initForm();
         this.versionFromGroup = this.fb.group({
             id: [null],
@@ -75,13 +81,17 @@ export class ProductDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadProperties();
-        this.productId = this.route.snapshot.paramMap.get('id');
-        this.isUpdate = this.productId !== null;
+    }
+
+    loadAll() {
         if (this.isUpdate) {
             this.productService.find(this.productId).subscribe(res => {
                 this.product = res.body;
                 this.versions = this.product.versions;
+
+                if (this.product.image != null) {
+                    this.imageDefault = SERVER_URL + this.product.image;
+                }
                 this.productFormGroup.setValue({
                     id: this.product.id,
                     name: this.product.name,
@@ -91,48 +101,91 @@ export class ProductDetailComponent implements OnInit {
                     EXP: this.product.EXP,
                     image: this.product.image,
                     description: this.product.description,
-                    category: this.product.category,
                     versions: this.product.versions,
-                    producer: this.product.producer,
-                    amount: this.product.amount,
-                    fragrant: this.product.fragrant,
-                    targets: this.product.targets,
+                    category: this.product.category,
+                    producer: null,
+                    amount: null,
+                    fragrant: null,
+                    targets: null,
                     imageBase64: null
                 });
+                this.loadProperties();
             });
+        } else {
+            this.loadProperties();
         }
     }
 
     loadProperties() {
         this.producerService.filterAll().subscribe(res => {
             this.producers = res.body;
-            if (this.producers.length > 0 && !this.isUpdate) {
-                this.productFormGroup.get('producer').setValue(this.producers[0]);
+            if (this.producers.length > 0) {
+                let tmp = null;
+                if (!this.isUpdate) {
+                    tmp = this.producers[0];
+                } else {
+                    tmp = this.findById(this.product.producer.id, this.producers);
+                }
+                this.productFormGroup.get('producer').setValue(tmp);
             }
         });
 
         this.categoryService.filterAll().subscribe(res => {
             this.categories = res.body;
-            if (this.categories.length > 0 && !this.isUpdate) {
-                this.productFormGroup.get('category').setValue(this.categories[0]);
+            if (this.categories.length > 0) {
+                let tmp = null;
+                if (!this.isUpdate) {
+                    tmp = this.categories[0];
+                } else {
+                    tmp = this.findById(this.product.category.id, this.categories);
+                }
+                this.productFormGroup.get('category').setValue(tmp);
             }
         });
         this.targetService.filterAll().subscribe(res => {
             this.targets = res.body;
+            if (this.targets.length > 0 && this.isUpdate && this.product.targets) {
+                const tmp = [];
+                this.product.targets.forEach(value => {
+                    tmp.push(this.findById(value.id, this.targets));
+                });
+                this.productFormGroup.get('targets').setValue(tmp);
+            }
         });
 
         this.fragrantService.filterAll().subscribe(res => {
             this.fragrants = res.body;
-            if (this.fragrants.length > 0 && !this.isUpdate) {
-                this.productFormGroup.get('fragrant').setValue(this.fragrants[0]);
+            if (this.fragrants.length > 0) {
+                let tmp = null;
+                if (!this.isUpdate) {
+                    tmp = this.fragrants[0];
+                } else {
+                    tmp = this.findById(this.product.fragrant.id, this.fragrants);
+                }
+                this.productFormGroup.get('fragrant').setValue(tmp);
             }
         });
         this.amountService.filterAll().subscribe(res => {
             this.amounts = res.body;
-            if (this.amounts.length > 0 && !this.isUpdate) {
-                this.productFormGroup.get('amount').setValue(this.amounts[0]);
+            if (this.amounts.length > 0) {
+                let tmp = null;
+                if (!this.isUpdate) {
+                    tmp = this.amounts[0];
+                } else {
+                    tmp = this.findById(this.product.amount.id, this.amounts);
+                }
+                this.productFormGroup.get('amount').setValue(tmp);
             }
         });
+    }
+
+    findById(id: number, data: Array<any>) {
+        const rs = data.find(value => {
+            return value.id === id;
+        });
+        console.log('=========');
+        console.log(rs);
+        return rs;
     }
 
     initForm() {
@@ -229,20 +282,33 @@ export class ProductDetailComponent implements OnInit {
             tmp.imageBase64 = this.cardImageBase64;
         }
         console.log(tmp);
-        this.productService.findByCode(tmp.code).subscribe(resCode => {
-            if (resCode.body.status === 200) {
-                alert('Đã tồn tại đường dẫn cho sản phẩm khác ');
-            } else {
-                this.productService.create(tmp).subscribe(res => {
-                    if (res.status === 200) {
-                        //chuyển hướng
-                        this.router.navigate(['/admin/product']);
-                    } else {
-                        console.log('error');
-                    }
-                });
-            }
-        });
+        if (this.isUpdate) {
+            this.productService.update(tmp).subscribe(res => {
+                if (res.status === 200) {
+                    window.location.reload();
+                } else {
+                    alert('eror');
+                    console.log('error');
+                }
+            });
+        } else {
+            this.productService.findByCode(tmp.code).subscribe(resCode => {
+                if (resCode.body.status === 200) {
+                    alert('Đã tồn tại đường dẫn cho sản phẩm khác ');
+                } else {
+                    this.productService.create(tmp).subscribe(res => {
+                        if (res.status === 200) {
+                            console.log(res.body);
+                            //chuyển hướng
+                            this.router.navigate(['/admin/product']);
+                        } else {
+                            alert('eror');
+                            console.log('error');
+                        }
+                    });
+                }
+            });
+        }
     }
 
     addVersion() {
