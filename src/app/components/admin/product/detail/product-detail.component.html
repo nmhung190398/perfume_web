@@ -275,97 +275,162 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let version of versions; index as indexVersion">
+                            <ng-container *ngIf="version.isUpdate">
+                                <td>
+                                    <input
+                                            [formControl]="versionUpdateGroup.get('name')"
+                                            class="form-control"
+                                            placeholder="Dung tích"
+                                    />
+                                    <span
+                                            class="text-danger"
+                                            *ngIf="versionUpdateGroup.get('name').invalid"
+                                    >Name invalid</span
+                                    >
+                                </td>
+                                <td>
+                                    <input
+                                            [formControl]="versionUpdateGroup.get('total')"
+                                            class="form-control"
+                                            type="number"
+                                            placeholder="Số lượng"
+                                    />
+                                    <span
+                                            class="text-danger"
+                                            *ngIf="versionUpdateGroup.get('total').invalid"
+                                    >Name invalid</span
+                                    >
+                                </td>
+                                <td>
+                                    <input
+                                            [formControl]="versionUpdateGroup.get('price')"
+                                            class="form-control"
+                                            type="number"
+                                            placeholder="Giá"
+                                    />
+                                    <span
+                                            class="text-danger"
+                                            *ngIf="versionUpdateGroup.get('price').invalid"
+                                    >Name invalid</span
+                                    >
+                                </td>
+                                <!--acction-->
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button (click)="editVersion(version)"
+                                                type="submit"
+                                                [disabled]="versionFromGroup.invalid"
+                                                class="btn btn-primary btn-sm"
+                                        >
+                                            <i class="icon-trash"></i>
+                                            <span class="d-none d-md-inline">Lưu</span>
+                                        </button>
+                                        <button (click)="version.isUpdate = false"
+                                                type="submit"
+                                                [disabled]="versionFromGroup.invalid"
+                                                class="btn btn-primary btn-sm"
+                                        >
+                                            <i class="icon-trash"></i>
+                                            <span class="d-none d-md-inline">Hủy</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container *ngIf="!version.isUpdate">
+                                <td>
+                                    {{ version.name }}
+                                </td>
+                                <td>
+                                    {{ version.total }}
+                                </td>
+                                <td>
+                                    {{ version.price }}
+                                </td>
+                                <!--acction-->
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <!--                                    <button-->
+                                        <!--                                            type="submit"-->
+                                        <!--                                            class="btn btn-success btn-sm">-->
+                                        <!--                                        <i class="icon-pencil"></i>-->
+                                        <!--                                        <span class="d-none d-md-inline">Sửa</span>-->
+                                        <!--                                    </button>-->
+                                        <button
+                                                type="submit"
+                                                (click)="removeVersion(indexVersion)"
+                                                class="btn btn-danger btn-sm"
+                                        >
+                                            <i class="icon-trash"></i>
+                                            <span class="d-none d-md-inline">Xóa</span>
+                                        </button>
+
+                                        <button (click)="setUpEditVersion(version)"
+                                                type="submit"
+                                                class="btn btn-info btn-sm"
+                                        >
+                                            <i class="icon-trash"></i>
+                                            <span class="d-none d-md-inline">Sửa</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
                             <td>
-                                {{ version.name }}
+                                <input
+                                        [formControl]="versionFromGroup.get('name')"
+                                        class="form-control"
+                                        placeholder="Dung tích"
+                                />
+                                <span
+                                        class="text-danger"
+                                        *ngIf="versionFromGroup.get('name').invalid"
+                                >Name invalid</span
+                                >
                             </td>
                             <td>
-                                {{ version.total }}
+                                <input
+                                        [formControl]="versionFromGroup.get('total')"
+                                        class="form-control"
+                                        type="number"
+                                        placeholder="Số lượng"
+                                />
+                                <span
+                                        class="text-danger"
+                                        *ngIf="versionFromGroup.get('total').invalid"
+                                >Name invalid</span
+                                >
                             </td>
                             <td>
-                                {{ version.price }}
+                                <input
+                                        [formControl]="versionFromGroup.get('price')"
+                                        class="form-control"
+                                        type="number"
+                                        placeholder="Giá"
+                                />
+                                <span
+                                        class="text-danger"
+                                        *ngIf="versionFromGroup.get('price').invalid"
+                                >Name invalid</span
+                                >
                             </td>
                             <!--acction-->
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <!--                                    <button-->
-                                    <!--                                            type="submit"-->
-                                    <!--                                            class="btn btn-success btn-sm">-->
-                                    <!--                                        <i class="icon-pencil"></i>-->
-                                    <!--                                        <span class="d-none d-md-inline">Sửa</span>-->
-                                    <!--                                    </button>-->
                                     <button
                                             type="submit"
-                                            (click)="removeVersion(indexVersion)"
-                                            class="btn btn-danger btn-sm"
+                                            (click)="addVersion()"
+                                            [disabled]="versionFromGroup.invalid"
+                                            class="btn btn-primary btn-sm"
                                     >
                                         <i class="icon-trash"></i>
-                                        <span class="d-none d-md-inline">Xóa</span>
-                                    </button>
-
-                                    <button *ngIf="isUpdate"
-                                            type="submit"
-                                            class="btn btn-info btn-sm"
-                                    >
-                                        <i class="icon-trash"></i>
-                                        <span class="d-none d-md-inline">Sửa</span>
+                                        <span class="d-none d-md-inline">Thêm</span>
                                     </button>
                                 </div>
                             </td>
                         </tr>
-                        </tbody>
-                        <tbody>
-                        <td>
-                            <input
-                                    [formControl]="versionFromGroup.get('name')"
-                                    class="form-control"
-                                    placeholder="Dung tích"
-                            />
-                            <span
-                                    class="text-danger"
-                                    *ngIf="versionFromGroup.get('name').invalid"
-                            >Name invalid</span
-                            >
-                        </td>
-                        <td>
-                            <input
-                                    [formControl]="versionFromGroup.get('total')"
-                                    class="form-control"
-                                    type="number"
-                                    placeholder="Số lượng"
-                            />
-                            <span
-                                    class="text-danger"
-                                    *ngIf="versionFromGroup.get('total').invalid"
-                            >Name invalid</span
-                            >
-                        </td>
-                        <td>
-                            <input
-                                    [formControl]="versionFromGroup.get('price')"
-                                    class="form-control"
-                                    type="number"
-                                    placeholder="Giá"
-                            />
-                            <span
-                                    class="text-danger"
-                                    *ngIf="versionFromGroup.get('price').invalid"
-                            >Name invalid</span
-                            >
-                        </td>
-                        <!--acction-->
-                        <td class="text-center">
-                            <div class="btn-group">
-                                <button
-                                        type="submit"
-                                        (click)="addVersion()"
-                                        [disabled]="versionFromGroup.invalid"
-                                        class="btn btn-primary btn-sm"
-                                >
-                                    <i class="icon-trash"></i>
-                                    <span class="d-none d-md-inline">Thêm</span>
-                                </button>
-                            </div>
-                        </td>
                         </tbody>
                     </table>
                     <div class="col-12">

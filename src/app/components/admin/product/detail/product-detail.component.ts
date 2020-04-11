@@ -45,6 +45,7 @@ export class ProductDetailComponent implements OnInit {
     isNew = true;
     isCustomUri = true;
     versionFromGroup: FormGroup;
+    versionUpdateGroup: FormGroup;
 
     public Editor = ClassicEditor;
 
@@ -71,7 +72,15 @@ export class ProductDetailComponent implements OnInit {
             id: [null],
             name: [''],
             total: [0],
-            price: [0]
+            price: [0],
+            isUpdate: [false]
+        });
+        this.versionUpdateGroup = this.fb.group({
+            id: [null],
+            name: [''],
+            total: [0],
+            price: [0],
+            isUpdate: [false]
         });
         if (!this.isUpdate && !this.isImageSaved) {
             this.imageError = 'Chưa chọn ảnh';
@@ -87,7 +96,10 @@ export class ProductDetailComponent implements OnInit {
         if (this.isUpdate) {
             this.productService.find(this.productId).subscribe(res => {
                 this.product = res.body;
-                this.versions = this.product.versions;
+                this.versions = this.product.versions.map(value => {
+                    value.isUpdate = false;
+                    return value;
+                });
 
                 if (this.product.image != null) {
                     this.imageDefault = SERVER_URL + this.product.image;
@@ -309,6 +321,26 @@ export class ProductDetailComponent implements OnInit {
                 }
             });
         }
+    }
+
+    editVersion(version: Version) {
+        version.name = this.versionUpdateGroup.get('name').value;
+        version.total = this.versionUpdateGroup.get('total').value;
+        version.price = this.versionUpdateGroup.get('price').value;
+        version.isUpdate = false;
+    }
+
+    setUpEditVersion(version: Version) {
+        this.versions.forEach(value => {
+            if (value !== version) {
+                value.isUpdate = false;
+            }
+        });
+        version.isUpdate = true;
+        this.versionUpdateGroup.get('name').setValue(version.name);
+        this.versionUpdateGroup.get('total').setValue(version.total);
+        this.versionUpdateGroup.get('price').setValue(version.price);
+
     }
 
     addVersion() {

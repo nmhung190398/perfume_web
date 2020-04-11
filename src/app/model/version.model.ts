@@ -1,4 +1,4 @@
-import {Product} from "./product.model";
+import {Product} from './product.model';
 
 export class Version {
     id?: number;
@@ -6,4 +6,5 @@ export class Version {
     price?: number;
     total?: number;
     product?: Product;
+    isUpdate?: boolean;
 }
