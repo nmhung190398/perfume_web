@@ -9,4 +9,6 @@ export class Comment {
     isComment?: boolean;
     parenComment?: Comment;
     subContent?: string;
+    status?: number;
+    showSubComment?: boolean;
 }

@@ -67,6 +67,13 @@
                                 <!--acction-->
                                 <td class="text-center">
                                     <div class="btn-group">
+                                        <a [routerLink]="['../../admin/comment/product/' + product.id]"
+                                           type="submit"
+                                           class="btn btn-success btn-sm"
+                                        >
+                                            <i class="icon-pencil"></i>
+                                            <span class="d-none d-md-inline">Bình luận</span>
+                                        </a>
 <!--                                        <button [routerLink]="['edit/' + product.id]"-->
 <!--                                                type="submit"-->
 <!--                                                class="btn btn-success btn-sm">-->

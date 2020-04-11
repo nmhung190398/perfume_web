@@ -38,6 +38,7 @@ import {FragrantComponent} from './fragrant/fragrant.component';
 import {CheckoutComponent} from './checkout/checkout.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import { CouponComponent } from './coupon/coupon.component';
+import { CommentComponent } from './comment/comment.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -73,7 +74,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AmountComponent,
         FragrantComponent,
         CheckoutComponent,
-        CouponComponent
+        CouponComponent,
+        CommentComponent
     ],
     providers: [
         {
