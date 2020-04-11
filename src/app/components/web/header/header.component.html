@@ -22,8 +22,10 @@
                                   class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown"
                                   aria-haspopup="true" aria-expanded="false">{{userLogin.username}}</span>
                         <div *ngIf="userLogin" class="dropdown-menu" aria-labelledby="dropdown05">
-                            <a class="dropdown-item"
+                            <a class="dropdown-item" *ngIf="isManager"
                                [routerLink]="['/admin']">Quản Trị</a>
+                            <a class="dropdown-item" (click)="changeInfo(changeInfoModal)">Đổi thông tin cá nhân</a>
+                            <a class="dropdown-item" (click)="changePassword(changePasswordModal)">Đổi mật khẩu</a>
                             <a class="dropdown-item" (click)="logout()">Logout</a>
                         </div>
 
@@ -65,3 +67,90 @@
     </div>
 </nav>
 <!-- END nav -->
+
+<ng-template #changePasswordModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-comfirm-save-title">Save</h4>
+        <button
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="modal.dismiss('Cross click')"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="changePasswordForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                        </div>
+                        <input formControlName="oldPassworld" type="password" class="form-control"
+                               placeholder="Old password"
+                               autocomplete="new-password" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                        </div>
+                        <input formControlName="password" type="password" class="form-control"
+                               placeholder="New password"
+                               autocomplete="new-password" required>
+                    </div>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                        </div>
+                        <input formControlName="confirmPassword" type="password" class="form-control"
+                               placeholder="Repeat new password" autocomplete="new-password" required>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('save')">
+            Đổi
+        </button>
+        <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="modal.close('Close')"
+        >
+            close
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #changeInfoModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-comfirm-save-title">Save</h4>
+        <button
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="modal.dismiss('Cross click')"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        save
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('save')">
+            save
+        </button>
+        <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="modal.close('Close')"
+        >
+            close
+        </button>
+    </div>
+</ng-template>

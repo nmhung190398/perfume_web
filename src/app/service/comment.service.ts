@@ -1,22 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {SERVER_API_URL} from '../app.constants';
-import {User} from '../model/user';
+import {Comment} from '../model/comment.model';
 import {Observable} from 'rxjs';
 import {createRequestOption} from '../utils/request.utils';
-import {IPaging, ResponseMsg} from '../model/base-respone.model';
+import {IPaging} from '../model/base-respone.model';
+import {Product} from '../model/product.model';
 
-type EntityResponseType = HttpResponse<User>;
-type EntityArrayResponseType = HttpResponse<User[]>;
+type EntityResponseType = HttpResponse<Comment>;
+type EntityArrayResponseType = HttpResponse<Comment[]>;
 
 interface PagingResponse {
-    data: User[];
+    data: Comment[];
     paging: IPaging;
 }
 
 @Injectable({providedIn: 'root'})
-export class UserService {
-    public resourceUrl = SERVER_API_URL + '/user';
+export class CommentService {
+    public resourceUrl = SERVER_API_URL + '/comment';
 
     constructor(private http: HttpClient) {
     }
@@ -32,13 +33,18 @@ export class UserService {
             filter = {};
         }
         return this.http
-            .post<User[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
+            .post<Comment[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
     }
 
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<User>(`${this.resourceUrl}/${id}`, {observe: 'response'});
+            .get<Comment>(`${this.resourceUrl}/${id}`, {observe: 'response'});
+    }
+
+    findByPostId(type: string, postId: number, paging: IPaging): Observable<HttpResponse<PagingResponse>> {
+        return this.http
+            .get<PagingResponse>(`${this.resourceUrl}/${type}/${postId}/${paging.page}/${paging.limit}`, {observe: 'response'});
     }
 
     filter(paging: IPaging, filter: any): Observable<HttpResponse<PagingResponse>> {
@@ -50,25 +56,16 @@ export class UserService {
     }
 
 
-    create(user: User): Observable<HttpResponse<any>> {
+    create(comment: Comment): Observable<HttpResponse<any>> {
         return this.http
-            .post<any>(this.resourceUrl, user, {observe: 'response'});
+            .post<any>(this.resourceUrl, comment, {observe: 'response'});
     }
 
-    update(user: User): Observable<HttpResponse<ResponseMsg>> {
+    update(comment: Comment): Observable<HttpResponse<any>> {
         return this.http
-            .put<ResponseMsg>(`${this.resourceUrl}/${user.id}`, user, {observe: 'response'});
+            .put<any>(`${this.resourceUrl}/${comment.id}`, comment, {observe: 'response'});
     }
 
-    changeUserLogin(user: User): Observable<HttpResponse<ResponseMsg>> {
-        return this.http
-            .put<ResponseMsg>(`${SERVER_API_URL}/change-user-login`, user, {observe: 'response'});
-    }
-
-    changePassword(user: User): Observable<HttpResponse<ResponseMsg>> {
-        return this.http
-            .put<ResponseMsg>(`${SERVER_API_URL}/change-password`, user, {observe: 'response'});
-    }
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }

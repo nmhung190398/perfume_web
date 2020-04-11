@@ -11,7 +11,7 @@ import {WebComponent} from "./web.component";
 import {DetailProductComponent} from "./detail-product/detail-product.component";
 import {CONSTANT_PATH} from './../../comom/constant/base.constant';
 import {CheckoutComponent} from "./checkout/checkout.component";
-import {RegisterComponent} from "../admin/register/register.component";
+import {RegisterComponent} from "../web/register/register.component";
 import {BlogComponent} from "./blog/blog.component";
 import {ContactComponent} from "./contact/contact.component";
 import {PermissionComponent} from "./permission/permission.component";

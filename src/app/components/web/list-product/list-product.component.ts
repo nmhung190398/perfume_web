@@ -19,6 +19,7 @@ export class ListProductComponent implements OnInit {
     categoryCode;
     products: Array<Product>;
     SERVER_URL = SERVER_URL;
+    quantity = 1;
     filterProduct: ProductSearch = {};
 
     constructor(
@@ -28,12 +29,18 @@ export class ListProductComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private router: Router,
     ) {
-        this.categoryCode = this.activatedRoute.snapshot.paramMap.get('category');
-        this.paging = new Paging();
+        // this.categoryCode = this.activatedRoute.snapshot.paramMap.get('category');
+
+
+        this.activatedRoute.paramMap.subscribe(param => {
+            this.categoryCode = param.get('category');
+            this.paging = new Paging();
+            this.loadAll();
+        });
     }
 
     ngOnInit(): void {
-        this.loadAll();
+
     }
 
     addCartItem(idVersion, buyNow = false) {
@@ -79,4 +86,6 @@ export class ListProductComponent implements OnInit {
         this.filterProduct = $event;
         this.loadAll();
     }
+
+
 }

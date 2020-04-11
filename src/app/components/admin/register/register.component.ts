@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {UserService} from '../../../service/user.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: 'register.component.html'
+    selector: 'app-dashboard',
+    templateUrl: 'register.component.html'
 })
-export class RegisterComponent {
+export class RegisterComponent{
 
-  constructor() { }
+    constructor(private userService: UserService) {
+
+    }
 
 }
