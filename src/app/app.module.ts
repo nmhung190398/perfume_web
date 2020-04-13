@@ -9,12 +9,13 @@ import {ErrorInterceptor} from './interceptor/error.interceptor';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtInterceptor} from './interceptor/jwt.interceptor';
 import {Ng5SliderModule} from 'ng5-slider';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
-import {BrowserModule} from "@angular/platform-browser";
-import {CommonModule} from "@angular/common";
-import {AlertService} from "./service/alert.service";
-import {AlertComponent} from "./components/alert/alert.component";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
+import {AlertService} from './service/alert.service';
+import {AlertComponent} from './components/alert/alert.component';
+
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {AlertComponent} from "./components/alert/alert.component";
         StoreModule.forRoot({count: counterReducer}),
         HttpClientModule,
         AppRoutingModule,
+
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

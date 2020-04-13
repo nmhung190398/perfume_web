@@ -37,8 +37,11 @@ import {AmountComponent} from './amount/amount.component';
 import {FragrantComponent} from './fragrant/fragrant.component';
 import {CheckoutComponent} from './checkout/checkout.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import { CouponComponent } from './coupon/coupon.component';
-import { CommentComponent } from './comment/comment.component';
+import {CouponComponent} from './coupon/coupon.component';
+import {CommentComponent} from './comment/comment.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -63,7 +66,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FormsModule,
         CollapseModule,
         NgbButtonsModule,
-        CKEditorModule
+        CKEditorModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
     ],
     declarations: [
         AdminLayoutComponent,

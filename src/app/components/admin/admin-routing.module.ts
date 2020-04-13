@@ -9,6 +9,7 @@ import {CheckoutComponent} from './checkout/checkout.component';
 import {FragrantComponent} from './fragrant/fragrant.component';
 import {AmountComponent} from './amount/amount.component';
 import {CommentComponent} from './comment/comment.component';
+import {CouponComponent} from './coupon/coupon.component';
 
 const routes: Routes = [
     {
@@ -42,6 +43,10 @@ const routes: Routes = [
             {
                 path: 'amount',
                 component: AmountComponent
+            },
+            {
+                path: 'coupon',
+                component: CouponComponent
             },
             {
                 path: 'checkout/:status',
