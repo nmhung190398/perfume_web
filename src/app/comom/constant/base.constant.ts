@@ -33,6 +33,13 @@ export const CONSTANT_PATH = {
     HOME: 'home'
 };
 
+export const ROLE = {
+    USER: 'USER',
+    EMPLOYEE: 'EMPLOYEE',
+    ADMIN: 'ADMIN'
+};
+
+
 export const HIGHLIGHT = {
     HOT: 'HOT',
     NEW: 'NEW'

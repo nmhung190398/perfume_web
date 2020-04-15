@@ -41,6 +41,8 @@ import {CouponComponent} from './coupon/coupon.component';
 import {CommentComponent} from './comment/comment.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { UserComponent } from './user/user.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -80,7 +82,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FragrantComponent,
         CheckoutComponent,
         CouponComponent,
-        CommentComponent
+        CommentComponent,
+        UserComponent,
+        UserDetailComponent
     ],
     providers: [
         {

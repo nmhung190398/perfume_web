@@ -138,7 +138,7 @@
                         <div class="cart-detail cart-total bg-light p-3 p-md-4">
                             <h3 class="billing-heading mb-4">Cart Total</h3>
                             <div class="d-flex">
-                                <input type="text" class="form-control" placeholder="Coupon" formControlName="coupon">
+                                <input type="text" class="form-control" placeholder="Coupon" [formControl]="checkoutForm.get('coupon')">
                             </div>
                             <p class="d-flex mt-3">
                                 <span>Subtotal</span>

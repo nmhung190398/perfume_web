@@ -9,8 +9,9 @@ import {SERVER_API_URL, SERVER_URL} from '../../../app.constants';
 import {District, Province, Ward} from '../../../model/address.model';
 import {AddressService} from '../../../service/address.service';
 import validate = WebAssembly.validate;
-import {CheckoutService} from "../../../service/checkout.service";
-import {PAYMENT_METHOD} from "../../../comom/constant/checkout.constant";
+import {CheckoutService} from '../../../service/checkout.service';
+import {PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
+import {Checkout} from '../../../model/checkout.model';
 
 @Component({
     selector: 'app-cart',
@@ -122,10 +123,20 @@ export class CartComponent implements OnInit {
 
     addCheckout() {
         console.log(this.checkoutForm.value);
-        this.checkoutService.create(this.checkoutForm.value).subscribe(res => {
+        const codeCoupon = this.checkoutForm.get('coupon').value;
+        const checkout: Checkout = this.checkoutForm.value;
+        if (codeCoupon) {
+            checkout.coupon = {
+                code: codeCoupon
+            };
+        } else {
+            checkout.coupon = null;
+        }
+        console.log(checkout);
+        this.checkoutService.create(checkout).subscribe(res => {
             console.log(res.body);
             if (res.body.status === 200) {
-                alert("Thành công! Vui lòng check mail ");
+                alert('Thành công! Vui lòng check mail ');
                 this.loadAll();
             } else {
                 alert(res.body.msg);

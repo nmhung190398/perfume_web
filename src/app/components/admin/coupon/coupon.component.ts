@@ -114,7 +114,7 @@ export class CouponComponent implements OnInit {
     //   const parameters = {
     //     offset: this.paging.offset - 1,
     //     limit: this.paging.limit
-    //   }
+    //   }`
     //   if (this.order.orderBy) {
     //     parameters['orderBy'] = this.order.orderBy;
     //     parameters['orderType'] = this.order.getOrderType();

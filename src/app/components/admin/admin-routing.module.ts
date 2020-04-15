@@ -10,6 +10,8 @@ import {FragrantComponent} from './fragrant/fragrant.component';
 import {AmountComponent} from './amount/amount.component';
 import {CommentComponent} from './comment/comment.component';
 import {CouponComponent} from './coupon/coupon.component';
+import {UserComponent} from './user/user.component';
+import {UserDetailComponent} from './user/user-detail/user-detail.component';
 
 const routes: Routes = [
     {
@@ -23,6 +25,14 @@ const routes: Routes = [
             {
                 path: 'product',
                 component: ProductListComponent
+            },
+            {
+                path: 'user',
+                component: UserComponent
+            },
+            {
+                path: 'user/edit/:id',
+                component: UserDetailComponent
             },
             {
                 path: 'product/add',
