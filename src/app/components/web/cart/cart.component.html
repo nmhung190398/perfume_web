@@ -25,137 +25,109 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-center">
-                            <td class="product-remove"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                        <tr class="text-center" *ngFor="let cartItem of cartItems">
+                            <td class="product-remove"><a (click)="removeCartItem(cartItem.id)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 
-                            <td class="image-prod"><div class="img" style="background-image:url(assets/images/product-3.jpg);"></div></td>
+                            <td class="image-prod"><div class="img" [style.background]="getUrlBackground(cartItem.version.product?.image)"></div></td>
 
                             <td class="product-name">
-                                <h3>Nike Free RN 2019 iD</h3>
-                                <p>Far far away, behind the word mountains, far from the countries</p>
+                                <h3>{{cartItem.version.product?.name}}</h3>
+                                <p> Phien ban {{cartItem.version.name}} </p>
                             </td>
 
-                            <td class="price">$4.90</td>
+                            <td class="price">{{cartItem.version.price}} VND</td>
 
                             <td class="quantity">
                                 <div class="input-group mb-3">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                    <input [(ngModel)]="cartItem.quantity" type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
                                 </div>
                             </td>
 
-                            <td class="total">$4.90</td>
+                            <td class="total">{{cartItem.version.price * cartItem.quantity}} VND</td>
                         </tr><!-- END TR-->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-<!--        <div class="row justify-content-start">-->
-<!--            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate fadeInUp ftco-animated">-->
-<!--                <div class="cart-total mb-3">-->
-<!--                    <h3>Cart Totals</h3>-->
-<!--                    <p class="d-flex">-->
-<!--                        <span>Subtotal</span>-->
-<!--                        <span>$20.60</span>-->
-<!--                    </p>-->
-<!--                    <p class="d-flex">-->
-<!--                        <span>Delivery</span>-->
-<!--                        <span>$0.00</span>-->
-<!--                    </p>-->
-<!--                    <p class="d-flex">-->
-<!--                        <span>Discount</span>-->
-<!--                        <span>$3.00</span>-->
-<!--                    </p>-->
-<!--                    <hr>-->
-<!--                    <p class="d-flex total-price">-->
-<!--                        <span>Total</span>-->
-<!--                        <span>$17.60</span>-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--                <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="row justify-content-center mt-5 ">
+        <div *ngIf="cartItems.length > 0" class="row justify-content-center mt-5 ">
             <div class="col-xl-10 ftco-animate fadeInUp ftco-animated">
-                <form [formControl]="checkoutForm" class="billing-form">
+                <form [formGroup]="checkoutForm" class="billing-form">
                     <h3 class="mb-4 billing-heading">Billing Details</h3>
                     <div class="row align-items-end">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="firstname">Firt Name</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <label>Firt Name</label>
+                                <input type="text" class="form-control" placeholder="Firt Name" formControlName="firstname">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="lastname">Last Name</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <label >Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastname">
                             </div>
                         </div>
                         <div class="w-100"></div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="country">State / Country</label>
+                                <label >Province</label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                    <select name="" id="" class="form-control">
-                                        <option value="">France</option>
-                                        <option value="">Italy</option>
-                                        <option value="">Philippines</option>
-                                        <option value="">South Korea</option>
-                                        <option value="">Hongkong</option>
-                                        <option value="">Japan</option>
+                                    <select class="form-control" formControlName="provinceId" (change)="loadDistricts()">
+                                        <option [value]="null" selected disabled>Province</option>
+                                        <option *ngFor="let province of provinces" [value]="province.id">{{province.name}}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="w-100"></div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="streetaddress">Street Address</label>
-                                <input type="text" class="form-control" placeholder="House number and street name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
-                            </div>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="towncity">Town / City</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="postcodezip">Postcode / ZIP *</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="emailaddress">Email Address</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div class="w-100"></div>
+
                         <div class="col-md-12">
-                            <div class="form-group mt-4">
-                                <div class="radio">
-                                    <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-                                    <label><input type="radio" name="optradio"> Ship to different address</label>
+                            <div class="form-group">
+                                <label >Province</label>
+                                <div class="select-wrap">
+                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select class="form-control" formControlName="districtId" (change)="loadWards()">
+                                        <option [value]="null" selected disabled>District</option>
+                                        <option *ngFor="let district of districts" [value]="district.id">{{district.prefix}} {{district.name}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label >Province</label>
+                                <div class="select-wrap">
+                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select class="form-control" formControlName="wardId" >
+                                        <option [value]="null" selected disabled>Ward</option>
+                                        <option *ngFor="let ward of wards" [value]="ward.id">{{ward.prefix}} {{ward.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-100"></div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Street Address</label>
+                                <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label >Phone</label>
+                                <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="text" class="form-control" placeholder="Email" formControlName="email">
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
                     </div>
                 </form><!-- END -->
 
@@ -165,57 +137,42 @@
                     <div class="col-md-6 d-flex">
                         <div class="cart-detail cart-total bg-light p-3 p-md-4">
                             <h3 class="billing-heading mb-4">Cart Total</h3>
-                            <p class="d-flex">
+                            <div class="d-flex">
+                                <input type="text" class="form-control" placeholder="Coupon" [formControl]="checkoutForm.get('coupon')">
+                            </div>
+                            <p class="d-flex mt-3">
                                 <span>Subtotal</span>
-                                <span>$20.60</span>
+                                <span>{{subtotal}} VNĐ</span>
                             </p>
                             <p class="d-flex">
                                 <span>Delivery</span>
-                                <span>$0.00</span>
+                                <span>0 VNĐ</span>
                             </p>
                             <p class="d-flex">
                                 <span>Discount</span>
-                                <span>$3.00</span>
+                                <span></span>
                             </p>
                             <hr>
                             <p class="d-flex total-price">
                                 <span>Total</span>
-                                <span>$17.60</span>
+                                <span>{{total}} VNĐ</span>
                             </p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="cart-detail bg-light p-3 p-md-4">
                             <h3 class="billing-heading mb-4">Payment Method</h3>
-                            <div class="form-group">
+                            <div class="form-group" *ngFor="let key of objectKeys(PAYMENT_METHOD)">
                                 <div class="col-md-12">
                                     <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
+                                        <label><input type="radio"
+                                                      [value]="PAYMENT_METHOD[key].value" name="optradio" class="mr-2"
+                                                        [formControl]="checkoutForm.get('paymentMethod')"
+                                        >{{PAYMENT_METHOD[key].label}}</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="radio">
-                                        <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
+                            <p><a (click)="addCheckout()" class="btn btn-primary py-3 px-4">Place an order</a></p>
                         </div>
                     </div>
                 </div>

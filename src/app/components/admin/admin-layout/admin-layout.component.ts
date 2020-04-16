@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {INavData} from '@coreui/angular';
 
 @Component({
@@ -10,11 +10,15 @@ export class AdminLayoutComponent {
     public sidebarMinimized = false;
     public navItems = navItems;
 
+    constructor(private elRef: ElementRef) {
+        const tmp = this.elRef.nativeElement.querySelector('link[tag="web"]');
+        console.log(tmp);
+    }
+
     toggleMinimize(e) {
         this.sidebarMinimized = e;
     }
 }
-
 
 export const navItems: INavData[] = [
     {
@@ -25,6 +29,64 @@ export const navItems: INavData[] = [
             variant: 'info',
             text: 'NEW'
         }
+    },
+    {
+        title: true,
+        name: 'Admin'
+    },
+    {
+        name: 'Mã Giảm Giá',
+        url: '/admin/coupon',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Thẻ loại',
+        url: '/admin/category',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Nhà sản xuất',
+        url: '/admin/producer',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Sản phẩm',
+        url: '/admin/product',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Nồng độ',
+        url: '/admin/amount',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Mùi hương',
+        url: '/admin/fragrant',
+        icon: 'icon-phone'
+    },
+    {
+        title: true,
+        name: 'Đơn Hàng'
+    },
+    {
+        name: 'Đơn Mới',
+        url: '/admin/checkout/active',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Đang Vận Chuyển',
+        url: '/admin/checkout/delivery',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Hoàn Thành',
+        url: '/admin/checkout/done',
+        icon: 'icon-phone'
+    },
+    {
+        name: 'Hủy',
+        url: '/admin/checkout/deleted',
+        icon: 'icon-phone'
     },
     {
         title: true,
@@ -73,7 +135,6 @@ export const navItems: INavData[] = [
                 name: 'Navbars',
                 url: '/admin/base/navbars',
                 icon: 'icon-puzzle'
-
             },
             {
                 name: 'Pagination',
@@ -210,7 +271,7 @@ export const navItems: INavData[] = [
     },
     {
         title: true,
-        name: 'Extras',
+        name: 'Extras'
     },
     {
         name: 'Pages',
@@ -247,7 +308,7 @@ export const navItems: INavData[] = [
             variant: 'secondary',
             text: 'NEW'
         },
-        attributes: {disabled: true},
+        attributes: {disabled: true}
     },
     {
         name: 'Download CoreUI',
@@ -265,4 +326,3 @@ export const navItems: INavData[] = [
         attributes: {target: '_blank', rel: 'noopener'}
     }
 ];
-

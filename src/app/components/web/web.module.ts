@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {HomeComponent} from "./home/home.component";
+import {HomeWebComponent} from "./home/home-web.component";
 import {WebRoutingModule} from "./web-routing.module";
 import {Ng5SliderModule} from "ng5-slider";
 import {NgbCarousel, NgbCarouselModule, NgbModule, NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
@@ -17,11 +17,13 @@ import {CheckoutComponent} from "./checkout/checkout.component";
 import {LoginComponent} from "./login/login.component";
 import {AlertComponent} from "../alert/alert.component";
 import {FilterComponent} from "./list-product/filter/filter.component";
-import { BlogComponent } from './blog/blog.component';
-import { RegisterComponent } from './register/register.component';
-import { ContactComponent } from './contact/contact.component';
-import { BlogSingleComponent } from './blog-single/blog-single.component';
+import {BlogComponent} from './blog/blog.component';
+import {RegisterComponent} from './register/register.component';
+import {ContactComponent} from './contact/contact.component';
+import {BlogSingleComponent} from './blog-single/blog-single.component';
 import {CollapseModule} from "ngx-bootstrap";
+import {PermissionComponentComponent} from './permission-component/permission-component.component';
+import {PermissionComponent} from './permission/permission.component';
 
 
 @NgModule({
@@ -53,8 +55,11 @@ import {CollapseModule} from "ngx-bootstrap";
         RegisterComponent,
         ContactComponent,
         BlogSingleComponent,
+        PermissionComponentComponent,
+        PermissionComponent,
+        HomeWebComponent
     ],
-    exports: [],
+    exports: [FilterComponent],
     bootstrap: []
 })
 export class WebModule {

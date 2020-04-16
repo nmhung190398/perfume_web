@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from "./home/home.component";
+import {HomeWebComponent} from "./home/home-web.component";
 import {AboutComponent} from "./about/about.component";
 import {AuthGuard} from "../../comom/auth/auth.guard";
 import {CartComponent} from "./cart/cart.component";
@@ -11,9 +11,10 @@ import {WebComponent} from "./web.component";
 import {DetailProductComponent} from "./detail-product/detail-product.component";
 import {CONSTANT_PATH} from './../../comom/constant/base.constant';
 import {CheckoutComponent} from "./checkout/checkout.component";
-import {RegisterComponent} from "../admin/register/register.component";
+import {RegisterComponent} from "../web/register/register.component";
 import {BlogComponent} from "./blog/blog.component";
 import {ContactComponent} from "./contact/contact.component";
+import {PermissionComponent} from "./permission/permission.component";
 
 const routes: Routes = [
 
@@ -23,7 +24,7 @@ const routes: Routes = [
         children: [
             {
                 path: CONSTANT_PATH.HOME,
-                component: HomeComponent,
+                component: HomeWebComponent,
 
             },
             {
@@ -72,6 +73,10 @@ const routes: Routes = [
             {
                 path: '404',
                 component: NotFoundComponent
+            },
+            {
+                path: '403',
+                component: PermissionComponent
             },
             {
                 path: '**',
