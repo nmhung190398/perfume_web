@@ -6,6 +6,7 @@ import {CART_ITEM, SERVER_API_URL, USER_LOGIN} from '../app.constants';
 import {AuthModel} from '../model/auth.model';
 import {CartService} from './cart.service';
 import {ResponseMsg} from '../model/base-respone.model';
+import {createRequestOption} from '../utils/request.utils';
 
 
 @Injectable({providedIn: 'root'})
@@ -64,6 +65,12 @@ export class AuthenticationService {
             });
         }
         return false;
+    }
+
+    getAllRole(req?: any): Observable<HttpResponse<any>> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<any>(`${SERVER_API_URL}/roles`, {params: options, observe: 'response'});
     }
 
 

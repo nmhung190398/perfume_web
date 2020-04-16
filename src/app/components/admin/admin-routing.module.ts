@@ -12,6 +12,8 @@ import {CommentComponent} from './comment/comment.component';
 import {CouponComponent} from './coupon/coupon.component';
 import {UserComponent} from './user/user.component';
 import {UserDetailComponent} from './user/user-detail/user-detail.component';
+import {AuthManagerGuard} from '../../comom/auth/authManager.guard';
+import {AuthAdminGuard} from '../../comom/auth/authAdmin.guard';
 
 const routes: Routes = [
     {
@@ -28,11 +30,13 @@ const routes: Routes = [
             },
             {
                 path: 'user',
-                component: UserComponent
+                component: UserComponent,
+                canActivate: [AuthAdminGuard]
             },
             {
                 path: 'user/edit/:id',
-                component: UserDetailComponent
+                component: UserDetailComponent,
+                canActivate: [AuthAdminGuard]
             },
             {
                 path: 'product/add',

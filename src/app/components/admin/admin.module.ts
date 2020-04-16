@@ -43,6 +43,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -71,6 +72,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CKEditorModule,
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
+        NgMultiSelectDropDownModule.forRoot()
     ],
     declarations: [
         AdminLayoutComponent,

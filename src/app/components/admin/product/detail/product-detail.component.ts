@@ -31,10 +31,12 @@ export class ProductDetailComponent implements OnInit {
     isUpdate: boolean;
     productFormGroup: FormGroup;
     product: Product;
+
     imageDefault = 'assets/images/upload-file.png';
     imageError: string;
     isImageSaved: boolean;
     cardImageBase64: string;
+
     categories: Array<Category>;
     producers: Array<Producer>;
     targets: Array<Target>;

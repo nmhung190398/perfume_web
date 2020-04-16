@@ -15,7 +15,8 @@
                             <select (change)="changeLimit()" [(ngModel)]="paging.limit" class="form-control float-left"
                                     style="max-width: 70px" [disabled]="!isAcction">
                                 <option *ngFor="let limitElement of limits"
-                                        value="{{limitElement.value}}">{{limitElement.label}}</option>
+                                        value="{{limitElement.value}}">{{limitElement.label}}
+                                </option>
                             </select>
                         </div>
                         <div class="col-2 float-right">
@@ -40,7 +41,16 @@
                             </th>
 
                             <th class="text-center">
-                                Đường dẫn
+                                Họ tên
+                            </th>
+                            <th class="text-center">
+                                Đỉa chỉ
+                            </th>
+                            <th class="text-center">
+                                Số điện thoại
+                            </th>
+                            <th class="text-center">
+                                Quyền
                             </th>
                             <th class="text-center" style="width: 200px">
                                 Acction
@@ -62,6 +72,19 @@
                                       <span>
                                          {{user.lastname}} {{user.firstname}}
                                       </span>
+                                </td>
+                                <td>
+                                      <span>
+                                         {{user.address}}
+                                      </span>
+                                </td>
+                                <td>
+                                      <span>
+                                         {{user.phone}}
+                                      </span>
+                                </td>
+                                <td>
+                                      <span *ngFor="let role of user.roles">{{role.name}}</span>
                                 </td>
 
                                 <!--acction-->

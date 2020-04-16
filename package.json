@@ -37,6 +37,7 @@
     "font-awesome": "^4.7.0",
     "moment": "^2.24.0",
     "mutationobserver-shim": "^0.3.3",
+    "ng-multiselect-dropdown": "^0.2.10",
     "ng-pick-datetime": "^7.0.0",
     "ng2-charts": "^2.3.0",
     "ng5-slider": "^1.2.3",

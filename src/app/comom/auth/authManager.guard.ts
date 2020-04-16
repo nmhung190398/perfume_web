@@ -4,7 +4,7 @@ import {AuthenticationService} from '../../service/authentication.service';
 
 
 @Injectable({providedIn: 'root'})
-export class AuthAdminGuard implements CanActivate {
+export class AuthManagerGuard implements CanActivate {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService
@@ -16,7 +16,7 @@ export class AuthAdminGuard implements CanActivate {
         if (currentUser) {
             // authorised so return true
             const tmp = currentUser.user.roles.some(role => {
-                if (role.name === "ROLE_ADMIN") {
+                if (role.name === "ROLE_ADMIN" || role.name === "ROLE_EMPLOYEE") {
                     return true;
                 }
 
