@@ -53,15 +53,15 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-4 col-form-label">email</label>
+                                            <label class="col-4 col-form-label">Email</label>
                                             <div class="col-8">
                                                 <input placeholder="email" class="form-control" [formControl]="userFormGroup.get('email')" />
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-4 col-form-label">phone</label>
+                                            <label class="col-4 col-form-label">Nick name</label>
                                             <div class="col-8">
-                                                <input placeholder="phone" class="form-control" [formControl]="userFormGroup.get('phone')" />
+                                                <input placeholder="username" class="form-control" [formControl]="userFormGroup.get('username')" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -73,7 +73,7 @@
                                         <div class="row">
                                             <label class="col-4 col-form-label">Số điện thoại</label>
                                             <div class="col-8">
-                                                0964119569
+                                                <input placeholder="phone" class="form-control" [formControl]="userFormGroup.get('phone')" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -89,6 +89,19 @@
                                                 >
                                                 </ng-multiselect-dropdown>
                                             </div>
+                                        </div>
+                                        <div class="card-footer" style="text-align: right">
+                                            <button
+                                                    *ngIf="isSave()"
+                                                    (click)="save()"
+                                                    type="submit"
+                                                    class="btn btn-sm btn-primary"
+                                            >
+                                                <i class="fa fa-dot-circle-o"></i> Submit
+                                            </button>
+                                            <button type="reset" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-ban"></i> Reset
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -21,6 +21,11 @@ const routes: Routes = [
         component: AdminLayoutComponent,
         children: [
             {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full'
+            },
+            {
                 path: 'category',
                 component: CategoryComponent
             },
@@ -31,6 +36,11 @@ const routes: Routes = [
             {
                 path: 'user',
                 component: UserComponent,
+                canActivate: [AuthAdminGuard]
+            },
+            {
+                path: 'user/add',
+                component: UserDetailComponent,
                 canActivate: [AuthAdminGuard]
             },
             {

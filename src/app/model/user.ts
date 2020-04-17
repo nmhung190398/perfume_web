@@ -9,4 +9,5 @@ export class User {
     phone?: string;
     token?: string;
     roles?: Array<any>;
+    image?: string;
 }

@@ -86,9 +86,12 @@ export class HeaderComponent implements OnInit {
             .result.then(result => {
             if (result === 'save') {
                 this.userService.changePassword(this.changePasswordForm.value).subscribe(res => {
-                    if (res.status === 200) {
-                        console.log(res.body.msg);
+                    if (res.body.status === 200) {
+                        alert('Success');
+                    } else {
+                        alert(res.body['msg']);
                     }
+                    this.changePasswordForm.reset();
                 });
             }
         });

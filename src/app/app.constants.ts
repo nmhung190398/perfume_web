@@ -7,3 +7,4 @@ export const SERVER_API_URL = environment.SERVER_URL + '/api';
 export const SERVER_URL = environment.SERVER_URL;
 export const USER_LOGIN = 'USER_LOGIN';
 export const CART_ITEM = 'CART_ITEM';
+export const DEFAULTPASSWORD = '123456';
