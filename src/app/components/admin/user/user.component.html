@@ -84,7 +84,7 @@
                                       </span>
                                 </td>
                                 <td>
-                                      <span *ngFor="let role of user.roles">{{role.name}}</span>
+                                      <span *ngFor="let role of user.roles">{{role.name}}&nbsp;&nbsp;&nbsp;</span>
                                 </td>
 
                                 <!--acction-->
@@ -97,7 +97,7 @@
                                             <i class="icon-pencil"></i>
                                             <span class="d-none d-md-inline">Bình luận</span>
                                         </a>
-                                        <button [routerLink]="['edit/' + user.id]"
+                                        <button [routerLink]="['edit/' + user.username]"
                                                 type="submit"
                                                 class="btn btn-info btn-sm">
                                             <i class="icon-pencil"></i>

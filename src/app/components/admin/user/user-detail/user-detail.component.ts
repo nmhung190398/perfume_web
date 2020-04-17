@@ -6,7 +6,8 @@ import {AuthenticationService} from '../../../../service/authentication.service'
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../../../model/user';
+import { User } from '../../../../model/user';
+import {SERVER_URL, DEFAULTPASSWORD} from '../../../../app.constants';
 
 @Component({
     selector: 'app-user-detail',
@@ -36,7 +37,7 @@ export class UserDetailComponent implements OnInit {
 
 
     userFormGroup: FormGroup;
-    userEdit: User;
+    userEdit: User = null;
     isUpdate = false;
 
 
@@ -61,6 +62,9 @@ export class UserDetailComponent implements OnInit {
         const userFiltet: User = {
             username: username
         };
+        if (!username) {
+            return;
+        }
         this.userService.filterAll(userFiltet).subscribe(res => {
             if (res.body.length > 0) {
                 this.userEdit = res.body[0];
@@ -69,21 +73,24 @@ export class UserDetailComponent implements OnInit {
             if (this.userEdit != null) {
                 this.selectedItems = this.userEdit.roles;
                 this.addValueInForm();
+                this.imageDefault = SERVER_URL + this.userEdit.image;
             } else {
-                this.router.navigate(['404']);
+                // this.router.navigate(['404']);
             }
         });
     }
 
     addValueInForm() {
         this.userFormGroup.setValue({
+            id: this.userEdit.id,
             username: this.userEdit.username,
             firstname: this.userEdit.firstname,
             lastname: this.userEdit.lastname,
             password: this.userEdit.password,
             email: this.userEdit.email,
             phone: this.userEdit.phone,
-            address: this.userEdit.address
+            address: this.userEdit.address,
+            imageBase64: this.userEdit.image
         });
     }
 
@@ -93,7 +100,7 @@ export class UserDetailComponent implements OnInit {
             username: [null, [Validators.required]],
             firstname: [null, [Validators.required]],
             lastname: [null, [Validators.required]],
-            password: [null, [Validators.required]],
+            password: [],
             email: [null, [Validators.required]],
             phone: [null, [Validators.required]],
             address: [null, [Validators.required]],
@@ -101,6 +108,48 @@ export class UserDetailComponent implements OnInit {
         });
     }
 
+    isSave() {
+        const tmp =
+            !this.userFormGroup.invalid &&
+            (this.isUpdate ? true : this.isImageSaved);
+        return tmp;
+    }
+
+    save() {
+        const tmp: User = this.userFormGroup.value;
+        tmp.roles = this.selectedItems;
+        if (this.isImageSaved) {
+            tmp.image = this.cardImageBase64;
+        }
+        console.log(tmp);
+        if (this.isUpdate) {
+            this.userService.update(tmp).subscribe(res => {
+                if (res.status === 200) {
+                    window.location.reload();
+                } else {
+                    alert('eror');
+                }
+            });
+        } else {
+            this.userService.filterAll({ username: tmp.username }).subscribe(resCode => {
+                if (resCode.body['status'] === 200) {
+                    alert('Đã tồn tại username ');
+                } else {
+                    tmp.password = DEFAULTPASSWORD;
+                    this.userService.create(tmp).subscribe(res => {
+                        if (res.status === 200) {
+                            console.log(res.body);
+                            //chuyển hướng
+                            this.router.navigate(['/admin/user']);
+                        } else {
+                            alert('eror');
+                            console.log('error');
+                        }
+                    });
+                }
+            });
+        }
+    }
 
     ngOnInit(): void {
 
@@ -169,11 +218,12 @@ export class UserDetailComponent implements OnInit {
     }
 
     onItemSelect($event) {
-        console.log($event);
+        console.log(this.selectedItems);
     }
 
     onSelectAll($event) {
-        console.log($event);
+        this.selectedItems = $event;
+        console.log(this.selectedItems);
     }
 
 }
