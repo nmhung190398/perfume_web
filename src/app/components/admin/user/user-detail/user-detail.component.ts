@@ -6,7 +6,7 @@ import {AuthenticationService} from '../../../../service/authentication.service'
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { User } from '../../../../model/user';
+import {User} from '../../../../model/user';
 import {SERVER_URL, DEFAULTPASSWORD} from '../../../../app.constants';
 
 @Component({
@@ -131,18 +131,19 @@ export class UserDetailComponent implements OnInit {
                 }
             });
         } else {
-            this.userService.filterAll({ username: tmp.username }).subscribe(resCode => {
+            this.userService.filterAll({username: tmp.username}).subscribe(resCode => {
                 if (resCode.body['status'] === 200) {
                     alert('Đã tồn tại username ');
                 } else {
                     tmp.password = DEFAULTPASSWORD;
+                    console.log(tmp);
                     this.userService.create(tmp).subscribe(res => {
-                        if (res.status === 200) {
+                        if (res.body.status === 200) {
                             console.log(res.body);
                             //chuyển hướng
                             this.router.navigate(['/admin/user']);
                         } else {
-                            alert('eror');
+                            alert(res.body.msg);
                             console.log('error');
                         }
                     });
