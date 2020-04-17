@@ -44,6 +44,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { NewsComponent } from './news/news.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -86,7 +88,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CouponComponent,
         CommentComponent,
         UserComponent,
-        UserDetailComponent
+        UserDetailComponent,
+        NewsComponent,
+        NewsDetailComponent
     ],
     providers: [
         {

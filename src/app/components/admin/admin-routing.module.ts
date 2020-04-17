@@ -14,6 +14,7 @@ import {UserComponent} from './user/user.component';
 import {UserDetailComponent} from './user/user-detail/user-detail.component';
 import {AuthManagerGuard} from '../../comom/auth/authManager.guard';
 import {AuthAdminGuard} from '../../comom/auth/authAdmin.guard';
+import {NewsComponent} from './news/news.component';
 
 const routes: Routes = [
     {
@@ -32,6 +33,10 @@ const routes: Routes = [
                 path: 'user',
                 component: UserComponent,
                 canActivate: [AuthAdminGuard]
+            },
+            {
+                path: 'news',
+                component: NewsComponent,
             },
             {
                 path: 'user/edit/:id',
