@@ -1,3 +1,5 @@
+import {User} from './user';
+
 export class Comment {
     id?: number;
     createdAt?: Date;
@@ -11,4 +13,5 @@ export class Comment {
     subContent?: string;
     status?: number;
     showSubComment?: boolean;
+    user?: User;
 }

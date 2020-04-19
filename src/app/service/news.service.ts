@@ -36,7 +36,7 @@ export class NewsService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<News>(`${this.resourceUrl}/id/${id}`, {
+        return this.http.get<News>(`${this.resourceUrl}/${id}`, {
             observe: 'response'
         });
     }
