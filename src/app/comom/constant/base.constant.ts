@@ -1,4 +1,9 @@
 import {Category} from '../../model/category.model';
+import {SERVER_API_IMAGE} from '../../app.constants';
+
+export const getImg = (img) => {
+    return `${SERVER_API_IMAGE}${img}`;
+};
 
 export const PAGING_PER_PAGE = [
     {label: 5, value: 5},
