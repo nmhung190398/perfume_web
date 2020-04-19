@@ -16,6 +16,7 @@ import {xoaDau} from '../../../comom/utils/base.utils';
 export class CategoryComponent implements OnInit {
 
     categories: Category[];
+    public entitySelected: Category;
     paging: IPaging;
     categoryFormGroup: FormGroup;
     selectedCategory: Category;
@@ -143,6 +144,7 @@ export class CategoryComponent implements OnInit {
     }
 
     save(modal, category: Category) {
+        this.entitySelected = category;
         this.modalService.open(modal, {
             ariaLabelledBy: 'modal-basic-title',
             size: 'lg',
@@ -168,6 +170,7 @@ export class CategoryComponent implements OnInit {
     }
 
     remove(modal, category: Category) {
+        this.entitySelected = category;
         this.modalService.open(modal, {
             ariaLabelledBy: 'modal-basic-title',
             size: 'lg',

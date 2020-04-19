@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import {IPaging, Paging} from '../../../model/base-respone.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PAGING_PER_PAGE} from '../../../comom/constant/base.constant';
@@ -13,9 +13,8 @@ import {User} from '../../../model/user';
     styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
-
     users: User[];
+    public entitySelected: User;
     paging: IPaging;
     userFormGroup: FormGroup;
     selectedUser: User;
@@ -127,6 +126,43 @@ export class UserComponent implements OnInit {
         console.log(this.userFormGroup.value);
     }
 
+    remove(modal, user: User) {
+        this.entitySelected = user;
+        this.modalService
+            .open(modal, {
+                ariaLabelledBy: 'modal-basic-title',
+                size: 'lg',
+                backdrop: 'static'
+            }).result.then(
+            result => {
+                if (result === 'delete') {
+                    console.log('delete');
+                    if (user.id) {
+                        this.userService.delete(user.id).subscribe(res => {
+                            // control.removeAt(index);
+                            if (res.status === 200) {
+                                if (
+                                    this.paging.offset +
+                                    this.users.length -
+                                    this.paging.offset ===
+                                    1 &&
+                                    this.paging.page !== 1
+                                ) {
+                                    this.paging.page = this.paging.page - 1;
+                                    this.loadAll();
+                                } else {
+                                    this.loadAll();
+                                }
+                            }
+                        });
+                    } else {
+                    }
+                }
+            },
+            reason => {
+            }
+        );
+    }
 
     openViewCertPopup(modal, user) {
         this.selectedUser = user;

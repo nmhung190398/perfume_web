@@ -16,6 +16,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class ProducerComponent implements OnInit {
     public Editor = ClassicEditor;
     producers: Producer[];
+    public entitySelected: Producer;
     paging: IPaging;
     producerFormGroup: FormGroup;
     selectedProducer: Producer;
@@ -130,6 +131,7 @@ export class ProducerComponent implements OnInit {
     }
 
     save(modal, producer: Producer) {
+        this.entitySelected = producer;
         this.modalService
             .open(modal, {
                 ariaLabelledBy: 'modal-basic-title',
@@ -156,6 +158,7 @@ export class ProducerComponent implements OnInit {
     }
 
     remove(modal, producer: Producer) {
+        this.entitySelected = producer;
         this.modalService
             .open(modal, {
                 ariaLabelledBy: 'modal-basic-title',

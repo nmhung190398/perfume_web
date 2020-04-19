@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit {
 
 
     products: Product[];
+    public entitySelected: Product;
     paging: IPaging;
     productFormGroup: FormGroup;
     selectedProduct: Product;
@@ -89,6 +90,43 @@ export class ProductListComponent implements OnInit {
         }
     }
 
+    remove(modal, product: Product) {
+        this.entitySelected = product;
+        this.modalService
+            .open(modal, {
+                ariaLabelledBy: 'modal-basic-title',
+                size: 'lg',
+                backdrop: 'static'
+            }).result.then(
+            result => {
+                if (result === 'delete') {
+                    console.log('delete');
+                    if (product.id) {
+                        this.productService.delete(product.id).subscribe(res => {
+                            // control.removeAt(index);
+                            if (res.status === 200) {
+                                if (
+                                    this.paging.offset +
+                                    this.products.length -
+                                    this.paging.offset ===
+                                    1 &&
+                                    this.paging.page !== 1
+                                ) {
+                                    this.paging.page = this.paging.page - 1;
+                                    this.loadAll();
+                                } else {
+                                    this.loadAll();
+                                }
+                            }
+                        });
+                    } else {
+                    }
+                }
+            },
+            reason => {
+            }
+        );
+    }
 
     // transition() {
     //   const parameters = {

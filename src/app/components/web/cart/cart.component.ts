@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CartService} from '../../../service/cart.service';
+import { CartService } from '../../../service/cart.service';
+import {CouponService} from '../../../service/coupon.service';
 import {Cart} from '../../../model/cart.model';
 import {ProductService} from '../../../service/product.service';
 import {AuthenticationService} from '../../../service/authentication.service';
@@ -28,12 +29,15 @@ export class CartComponent implements OnInit {
     districts: District[] = [];
     provinces: Province[] = [];
     coupon;
+    percent: string = '0';
+    invalidCoupon = false;
     objectKeys = Object.keys;
 
     constructor(private fb: FormBuilder, private cartService: CartService, private productService: ProductService,
                 private authenticationService: AuthenticationService,
                 private addressService: AddressService,
-                private checkoutService: CheckoutService,
+        private checkoutService: CheckoutService,
+        private couponService: CouponService,
     ) {
     }
 
@@ -117,7 +121,7 @@ export class CartComponent implements OnInit {
     }
 
     get total() {
-        const rs = this.subtotal;
+        const rs = this.subtotal*(100 - parseInt(this.percent));
         return rs;
     }
 
@@ -125,6 +129,8 @@ export class CartComponent implements OnInit {
         console.log(this.checkoutForm.value);
         const codeCoupon = this.checkoutForm.get('coupon').value;
         const checkout: Checkout = this.checkoutForm.value;
+        checkout.total = this.subtotal;
+        checkout.finalprice = this.total;
         if (codeCoupon) {
             checkout.coupon = {
                 code: codeCoupon
@@ -144,4 +150,15 @@ export class CartComponent implements OnInit {
         });
     }
 
+    checkCoupon() {
+        let code = this.checkoutForm.value.coupon;
+        this.couponService.filterAll({ code }).subscribe(res => {
+            if (res.body.length > 0) {
+                this.percent = res.body[0]['percent'];
+                this.invalidCoupon = false;
+            } else {
+                this.invalidCoupon = true;
+            }
+        })
+    }
 }

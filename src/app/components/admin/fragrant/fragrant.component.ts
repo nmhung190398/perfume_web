@@ -16,6 +16,7 @@ import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export class FragrantComponent implements OnInit {
   public Editor = ClassicEditor;
   fragrants: Fragrant[];
+  public entitySelected: Fragrant;
   paging: IPaging;
   fragrantFormGroup: FormGroup;
   selectedFragrant: Fragrant;
@@ -129,6 +130,7 @@ export class FragrantComponent implements OnInit {
   }
 
   save(modal, fragrant: Fragrant) {
+    this.entitySelected = fragrant;
     this.modalService
       .open(modal, {
         ariaLabelledBy: "modal-basic-title",
@@ -155,6 +157,7 @@ export class FragrantComponent implements OnInit {
   }
 
   remove(modal, fragrant: Fragrant) {
+    this.entitySelected = fragrant;
     this.modalService
       .open(modal, {
         ariaLabelledBy: "modal-basic-title",

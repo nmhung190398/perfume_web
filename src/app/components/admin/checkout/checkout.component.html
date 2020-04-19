@@ -85,16 +85,17 @@
                                 </td>
 
                                 <td>
-                                    <span>{{checkout.coupon ? checkout.coupon : 'Không có'}}</span>
+                                    <span>{{checkout.coupon ? checkout.coupon.code : 'Không có'}}</span><br>
+                                    <span>{{checkout.coupon ? checkout.coupon.percent : 0}}%</span>
                                 </td>
 
                                 <td>
-                                    <span>12000 VND</span><br>
+                                    <span>{{checkout.total}} VND</span><br>
                                     <span>{{checkout.checkoutItems?.length}} Sản phẩm</span>
                                 </td>
 
                                 <td>
-                                    <span>12000 VND</span>
+                                    <span>{{checkout.finalprice}} VND</span>
                                 </td>
                                 <td *ngIf="checkoutStatus === 0">{{checkout.note}}</td>
 

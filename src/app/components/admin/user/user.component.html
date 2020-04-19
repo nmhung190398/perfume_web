@@ -53,7 +53,7 @@
                                 Quyền
                             </th>
                             <th class="text-center" style="width: 200px">
-                                Acction
+                                Action
                             </th>
                         </tr>
                         </thead>
@@ -90,13 +90,6 @@
                                 <!--acction-->
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <a [routerLink]="['../../admin/comment/user/' + user.id]"
-                                           type="submit"
-                                           class="btn btn-success btn-sm"
-                                        >
-                                            <i class="icon-pencil"></i>
-                                            <span class="d-none d-md-inline">Bình luận</span>
-                                        </a>
                                         <button [routerLink]="['edit/' + user.username]"
                                                 type="submit"
                                                 class="btn btn-info btn-sm">
@@ -104,7 +97,8 @@
                                             <span class="d-none d-md-inline">Chi Tiết</span>
                                         </button>
                                         <button type="submit"
-                                                class="btn btn-danger btn-sm">
+                                                class="btn btn-danger btn-sm"
+                                                (click)="remove(deleteModal, user)">
                                             <i class="icon-trash"></i>
                                             <span class="d-none d-md-inline">delete</span>
                                         </button>
@@ -149,31 +143,12 @@
         </button>
     </div>
     <div class="modal-body">
-        Delete
+        Delete {{entitySelected.username}}
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="modal.close('delete')">Delete
         </button>
         <button type="button" class="btn btn-secondary" (click)="modal.close('Close')">Close
-        </button>
-    </div>
-</ng-template>
-
-<ng-template #saveModal let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-comfirm-save-title">Save</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        save
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger"
-                (click)="modal.close('save')">save
-        </button>
-        <button type="button" class="btn btn-secondary" (click)="modal.close('Close')">close
         </button>
     </div>
 </ng-template>
