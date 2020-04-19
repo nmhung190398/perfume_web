@@ -15,6 +15,7 @@ import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export class AmountComponent implements OnInit {
   public Editor = ClassicEditor;
   amounts: Amount[];
+  public entitySelected: Amount;
   paging: IPaging;
   amountFormGroup: FormGroup;
   selectedAmount: Amount;
@@ -128,6 +129,7 @@ export class AmountComponent implements OnInit {
   }
 
   save(modal, amount: Amount) {
+    this.entitySelected = amount;
     this.modalService
       .open(modal, {
         ariaLabelledBy: "modal-basic-title",
@@ -154,6 +156,7 @@ export class AmountComponent implements OnInit {
   }
 
   remove(modal, amount: Amount) {
+    this.entitySelected = amount;
     this.modalService
       .open(modal, {
         ariaLabelledBy: "modal-basic-title",

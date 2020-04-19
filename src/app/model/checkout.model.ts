@@ -19,4 +19,6 @@ export class Checkout {
     status?;
     checkoutItems?: Array<any>;
     coupon?: any;
+    total?: number;
+    finalprice?: number;
 }

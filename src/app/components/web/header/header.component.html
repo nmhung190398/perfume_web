@@ -24,9 +24,10 @@
                         <div *ngIf="userLogin" class="dropdown-menu" aria-labelledby="dropdown05">
                             <a class="dropdown-item" *ngIf="isManager"
                                [routerLink]="['/admin']">Quản Trị</a>
-                            <a class="dropdown-item" (click)="changeInfo(changeInfoModal)">Đổi thông tin cá nhân</a>
-                            <a class="dropdown-item" (click)="changePassword(changePasswordModal)">Đổi mật khẩu</a>
-                            <a class="dropdown-item" (click)="logout()">Logout</a>
+                            <a style="cursor: pointer" class="dropdown-item" (click)="changeInfo(changeInfoModal)">Đổi thông tin cá nhân</a>
+                            <a style="cursor: pointer" class="dropdown-item" (click)="changePassword(changePasswordModal)">Đổi mật khẩu</a>
+                            <a style="cursor: pointer" class="dropdown-item" [routerLink]="['/checkout']">Trạng thái đơn hàng</a>
+                            <a style="cursor: pointer" class="dropdown-item" (click)="logout()">Logout</a>
                         </div>
 
                         <span *ngIf="!userLogin" class="text"><a [routerLink]="['/register']">Đăng Ký</a>&nbsp;&nbsp;<a

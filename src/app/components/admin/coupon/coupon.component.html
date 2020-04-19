@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-2">
                             <input (focusout)="isCodeValidate()" [formControl]="couponFormGroup.get('code')" type="text"
                                    class="form-control">
                             <span *ngIf="!couponFormGroup.get('code').valid" class="text-danger">Mã chỉ chứa a-z, A-Z, 0-9 và có tối thiểu 3 ký tự tối đa 15</span>
@@ -30,8 +30,12 @@
                             <owl-date-time #dt2></owl-date-time>
                         </div>
 
-                        <div class="col-3"><input [formControl]="couponFormGroup.get('total')" type="number"
-                                                  class="form-control"></div>
+                        <div class="col-2"><input [formControl]="couponFormGroup.get('total')" placeholder="amount" type="number"
+                        class="form-control">
+                        <br><span class="text-info">Số lượng</span></div>
+                        <div class="col-2"><input [formControl]="couponFormGroup.get('percent')" placeholder="percent" type="number"
+                        class="form-control">
+                        <br><span class="text-info">Giảm theo %</span></div>
 
                         <div class="col-12 mt-3 text-right">
                             <div class="btn-group">
@@ -127,6 +131,9 @@
                                 Số lương
                             </th>
                             <th class="text-center">
+                                Giảm giá
+                            </th>
+                            <th class="text-center">
                                 Thơi hạn
                             </th>
                             <th class="text-center">
@@ -158,6 +165,9 @@
                                 <td>
                                     <span *ngIf="coupon.total > 0">{{ coupon.total }}</span>
                                     <span class="bg-danger status-text" *ngIf="coupon.total <= 0">Hết</span>
+                                </td>
+                                <td>
+                                    <span>{{ coupon.percent }}%</span>
                                 </td>
                                 <td>
                                     {{coupon.startDate | date:'short'}} đến <br> {{coupon.endDate | date:'short'}}
@@ -241,7 +251,7 @@
         </button>
     </div>
     <div class="modal-body">
-        Delete
+        Delete {{entitySelected.code}}
     </div>
     <div class="modal-footer">
         <button
@@ -274,7 +284,7 @@
         </button>
     </div>
     <div class="modal-body">
-        save
+        save {{entitySelected.code}}
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="modal.close('save')">

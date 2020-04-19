@@ -138,10 +138,11 @@
                         <div class="cart-detail cart-total bg-light p-3 p-md-4">
                             <h3 class="billing-heading mb-4">Cart Total</h3>
                             <div class="d-flex">
-                                <input type="text" class="form-control" placeholder="Coupon" [formControl]="checkoutForm.get('coupon')">
+                                <input (keyup)="checkCoupon()" type="text" class="form-control" placeholder="Coupon" [formControl]="checkoutForm.get('coupon')">
+                                <span *ngIf="invalidCoupon" class="ml-1 text-danger">Mã giảm giá không đúng</span>
                             </div>
                             <p class="d-flex mt-3">
-                                <span>Subtotal</span>
+                                <span>Giá gốc</span>
                                 <span>{{subtotal}} VNĐ</span>
                             </p>
                             <p class="d-flex">
@@ -154,7 +155,7 @@
                             </p>
                             <hr>
                             <p class="d-flex total-price">
-                                <span>Total</span>
+                                <span>Giá cuối</span>
                                 <span>{{total}} VNĐ</span>
                             </p>
                         </div>

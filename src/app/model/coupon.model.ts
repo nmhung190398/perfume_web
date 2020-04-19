@@ -5,4 +5,5 @@ export class Coupon {
     code?: string;
     total?: number;
     statusDate?: number;
+    percent: any;
 }

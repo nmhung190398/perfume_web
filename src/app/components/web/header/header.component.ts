@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../../model/user';
 import {AuthenticationService} from '../../../service/authentication.service';
 import {CONSTANT_PATH} from './../../../comom/constant/base.constant';
-import {HttpClient} from '@angular/common/http';
 import {CartService} from '../../../service/cart.service';
 import {CategoryService} from '../../../service/category.service';
 import {Category} from '../../../model/category.model';

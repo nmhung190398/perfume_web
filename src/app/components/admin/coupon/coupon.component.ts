@@ -14,6 +14,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CouponComponent implements OnInit {
     coupons: Coupon[];
+    public entitySelected: Coupon;
     paging: IPaging;
     couponFormGroup: FormGroup;
     selectedCoupon: Coupon;
@@ -50,6 +51,7 @@ export class CouponComponent implements OnInit {
             endDate: [null, [Validators.required]],
             code: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]],
             total: [0, [Validators.required]],
+            percent: [0, [Validators.required]],
             isUpdate: [true],
             isShow: [false]
         });
@@ -135,6 +137,7 @@ export class CouponComponent implements OnInit {
             endDate: null,
             code: '',
             total: 0,
+            percent: 0,
             isUpdate: false,
             isShow: true
         });
@@ -147,6 +150,7 @@ export class CouponComponent implements OnInit {
             endDate: coupon.endDate,
             code: coupon.code,
             total: coupon.total,
+            percent: coupon.percent,
             isUpdate: true,
             isShow: true
         });
@@ -154,6 +158,7 @@ export class CouponComponent implements OnInit {
     }
 
     save(modal, coupon: Coupon) {
+        this.entitySelected = coupon;
         console.log(this.couponFormGroup.value);
         this.modalService
             .open(modal, {
@@ -181,6 +186,7 @@ export class CouponComponent implements OnInit {
     }
 
     remove(modal, coupon: Coupon) {
+        this.entitySelected = coupon;
         this.modalService
             .open(modal, {
                 ariaLabelledBy: 'modal-basic-title',
