@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../model/user';
 import {AuthenticationService} from '../../../service/authentication.service';
-import {CONSTANT_PATH} from './../../../comom/constant/base.constant';
+import {CONSTANT_PATH, getImg} from './../../../comom/constant/base.constant';
 import {CartService} from '../../../service/cart.service';
 import {CategoryService} from '../../../service/category.service';
 import {Category} from '../../../model/category.model';
@@ -108,6 +108,10 @@ export class HeaderComponent implements OnInit {
                 console.log('ahihi');
             }
         });
+    }
+
+    getAvatar(url) {
+        return getImg(url);
     }
 
 }

@@ -32,65 +32,6 @@
                     >
                         <app-item-product [product]="product"></app-item-product>
                     </div>
-
-                    <div
-                    *ngFor="let product of products"
-                    class="col-sm-12 col-md-6 col-lg-4 ftco-animate d-flex fadeInUp ftco-animated"
-                    >
-                    <div class="product d-flex flex-column">
-                    <a
-                    [routerLink]="[
-                    '/' + [CONSTANT_PATH.DETAIL_PRODUCT, product.code].join('/')
-                    ]"
-                    class="img-prod"
-                    ><img style="width: 100%"
-                    class="img-fluid"
-                    [src]="SERVER_URL + product.image"
-                    alt="Colorlib Template"
-                    />
-                    <div class="overlay"></div>
-                    </a>
-                    <div class="text py-3 pb-4 px-3">
-                    <div class="d-flex">
-                    <div class="cat">
-                    <span>Lifestyle</span>
-                    </div>
-                    <div class="rating">
-                    <p class="text-right mb-0">
-                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    </p>
-                    </div>
-                    </div>
-                    <h3>
-                    <a [routerLink]="['/' + [CONSTANT_PATH.DETAIL_PRODUCT, product.code].join('/')]"
-                    >{{ product.name }}</a>
-                    </h3>
-                    <div class="pricing">
-                    <p class="price">
-                    <span
-                    >{{ product.versions[0]?.price }} cho phiên bản
-                    {{ product.versions[0]?.name }}</span
-                    >
-                    </p>
-                    </div>
-                    <p class="bottom-area d-flex px-3">
-                    <a
-                    (click)="addCartItem(product.versions[0]?.id)"
-                    class="add-to-cart text-center py-2 mr-1"
-                    ><span>Add to cart <i class="ion-ios-add ml-1"></i></span
-                    ></a>
-                    <a class="buy-now text-center py-2"
-                    (click)="addCartItem(product.versions[0]?.id,true)"
-                    >Buy now<span><i class="ion-ios-cart ml-1"></i></span
-                    ></a>
-                    </p>
-                    </div>
-                    </div>
-                    </div>
                 </div>
                 <!--END LIST PRODUCT-->
                 <div class="row mt-5">

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { CartService } from '../../../service/cart.service';
+import {CartService} from '../../../service/cart.service';
 import {CouponService} from '../../../service/coupon.service';
 import {Cart} from '../../../model/cart.model';
 import {ProductService} from '../../../service/product.service';
@@ -13,6 +13,7 @@ import validate = WebAssembly.validate;
 import {CheckoutService} from '../../../service/checkout.service';
 import {PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
 import {Checkout} from '../../../model/checkout.model';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-cart',
@@ -29,15 +30,17 @@ export class CartComponent implements OnInit {
     districts: District[] = [];
     provinces: Province[] = [];
     coupon;
-    percent: string = '0';
+    percent = '0';
     invalidCoupon = false;
     objectKeys = Object.keys;
 
-    constructor(private fb: FormBuilder, private cartService: CartService, private productService: ProductService,
-                private authenticationService: AuthenticationService,
-                private addressService: AddressService,
+    constructor(
+        private fb: FormBuilder, private cartService: CartService, private productService: ProductService,
+        private authenticationService: AuthenticationService,
+        private addressService: AddressService,
         private checkoutService: CheckoutService,
         private couponService: CouponService,
+        private router: Router,
     ) {
     }
 
@@ -121,7 +124,7 @@ export class CartComponent implements OnInit {
     }
 
     get total() {
-        const rs = this.subtotal*(100 - parseInt(this.percent));
+        const rs = (this.subtotal * (100 - parseInt(this.percent, 10))) / 100;
         return rs;
     }
 
@@ -143,7 +146,7 @@ export class CartComponent implements OnInit {
             console.log(res.body);
             if (res.body.status === 200) {
                 alert('Thành công! Vui lòng check mail ');
-                this.loadAll();
+                this.router.navigate(['/checkout']);
             } else {
                 alert(res.body.msg);
             }
@@ -151,14 +154,14 @@ export class CartComponent implements OnInit {
     }
 
     checkCoupon() {
-        let code = this.checkoutForm.value.coupon;
-        this.couponService.filterAll({ code }).subscribe(res => {
+        const code = this.checkoutForm.value.coupon;
+        this.couponService.filterAll({code}).subscribe(res => {
             if (res.body.length > 0) {
                 this.percent = res.body[0]['percent'];
                 this.invalidCoupon = false;
             } else {
                 this.invalidCoupon = true;
             }
-        })
+        });
     }
 }

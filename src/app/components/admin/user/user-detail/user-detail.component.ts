@@ -8,6 +8,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../../model/user';
 import {SERVER_URL, DEFAULTPASSWORD} from '../../../../app.constants';
+import {getUrlScheme} from '@angular/compiler';
+import {getImg} from '../../../../comom/constant/base.constant';
 
 @Component({
     selector: 'app-user-detail',
@@ -73,7 +75,7 @@ export class UserDetailComponent implements OnInit {
             if (this.userEdit != null) {
                 this.selectedItems = this.userEdit.roles;
                 this.addValueInForm();
-                this.imageDefault = SERVER_URL + this.userEdit.image;
+                this.imageDefault = getImg(this.userEdit.image);
             } else {
                 // this.router.navigate(['404']);
             }

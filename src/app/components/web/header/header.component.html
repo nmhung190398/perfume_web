@@ -17,16 +17,19 @@
                         <span class="text">3-5 Business days delivery &amp; Free Returns</span>
                     </div>
                     <div class="col-md-4 pr-4 d-flex align-items-center text-lg-right dropdown">
-
-                            <span *ngIf="userLogin" style="cursor: pointer; color: #fff;"
-                                  class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown"
-                                  aria-haspopup="true" aria-expanded="false">{{userLogin.username}}</span>
+                        <img *ngIf="userLogin" [src]="getAvatar(userLogin.image)" alt="Avatar" class="avatar">
+                        <span *ngIf="userLogin" style="cursor: pointer; color: #fff;"
+                              class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">{{userLogin.username}}</span>
                         <div *ngIf="userLogin" class="dropdown-menu" aria-labelledby="dropdown05">
                             <a class="dropdown-item" *ngIf="isManager"
                                [routerLink]="['/admin']">Quản Trị</a>
-                            <a style="cursor: pointer" class="dropdown-item" (click)="changeInfo(changeInfoModal)">Đổi thông tin cá nhân</a>
-                            <a style="cursor: pointer" class="dropdown-item" (click)="changePassword(changePasswordModal)">Đổi mật khẩu</a>
-                            <a style="cursor: pointer" class="dropdown-item" [routerLink]="['/checkout']">Trạng thái đơn hàng</a>
+                            <a style="cursor: pointer" class="dropdown-item" (click)="changeInfo(changeInfoModal)">Đổi
+                                thông tin cá nhân</a>
+                            <a style="cursor: pointer" class="dropdown-item"
+                               (click)="changePassword(changePasswordModal)">Đổi mật khẩu</a>
+                            <a style="cursor: pointer" class="dropdown-item" [routerLink]="['/checkout']">Trạng thái đơn
+                                hàng</a>
                             <a style="cursor: pointer" class="dropdown-item" (click)="logout()">Logout</a>
                         </div>
 
@@ -40,7 +43,7 @@
 </div>
 <nav class="navbar navbar-expand-lg  ftco_navbar ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Minishop</a>
+        <a class="navbar-brand" [routerLink]="['/home']">Minishop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
