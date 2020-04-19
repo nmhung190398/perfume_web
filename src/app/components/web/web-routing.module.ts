@@ -1,20 +1,22 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeWebComponent} from "./home/home-web.component";
-import {AboutComponent} from "./about/about.component";
-import {AuthGuard} from "../../comom/auth/auth.guard";
-import {CartComponent} from "./cart/cart.component";
-import {LoginComponent} from "./login/login.component";
-import {ListProductComponent} from "./list-product/list-product.component";
-import {NotFoundComponent} from "./not-found/not-found.component";
-import {WebComponent} from "./web.component";
-import {DetailProductComponent} from "./detail-product/detail-product.component";
+import {HomeWebComponent} from './home/home-web.component';
+import {AboutComponent} from './about/about.component';
+import {AuthGuard} from '../../comom/auth/auth.guard';
+import {CartComponent} from './cart/cart.component';
+import {LoginComponent} from './login/login.component';
+import {ListProductComponent} from './list-product/list-product.component';
+import {NotFoundComponent} from './not-found/not-found.component';
+import {WebComponent} from './web.component';
+import {DetailProductComponent} from './detail-product/detail-product.component';
 import {CONSTANT_PATH} from './../../comom/constant/base.constant';
-import {CheckoutComponent} from "./checkout/checkout.component";
-import {RegisterComponent} from "../web/register/register.component";
-import {BlogComponent} from "./blog/blog.component";
-import {ContactComponent} from "./contact/contact.component";
-import {PermissionComponent} from "./permission/permission.component";
+import {CheckoutComponent} from './checkout/checkout.component';
+import {RegisterComponent} from '../web/register/register.component';
+import {BlogComponent} from './blog/blog.component';
+import {ContactComponent} from './contact/contact.component';
+import {PermissionComponent} from './permission/permission.component';
+import {Paging} from '../../model/base-respone.model';
+import {BlogSingleComponent} from './blog-single/blog-single.component';
 
 const routes: Routes = [
 
@@ -56,7 +58,11 @@ const routes: Routes = [
             },
             {
                 path: CONSTANT_PATH.BLOG,
-                component: BlogComponent
+                component: BlogComponent,
+            },
+            {
+                path: CONSTANT_PATH.BLOG + '/:url',
+                component: BlogSingleComponent,
             },
             {
                 path: CONSTANT_PATH.CONTACT,

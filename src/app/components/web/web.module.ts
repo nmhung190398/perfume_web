@@ -24,6 +24,8 @@ import {BlogSingleComponent} from './blog-single/blog-single.component';
 import {CollapseModule} from "ngx-bootstrap";
 import {PermissionComponentComponent} from './permission-component/permission-component.component';
 import {PermissionComponent} from './permission/permission.component';
+import {ShowCommentComponent} from './comment/show-comment.component';
+import { ItemProductComponent } from './list-product/item-product/item-product.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import {PermissionComponent} from './permission/permission.component';
         BlogSingleComponent,
         PermissionComponentComponent,
         PermissionComponent,
-        HomeWebComponent
+        HomeWebComponent,
+        ShowCommentComponent,
+        ItemProductComponent
     ],
     exports: [FilterComponent],
     bootstrap: []
