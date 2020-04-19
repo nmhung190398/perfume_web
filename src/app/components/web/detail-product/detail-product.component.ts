@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {COMMENT_TYPE, CONSTANT_PATH} from '../../../comom/constant/base.constant';
+import {COMMENT_TYPE, CONSTANT_PATH, getImg} from '../../../comom/constant/base.constant';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../../model/product.model';
 import {ProductService} from '../../../service/product.service';
@@ -23,6 +23,7 @@ export class DetailProductComponent implements OnInit {
     quantity = 1;
     SERVER_URL = SERVER_URL;
     contentComment: string;
+    COMMENT_TYPE = COMMENT_TYPE;
 
     comments: Comment[] = [];
 
@@ -40,7 +41,6 @@ export class DetailProductComponent implements OnInit {
                 if (res.status === 200 && res.body.length > 0) {
                     this.product = res.body[0];
                     this.versionSelect = this.product.versions[0];
-                    this.loadComment();
                 } else {
                     this.product = null;
                     this.router.navigate(['404']);
@@ -51,25 +51,6 @@ export class DetailProductComponent implements OnInit {
 
     ngOnInit(): void {
 
-    }
-
-    loadComment() {
-        const comment: Comment = {
-            type: COMMENT_TYPE.PRODUCT,
-            postId: this.product.id,
-            parenComment: {
-                id: null
-            }
-        };
-        this.commentService.filterAll(comment).subscribe(res => {
-            this.comments = res.body.map(value => {
-                value.isComment = false;
-                value.createdAt = new Date(value.createdAt);
-                return value;
-            });
-            console.log('comment');
-            console.log(this.comments);
-        });
     }
 
     downQuantity() {
@@ -115,43 +96,9 @@ export class DetailProductComponent implements OnInit {
         }
     }
 
-
-    sendComment(parenComment?: Comment) {
-        console.log(parenComment);
-        if (parenComment && parenComment.subContent && parenComment.subContent.trim() === '') {
-            alert('Chưa nhập bình luận');
-            return;
-        }
-        if (!parenComment && this.contentComment.trim() === '') {
-            alert('Chưa nhập bình luận');
-            return;
-        }
-        if (this.authenticationService.currentUserValue) {
-            const comment: Comment = {
-                type: COMMENT_TYPE.PRODUCT,
-                postId: this.product.id,
-                content: this.contentComment
-            };
-            if (parenComment) {
-                comment.parenComment = parenComment;
-                comment.content = parenComment.subContent;
-            }
-            this.commentService.create(comment).subscribe(res => {
-                if (res.status === 200) {
-                    console.log(res.body);
-                    this.loadComment();
-                }
-            });
-
-        } else {
-            alert('Bạn chưa đăng nhập. vui lòng đăng nhập để gửi bình luận');
-        }
+    getImg(img) {
+        return getImg(img);
     }
 
-
-    showInputComment(comment: Comment) {
-        comment.isComment = true;
-        comment.subContent = '';
-    }
 
 }

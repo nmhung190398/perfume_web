@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-6 mb-5 ftco-animate fadeInUp ftco-animated">
                 <a [href]="SERVER_URL + product?.image" class="image-popup prod-img-bg"><img style="width: 100%"
-                                                                                             [src]="SERVER_URL + product?.image"
+                                                                                             [src]="getImg(this.product.image)"
                                                                                              class="img-fluid img-product"
                                                                                              alt="Colorlib Template"></a>
             </div>
@@ -135,64 +135,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
-                        <div class="row p-4">
-                            <div class="input-group mb-3">
-                                <textarea [(ngModel)]="contentComment" rows="3" class="form-control"
-                                          placeholder="Recipient's username" aria-label="Recipient's username"
-                                          aria-describedby="basic-addon2"></textarea>
-                                <div (click)="sendComment()" class="input-group-append" style="cursor: pointer">
-                                    <span class="input-group-text" id="basic-addon2">Gửi Bình Luận</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row p-4">
-                            <div class="col-md-7">
-                                <h3 class="mb-4">{{comments.length}} Bình luận</h3>
-                                <div class="review" *ngFor="let item of comments" style="margin-bottom: 3rem">
-                                    <div class="user-img"
-                                         style="background-image: url(assets/images/person_1.jpg)"></div>
-                                    <div class="desc" style="margin-bottom: 3rem">
-                                        <h4>
-                                            <span class="text-left">{{item.createdBy}}</span>
-                                            <span class="text-right">{{item.createdAt | date:'short'}}</span>
-                                        </h4>
-                                        <p>{{item.content}}</p>
-                                        <a (click)="showInputComment(item)"
-                                           style="float: right;transition: .3s all ease;color: #dbcc8f; cursor: pointer">Trả
-                                            lời bình luận</a>
-
-
-                                    </div>
-                                    <!--Sub comment-->
-                                    <ng-container *ngIf="item.subComments">
-                                        <div *ngFor="let subItem of item.subComments" class="review"
-                                             style="padding-left: 5rem">
-                                            <div class="user-img"
-                                                 style="background-image: url(assets/images/person_1.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">{{subItem.createdBy}}</span>
-                                                    <span class="text-right">{{subItem.createdAt | date:'short'}}</span>
-                                                </h4>
-                                                <p>{{subItem.content}}</p>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-
-                                    <div class="input-group mt-3" *ngIf="item.isComment">
-                                <textarea [(ngModel)]="item.subContent" rows="2" class="form-control"
-                                          placeholder="Recipient's username" aria-label="Recipient's username"
-                                          aria-describedby="basic-addon2"></textarea>
-                                        <div (click)="sendComment(item)" class="input-group-append"
-                                             style="cursor: pointer">
-                                            <span class="input-group-text" id="basic-addon2">Gửi Bình Luận</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <app-show-comment [postId]="product.id" [type]="COMMENT_TYPE.PRODUCT"></app-show-comment>
                     </div>
                 </div>
             </div>

@@ -88,8 +88,8 @@
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center ">
-                <h2 class="mb-4">San Pham Hot</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                <h2 class="mb-4">Sản phẩm hot</h2>
+                <p>Mặt hàng được tìm kiếm nhiều nhất trên hệ thống</p>
             </div>
         </div>
     </div>
@@ -97,41 +97,7 @@
         <div class="row">
             <!--end a product -->
             <div class="col-sm-12 col-md-6 col-lg-3  d-flex" *ngFor="let product of productHots">
-                <div class="product d-flex flex-column">
-                    <a [routerLink]="['/' + [CONSTANT_PATH.DETAIL_PRODUCT,product.code].join('/')]"
-                       class="img-prod"><img class="img-fluid img-product" [src]="SERVER_URL + product.image"
-                                             alt="Colorlib Template">
-                        <div class="overlay"></div>
-                    </a>
-                    <div class="text py-3 pb-4 px-3">
-                        <div class="d-flex">
-                            <div class="cat">
-                                <span>Lifestyle</span>
-                            </div>
-                            <div class="rating">
-                                <p class="text-right mb-0">
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                </p>
-                            </div>
-                        </div>
-                        <h3><a [routerLink]="['/' + [CONSTANT_PATH.DETAIL_PRODUCT,product.code].join('/')]" href="#">{{product.name}}</a>
-                        </h3>
-                        <div class="pricing">
-                            <p class="price"><span>{{product.versions[0]?.price}} cho phiên bản {{product.versions[0]?.name}}</span>
-                            </p>
-                        </div>
-                        <p class="bottom-area d-flex px-3">
-                            <a (click)="addCartItem(product.versions[0]?.id)" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-                                    class="ion-ios-add ml-1"></i></span></a>
-                            <a (click)="addCartItem(product.versions[0]?.id,true)" class="buy-now text-center py-2">Buy
-                                now<span><i class="ion-ios-cart ml-1"></i></span></a>
-                        </p>
-                    </div>
-                </div>
+                <app-item-product [product]="product"></app-item-product>
             </div>
             <!--end a product -->
         </div>
@@ -142,8 +108,8 @@
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center ">
-                <h2 class="mb-4">San Pham Moi</h2>
-                <p>Day la mo ta cho san pham moi</p>
+                <h2 class="mb-4">Sản phẩm mới</h2>
+                <p>Top danh sách sản phẩm mới nhất hiện nay</p>
             </div>
         </div>
     </div>
@@ -151,41 +117,7 @@
         <div class="row">
             <!--end a product -->
             <div class="col-sm-12 col-md-6 col-lg-3  d-flex" *ngFor="let product of productNews">
-                <div class="product d-flex flex-column">
-                    <a [routerLink]="['/' + [CONSTANT_PATH.DETAIL_PRODUCT,product.code].join('/')]" class="img-prod">
-                        <img class="img-fluid img-product" [src]="SERVER_URL + product.image"
-                             alt="Colorlib Template">
-                        <div class="overlay"></div>
-                    </a>
-                    <div class="text py-3 pb-4 px-3">
-                        <div class="d-flex">
-                            <div class="cat">
-                                <span>Lifestyle</span>
-                            </div>
-                            <div class="rating">
-                                <p class="text-right mb-0">
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                </p>
-                            </div>
-                        </div>
-                        <h3><a [routerLink]="['/' + [CONSTANT_PATH.DETAIL_PRODUCT,product.code].join('/')]" href="#">{{product.name}}</a>
-                        </h3>
-                        <div class="pricing">
-                            <p class="price"><span>{{product.versions[0]?.price}} cho phiên bản {{product.versions[0]?.name}}</span>
-                            </p>
-                        </div>
-                        <p class="bottom-area d-flex px-3">
-                            <a (click)="addCartItem(product.versions[0]?.id)" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i
-                                    class="ion-ios-add ml-1"></i></span></a>
-                            <a (click)="addCartItem(product.versions[0]?.id,true)" class="buy-now text-center py-2">Buy
-                                now<span><i class="ion-ios-cart ml-1"></i></span></a>
-                        </p>
-                    </div>
-                </div>
+                <app-item-product [product]="product"></app-item-product>
             </div>
             <!--end a product -->
         </div>

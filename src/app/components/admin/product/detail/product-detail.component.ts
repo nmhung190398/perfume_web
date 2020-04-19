@@ -18,7 +18,7 @@ import {Amount} from 'src/app/model/amount.model';
 import {Fragrant} from 'src/app/model/fragrant.model';
 import {AmountService} from 'src/app/service/amount.service';
 import {FragrantService} from 'src/app/service/fragrant.service';
-import {CKEDITOR_CONFIG, COMMENT_TYPE} from '../../../../comom/constant/base.constant';
+import {CKEDITOR_CONFIG, COMMENT_TYPE, getImg} from '../../../../comom/constant/base.constant';
 import {SERVER_URL} from '../../../../app.constants';
 
 @Component({
@@ -104,7 +104,7 @@ export class ProductDetailComponent implements OnInit {
                 });
 
                 if (this.product.image != null) {
-                    this.imageDefault = SERVER_URL + this.product.image;
+                    this.imageDefault = getImg(this.product.image);
                 }
                 this.productFormGroup.setValue({
                     id: this.product.id,

@@ -5,7 +5,7 @@ import {Cart} from '../../../model/cart.model';
 import {ProductService} from '../../../service/product.service';
 import {AuthenticationService} from '../../../service/authentication.service';
 import {User} from '../../../model/user';
-import {SERVER_API_URL, SERVER_URL} from '../../../app.constants';
+import {SERVER_API_IMAGE, SERVER_API_URL, SERVER_URL} from '../../../app.constants';
 import {District, Province, Ward} from '../../../model/address.model';
 import {AddressService} from '../../../service/address.service';
 import validate = WebAssembly.validate;
@@ -105,7 +105,7 @@ export class CartComponent implements OnInit {
     }
 
     getUrlBackground(image) {
-        return `url(${this.SERVER_URL}/${image})`;
+        return `url(${SERVER_API_IMAGE}/${image})`;
     }
 
     get subtotal() {
