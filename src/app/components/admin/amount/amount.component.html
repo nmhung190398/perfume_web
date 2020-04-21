@@ -19,7 +19,7 @@
             <div class="col-12">
               <ckeditor
                 [formControl]="amountFormGroup.get('description')"
-                [editor]="Editor"
+
               ></ckeditor>
               <!-- <input [formControl]="amountFormGroup.get('description')" class="form-control"
                                      placeholder="description"> -->
@@ -218,7 +218,7 @@
     </button>
   </div>
   <div class="modal-body">
-    Delete {{entitySelected.name}}
+    Bạn có chắc chắn muốn xóa : {{entitySelected.name}}
   </div>
   <div class="modal-footer">
     <button
@@ -226,21 +226,21 @@
       class="btn btn-danger"
       (click)="modal.close('delete')"
     >
-      Delete
+      Xóa
     </button>
     <button
       type="button"
       class="btn btn-secondary"
       (click)="modal.close('Close')"
     >
-      Close
+      Đóng
     </button>
   </div>
 </ng-template>
 
 <ng-template #saveModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-comfirm-save-title">Save</h4>
+    <h4 class="modal-title" id="modal-comfirm-save-title">Lưu</h4>
     <button
       type="button"
       class="close"
@@ -251,7 +251,7 @@
     </button>
   </div>
   <div class="modal-body">
-    save {{entitySelected.name}}
+    Bạn có chắc muốn thêm {{entitySelected.name}}
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="modal.close('save')">
@@ -262,7 +262,7 @@
       class="btn btn-secondary"
       (click)="modal.close('Close')"
     >
-      close
+      Đóng
     </button>
   </div>
 </ng-template>

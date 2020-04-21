@@ -6,7 +6,6 @@ import {PAGING_PER_PAGE} from './../../../comom/constant/base.constant';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProducerService} from '../../../service/producer.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
     selector: 'app-producer',
@@ -14,7 +13,6 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     styleUrls: ['./producer.component.scss']
 })
 export class ProducerComponent implements OnInit {
-    public Editor = ClassicEditor;
     producers: Producer[];
     public entitySelected: Producer;
     paging: IPaging;

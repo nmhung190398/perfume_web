@@ -7,4 +7,5 @@ export class Version {
     total?: number;
     product?: Product;
     isUpdate?: boolean;
+    totalSold?: number;
 }

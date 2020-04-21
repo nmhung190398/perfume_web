@@ -51,7 +51,7 @@ export class CategoryComponent implements OnInit {
             name: ['', [
                 Validators.required,
                 Validators.minLength(5),
-                Validators.maxLength(20)]
+                Validators.maxLength(100)]
             ],
             code: ['', [Validators.required, Validators.minLength(8),
                 Validators.required, Validators.maxLength(30)

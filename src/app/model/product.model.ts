@@ -1,10 +1,10 @@
-import {Category} from "./category.model";
-import {Producer} from "./producer.model";
-import {Fragrant} from "./fragrant.model";
-import {Target} from "./target.model";
-import {Amount} from "./amount.model";
-import {Version} from "./version.model";
-import {OderBy} from "./base-respone.model";
+import {Category} from './category.model';
+import {Producer} from './producer.model';
+import {Fragrant} from './fragrant.model';
+import {Target} from './target.model';
+import {Amount} from './amount.model';
+import {Version} from './version.model';
+import {OderBy} from './base-respone.model';
 
 
 export class Product {
@@ -23,6 +23,8 @@ export class Product {
     fragrant: Fragrant;
     targets: Array<Target>;
     imageBase64?: string;
+    year?: number;
+    totalSold?: number;
 }
 
 export class ProductSearch {
@@ -39,5 +41,6 @@ export class ProductSearch {
     minPrice?: number;
     categoryCode?: string;
     oderBy?: OderBy;
+    year?: number;
 }
 

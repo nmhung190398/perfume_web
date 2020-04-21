@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -16,7 +15,6 @@ import {SERVER_URL, DEFAULTPASSWORD, SERVER_API_IMAGE} from '../../../../app.con
     styleUrls: ['./news-detail.component.scss']
 })
 export class NewsDetailComponent implements OnInit {
-    public Editor = ClassicEditor;
     newsId;
     isUpdate = false;
     news: News;

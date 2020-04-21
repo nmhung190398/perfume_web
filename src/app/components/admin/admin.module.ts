@@ -36,16 +36,17 @@ import {ProducerComponent} from './producer/producer.component';
 import {AmountComponent} from './amount/amount.component';
 import {FragrantComponent} from './fragrant/fragrant.component';
 import {CheckoutComponent} from './checkout/checkout.component';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+
+import {CKEditorModule} from '../../../ckeditor/ckeditor.module';
 import {CouponComponent} from './coupon/coupon.component';
 import {CommentComponent} from './comment/comment.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { UserComponent } from './user/user.component';
-import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {UserComponent} from './user/user.component';
+import {UserDetailComponent} from './user/user-detail/user-detail.component';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import { NewsComponent } from './news/news.component';
-import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import {NewsComponent} from './news/news.component';
+import {NewsDetailComponent} from './news/news-detail/news-detail.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {

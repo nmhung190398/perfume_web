@@ -6,7 +6,6 @@ import {PAGING_PER_PAGE} from '../../../comom/constant/base.constant';
 import {NewsService} from '../../../service/news.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
     selector: 'app-news',
@@ -15,7 +14,6 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class NewsComponent implements OnInit {
 
-    public Editor = ClassicEditor;
     newss: News[];
     paging: IPaging;
     newsFormGroup: FormGroup;

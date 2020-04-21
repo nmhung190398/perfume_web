@@ -13,7 +13,6 @@ import {CategoryService} from '../../../../service/category.service';
 import {TargetService} from '../../../../service/target.service';
 import {ProducerService} from '../../../../service/producer.service';
 import {xoaDau} from './../../../../comom/utils/base.utils';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {Amount} from 'src/app/model/amount.model';
 import {Fragrant} from 'src/app/model/fragrant.model';
 import {AmountService} from 'src/app/service/amount.service';
@@ -31,6 +30,7 @@ export class ProductDetailComponent implements OnInit {
     isUpdate: boolean;
     productFormGroup: FormGroup;
     product: Product;
+    years: number[] = [];
 
     imageDefault = 'assets/images/upload-file.png';
     imageError: string;
@@ -49,7 +49,6 @@ export class ProductDetailComponent implements OnInit {
     versionFromGroup: FormGroup;
     versionUpdateGroup: FormGroup;
 
-    public Editor = ClassicEditor;
 
     constructor(
         private route: ActivatedRoute,
@@ -64,6 +63,9 @@ export class ProductDetailComponent implements OnInit {
         private modalService: NgbModal,
         private fb: FormBuilder
     ) {
+        for (let i = 2020; i >= 1990; --i) {
+            this.years.push(i);
+        }
         this.activatedRoute.paramMap.subscribe(param => {
             this.productId = this.route.snapshot.paramMap.get('id');
             this.isUpdate = this.productId !== null;
@@ -91,6 +93,7 @@ export class ProductDetailComponent implements OnInit {
         // this.Editor.config.toolbarGroups = CKEDITOR_CONFIG.toolbarGroups;
     }
 
+
     ngOnInit(): void {
     }
 
@@ -101,6 +104,17 @@ export class ProductDetailComponent implements OnInit {
                 this.versions = this.product.versions.map(value => {
                     value.isUpdate = false;
                     return value;
+                });
+                this.isHot = this.product.highlights.some(value => {
+                    if (value === 'HOT') {
+                        return true;
+                    }
+                });
+
+                this.isNew = this.product.highlights.some(value => {
+                    if (value === 'NEW') {
+                        return true;
+                    }
                 });
 
                 if (this.product.image != null) {
@@ -121,7 +135,8 @@ export class ProductDetailComponent implements OnInit {
                     amount: null,
                     fragrant: null,
                     targets: null,
-                    imageBase64: null
+                    imageBase64: null,
+                    year: this.product.year
                 });
                 this.loadProperties();
             });
@@ -218,7 +233,8 @@ export class ProductDetailComponent implements OnInit {
             amount: [null, [Validators.required]],
             fragrant: [null, [Validators.required]],
             targets: [null, [Validators.required]],
-            imageBase64: []
+            imageBase64: [],
+            year: [null, [Validators.required]],
         });
     }
 
@@ -314,6 +330,7 @@ export class ProductDetailComponent implements OnInit {
                         if (res.status === 200) {
                             console.log(res.body);
                             //chuyển hướng
+                            // this.loadAll();
                             this.router.navigate(['/admin/product']);
                         } else {
                             alert('eror');

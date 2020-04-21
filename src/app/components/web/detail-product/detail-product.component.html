@@ -32,7 +32,8 @@
                         <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
                     </p>
                     <p class="text-left">
-                        <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+                        <a href="#" class="mr-2" style="color: #000;">{{product.totalSold? product.totalSold : 0}}<span
+                                style="color: #bbb;"> sản phẩm đã bán</span></a>
                     </p>
                 </div>
                 <p class="price"><span>{{versionSelect?.price | currency:'VND':''}} VNĐ</span></p>
@@ -43,6 +44,12 @@
                         <ul *ngIf="product?.targets">
                             <li *ngFor="let target of product?.targets">{{target?.name}}</li>
                         </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">Phát hàng năm</div>
+                    <div class="col-7">
+                        {{product?.year}}
                     </div>
                 </div>
 
@@ -60,7 +67,7 @@
                     <div class="col-md-6">
                         <div class="form-group d-flex">
                             <div class="select-wrap">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <div class="icon"><span><i class="fa fa-angle-down" aria-hidden="true"></i></span></div>
                                 <select [(ngModel)]="versionSelect" class="form-control" *ngIf="versionSelect">
                                     <option *ngFor="let version of product?.versions" [ngValue]="version">
                                         {{version?.name}}
@@ -90,7 +97,7 @@
                     </div>
                     <div class="w-100"></div>
                     <div class="col-md-12">
-                        <p style="color: #000;">80 đã mua sản phẩm này</p>
+                        <p style="color: #000;">{{versionSelect.totalSold? versionSelect.totalSold : 0}} phiển bản {{versionSelect.name}} đã bán</p>
                     </div>
                 </div>
                 <p><a (click)="addCartItem()" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a>

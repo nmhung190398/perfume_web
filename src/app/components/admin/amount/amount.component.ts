@@ -6,14 +6,12 @@ import { PAGING_PER_PAGE } from "./../../../comom/constant/base.constant";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AmountService } from "../../../service/amount.service";
-import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 @Component({
   selector: "app-amount",
   templateUrl: "./amount.component.html",
   styleUrls: ["./amount.component.scss"]
 })
 export class AmountComponent implements OnInit {
-  public Editor = ClassicEditor;
   amounts: Amount[];
   public entitySelected: Amount;
   paging: IPaging;
@@ -48,7 +46,7 @@ export class AmountComponent implements OnInit {
       id: [],
       name: [
         "",
-        [Validators.required, Validators.minLength(5), Validators.maxLength(20)]
+        [Validators.required, Validators.minLength(5), Validators.maxLength(100)]
       ],
       description: ["", [Validators.required]],
       isUpdate: [true],
