@@ -85,5 +85,9 @@ export class CheckoutService {
         return null;
     }
 
+    getChart(param: any): Observable<HttpResponse<any>> {
+        const options = createRequestOption(param);
+        return this.http.get<ResponData>(`${this.resourceUrl}/chart`, {params: options, observe: 'response'});
+    }
 
 }

@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import {CheckoutService} from '../../../service/checkout.service';
 
 @Component({
   templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
+
+  constructor(private checkoutService: CheckoutService) {
+
+  }
 
   radioModel: string = 'Month';
 
@@ -212,98 +217,52 @@ export class DashboardComponent implements OnInit {
   // mainChart
 
   public mainChartElements = 27;
-  public mainChartData1: Array<number> = [];
-  public mainChartData2: Array<number> = [];
-  public mainChartData3: Array<number> = [];
+  public dataNew: Array<number> = [];
+  public dataProcessing: Array<number> = [];
+  public dataDone: Array<number> = [];
+  public dataCancel: Array<number> = [];
 
   public mainChartData: Array<any> = [
     {
-      data: this.mainChartData1,
-      label: 'Current'
+      data: this.dataNew,
+      label: 'Đơn mới'
     },
     {
-      data: this.mainChartData2,
-      label: 'Previous'
+      data: this.dataProcessing,
+      label: 'Đang vận chuyển'
     },
     {
-      data: this.mainChartData3,
-      label: 'BEP'
+      data: this.dataDone,
+      label: 'Hoàn thành'
+    },
+    {
+      data: this.dataCancel,
+      label: 'Đơn hủy'
     }
+  ];
+  public mainColors = [
+    {
+      backgroundColor: '#007bff'
+    },
+    {
+      backgroundColor: '#ffc107'
+    },
+    {
+      backgroundColor: '#28a745'
+    },
+    {
+      backgroundColor: '#dc3545'
+    },
   ];
   /* tslint:disable:max-line-length */
-  public mainChartLabels: Array<any> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Thursday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  public mainChartLabels: Array<any> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   /* tslint:enable:max-line-length */
   public mainChartOptions: any = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips,
-      intersect: true,
-      mode: 'index',
-      position: 'nearest',
-      callbacks: {
-        labelColor: function(tooltipItem, chart) {
-          return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor };
-        }
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          callback: function(value: any) {
-            return value.charAt(0);
-          }
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(250 / 5),
-          max: 250
-        }
-      }]
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-    legend: {
-      display: false
-    }
+    scaleShowVerticalLines: false,
+    responsive: true
   };
-  public mainChartColours: Array<any> = [
-    { // brandInfo
-      backgroundColor: hexToRgba(getStyle('--info'), 10),
-      borderColor: getStyle('--info'),
-      pointHoverBackgroundColor: '#fff'
-    },
-    { // brandSuccess
-      backgroundColor: 'transparent',
-      borderColor: getStyle('--success'),
-      pointHoverBackgroundColor: '#fff'
-    },
-    { // brandDanger
-      backgroundColor: 'transparent',
-      borderColor: getStyle('--danger'),
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 1,
-      borderDash: [8, 5]
-    }
-  ];
-  public mainChartLegend = false;
-  public mainChartType = 'line';
+  public mainChartLegend = true;
+  public mainChartType = 'bar';
 
   // social box charts
 
@@ -378,11 +337,52 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // generate random values for mainChart
-    for (let i = 0; i <= this.mainChartElements; i++) {
-      this.mainChartData1.push(this.random(50, 200));
-      this.mainChartData2.push(this.random(80, 100));
-      this.mainChartData3.push(65);
+    this.getAllChart("week");
+  }
+
+  getChart(status, type) {
+    this.checkoutService.getChart({ status, type }).subscribe(res => {
+      const data = res.body;
+      if (status == 1) {
+        data.forEach(e => {
+          this.dataNew.push(e.count);
+        });
+      }
+      if (status == 2) {
+        data.forEach(e => {
+          this.dataProcessing.push(e.count);
+        });
+      }
+      if (status == 3) {
+        data.forEach(e => {
+          this.dataDone.push(e.count);
+        });
+      }
+      if (status == 4) {
+        data.forEach(e => {
+          this.dataCancel.push(e.count);
+        });
+      }
+    });
+  }
+
+  getAllChart(type) {
+    for (let i=1; i<5; i++) {
+      this.getChart(i, type);
+    }
+  }
+
+  public optionSl = 1;
+
+  changeOption(option: number) {
+    this.optionSl = option;
+    if (option === 1) {
+      this.mainChartLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      this.getAllChart("week");
+    }
+    if (option === 2) {
+      this.mainChartLabels = ['Jan', 'Feb', 'March', 'April', 'May', 'Ju', 'July', 'Aug', 'Sep', 'Oct', 'November', 'Dec'];
+      this.getAllChart("month");
     }
   }
 }
