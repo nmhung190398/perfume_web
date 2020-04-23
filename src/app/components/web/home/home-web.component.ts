@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbCarouselConfig} from "@ng-bootstrap/ng-bootstrap";
-import {Product, ProductSearch} from "../../../model/product.model";
-import {ProductService} from "../../../service/product.service";
-import {CONSTANT_PATH, HIGHLIGHT} from "../../../comom/constant/base.constant";
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import {Product, ProductSearch} from '../../../model/product.model';
+import {ProductService} from '../../../service/product.service';
+import {CONSTANT_PATH, HIGHLIGHT} from '../../../comom/constant/base.constant';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SERVER_URL} from '../../../app.constants';
-import {CartService} from "../../../service/cart.service";
-import {AuthenticationService} from "../../../service/authentication.service";
+import {CartService} from '../../../service/cart.service';
+import {AuthenticationService} from '../../../service/authentication.service';
 
 @Component({
     selector: 'app-home',
@@ -19,6 +19,7 @@ export class HomeWebComponent implements OnInit {
     CONSTANT_PATH = CONSTANT_PATH;
     productHots: Product[] = [];
     productNews: Product[] = [];
+    productTopSold: Product[] = [];
     SERVER_URL = SERVER_URL;
 
     constructor(config: NgbCarouselConfig,
@@ -39,7 +40,7 @@ export class HomeWebComponent implements OnInit {
         this.productViews.push({
             title: 'test',
             products: []
-        })
+        });
 
         this.loadAll();
     }
@@ -47,6 +48,7 @@ export class HomeWebComponent implements OnInit {
     loadAll() {
         this.loadProductNew();
         this.loadProductHot();
+        this.loadProductTopSold();
     }
 
     loadProductNew() {
@@ -55,6 +57,20 @@ export class HomeWebComponent implements OnInit {
             page: 1
         }, {highlights: [HIGHLIGHT.NEW]}).subscribe(res => {
             this.productNews = res.body.data;
+        });
+    }
+
+    loadProductTopSold() {
+        this.productService.filter({
+            limit: 12,
+            page: 1
+        }, {
+            oderBy: {
+                name: 'countCheckoutItem',
+                type: 'desc'
+            }
+        }).subscribe(res => {
+            this.productTopSold = res.body.data;
         });
     }
 
@@ -95,7 +111,6 @@ export class HomeWebComponent implements OnInit {
     }
 
 }
-
 
 
 interface ProductView {

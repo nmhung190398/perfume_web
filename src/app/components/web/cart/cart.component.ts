@@ -102,6 +102,7 @@ export class CartComponent implements OnInit {
                     value.version.product = resProduct.body[0];
                 });
             });
+
         });
     }
 
@@ -112,7 +113,8 @@ export class CartComponent implements OnInit {
     }
 
     getUrlBackground(image) {
-        return `url(${SERVER_API_IMAGE}/${image})`;
+        const rs = `${SERVER_API_IMAGE}${image}`;
+        return rs;
     }
 
     get subtotal() {

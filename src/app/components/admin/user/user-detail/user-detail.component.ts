@@ -127,7 +127,7 @@ export class UserDetailComponent implements OnInit {
         if (this.isUpdate) {
             this.userService.update(tmp).subscribe(res => {
                 if (res.status === 200) {
-                    window.location.reload();
+                    this.router.navigate(['/admin/user']);
                 } else {
                     alert('eror');
                 }
