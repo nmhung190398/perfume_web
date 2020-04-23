@@ -19,6 +19,8 @@ export class ItemProductComponent implements OnInit {
     versionSelect: Version;
     SERVER_API_IMAGE = SERVER_API_IMAGE;
     CONSTANT_PATH = CONSTANT_PATH;
+    isNew = false;
+    isHot = false;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private productService: ProductService,
@@ -38,6 +40,20 @@ export class ItemProductComponent implements OnInit {
                 return true;
             }
         });
+
+        if (this.product?.highlights) {
+            this.isHot = this.product.highlights.some(value => {
+                if (value === 'HOT') {
+                    return true;
+                }
+            });
+
+            this.isNew = this.product.highlights.some(value => {
+                if (value === 'NEW') {
+                    return true;
+                }
+            });
+        }
     }
 
 
