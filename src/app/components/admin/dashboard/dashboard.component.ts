@@ -340,6 +340,8 @@ export class DashboardComponent implements OnInit {
         this.getAllChart('week');
     }
 
+    totalSold = 0;
+
     getChart(status, type) {
         this.checkoutService.getChart({status, type}).subscribe(res => {
             const data = res.body;
@@ -359,12 +361,14 @@ export class DashboardComponent implements OnInit {
 
             if (status == 3) {
                 this.dataDone.length = 0;
+                this.totalSold = 0;
                 data.forEach(e => {
+                    this.totalSold += e.value;
                     this.dataDone.push(e.count);
                 });
             }
 
-            if (status == 4) {
+            if (status == 0) {
                 this.dataCancel.length = 0;
                 data.forEach(e => {
                     this.dataCancel.push(e.count);
@@ -374,7 +378,7 @@ export class DashboardComponent implements OnInit {
     }
 
     getAllChart(type) {
-        for (let i = 1; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
             this.getChart(i, type);
         }
     }

@@ -43,8 +43,8 @@ export class ProductDetailComponent implements OnInit {
     amounts: Array<Amount>;
     fragrants: Array<Fragrant>;
     versions: Array<Version> = [];
-    isHot = true;
-    isNew = true;
+    isHot = false;
+    isNew = false;
     isCustomUri = true;
     versionFromGroup: FormGroup;
     versionUpdateGroup: FormGroup;
@@ -105,17 +105,20 @@ export class ProductDetailComponent implements OnInit {
                     value.isUpdate = false;
                     return value;
                 });
-                this.isHot = this.product.highlights.some(value => {
-                    if (value === 'HOT') {
-                        return true;
-                    }
-                });
+                if (this.product.highlights) {
+                    this.isHot = this.product.highlights.some(value => {
+                        if (value === 'HOT') {
+                            return true;
+                        }
+                    });
 
-                this.isNew = this.product.highlights.some(value => {
-                    if (value === 'NEW') {
-                        return true;
-                    }
-                });
+                    this.isNew = this.product.highlights.some(value => {
+                        if (value === 'NEW') {
+                            return true;
+                        }
+                    });
+                }
+
 
                 if (this.product.image != null) {
                     this.imageDefault = getImg(this.product.image);

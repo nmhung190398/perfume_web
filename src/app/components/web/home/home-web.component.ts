@@ -62,7 +62,7 @@ export class HomeWebComponent implements OnInit {
         this.productService.filter({
             limit: 12,
             page: 1
-        }, {highlights: [HIGHLIGHT.NEW]}).subscribe(res => {
+        }, {highlights: [HIGHLIGHT.HOT]}).subscribe(res => {
             this.productHots = res.body.data;
         });
     }

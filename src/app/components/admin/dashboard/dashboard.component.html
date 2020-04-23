@@ -34,8 +34,8 @@
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </div>
-          <div class="text-value">9.823</div>
-          <div>Members online</div>
+          <div class="text-value">Tổng thu nhập {{totalSold}} VNĐ</div>
+          <div><span *ngIf="optionSl == 1">Trong Tuần</span><span *ngIf="optionSl != 1">Trong Tháng</span></div>
         </div>
         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
           <canvas baseChart class="chart"
