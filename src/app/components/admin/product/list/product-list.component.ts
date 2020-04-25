@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from "../../../../model/product.model";
 import {IPaging, Paging} from "../../../../model/base-respone.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {PAGING_PER_PAGE} from "../../../../comom/constant/base.constant";
+import {PAGING_PER_PAGE, getImg} from "../../../../comom/constant/base.constant";
 import {ProductService} from "../../../../service/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -30,6 +30,10 @@ export class ProductListComponent implements OnInit {
                 protected activatedRoute: ActivatedRoute,
                 private modalService: NgbModal,
                 private fb: FormBuilder) {
+    }
+
+    getImage(img) {
+        return getImg(img);
     }
 
     ngOnInit(): void {

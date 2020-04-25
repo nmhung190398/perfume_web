@@ -36,12 +36,33 @@
                         <thead>
                         <tr>
                             <th class="text-center">
-                                Name
+                                Ảnh
                             </th>
 
                             <th class="text-center">
-                                Đường dẫn
+                                Tên
                             </th>
+
+                            <th class="text-center">
+                                Thể loại
+                            </th>
+
+                            <th class="text-center">
+                                Nhà sản xuất
+                            </th>
+
+                            <th class="text-center">
+                                Mùi hương
+                            </th>
+
+                            <th class="text-center">
+                                Nồng độ
+                            </th>
+
+                            <th class="text-center">
+                                Highlights
+                            </th>
+
                             <th class="text-center" style="width: 200px">
                                 Action
                             </th>
@@ -51,17 +72,32 @@
                             <tbody *ngFor="let product of products; let i=index">
                             <tr *ngIf="product"
                                 [style]="product.id === productFormGroup.get('id').value && productFormGroup.get('isShow').value? 'background : #dbcc8f' : ''">
-                                <!--name -->
                                 <td>
-                                      <span>
-                                        {{product.name}}
-                                      </span>
+                                    <a style="box-shadow: none;" [href]="getImage(product.image)" target="_blank" class="image-popup prod-img-bg" >
+                                        <img class="img-fluid img-product" style="width: 50px;" [src]="getImage(product.image)">
+                                    </a>   
                                 </td>
 
                                 <td>
-                                      <span>
-                                        {{product.code}}
-                                      </span>
+                                      <a [href]="'/product/' + product.code" target="_blank">
+                                        {{product?.name}}
+                                      </a>
+                                </td>
+
+                                <td>
+                                      {{product?.category?.name}}
+                                </td>
+                                <td>
+                                    {{product?.producer?.name}}
+                                </td>
+                                <td>
+                                    {{product?.fragrant?.name}}
+                                </td>
+                                <td>
+                                    {{product?.amount?.name}}
+                                </td>
+                                <td>
+                                    {{product?.highlights}}
                                 </td>
 
                                 <!--acction-->

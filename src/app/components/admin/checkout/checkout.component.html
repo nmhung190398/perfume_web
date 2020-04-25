@@ -122,7 +122,7 @@
 
                                         <button
                                                 type="submit"
-                                                class="btn btn-info btn-sm">
+                                                class="btn btn-info btn-sm" (click)="view(viewModal, checkout)">
                                             <span class="d-none d-md-inline">Chi tiết</span>
                                         </button>
 
@@ -156,6 +156,86 @@
     </div>
 </div>
 
+<ng-template #viewModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Chi tiết</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-sort-icon">
+            <thead>
+            <tr>
+                <th class="text-center">
+                    Ảnh
+                </th>
+
+                <th class="text-center">
+                    Tên
+                </th>
+
+                <th class="text-center">
+                    Thể loại
+                </th>
+
+                <th class="text-center">
+                    Nhà sản xuất
+                </th>
+
+                <th class="text-center">
+                    Mùi hương
+                </th>
+
+                <th class="text-center">
+                    Nồng độ
+                </th>
+
+                <th class="text-center">
+                    Highlights
+                </th>
+            </tr>
+            </thead>
+            <ng-container *ngIf="products && products.length >= 0">
+                <tbody *ngFor="let product of products; let i=index">
+                <tr *ngIf="product">
+                    <td>
+                        <a style="box-shadow: none;" [href]="getImage(product.image)" target="_blank" class="image-popup prod-img-bg" >
+                            <img class="img-fluid img-product" style="width: 50px;" [src]="getImage(product.image)">
+                        </a>   
+                    </td>
+
+                    <td>
+                          <a [href]="'/product/' + product.code" target="_blank">
+                            {{product?.name}}
+                          </a>
+                    </td>
+
+                    <td>
+                          {{product?.category?.name}}
+                    </td>
+                    <td>
+                        {{product?.producer?.name}}
+                    </td>
+                    <td>
+                        {{product?.fragrant?.name}}
+                    </td>
+                    <td>
+                        {{product?.amount?.name}}
+                    </td>
+                    <td>
+                        {{product?.highlights}}
+                    </td>
+                </tr>
+                </tbody>
+            </ng-container>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close')">Đóng
+        </button>
+    </div>
+</ng-template>
 
 <ng-template #deleteModal let-modal>
     <div class="modal-header">
