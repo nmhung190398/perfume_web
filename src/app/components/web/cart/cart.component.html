@@ -18,10 +18,10 @@
                         <tr class="text-center">
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
+                            <th>Sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
 
                             <td class="product-name">
                                 <h3>{{cartItem.version.product?.name}}</h3>
-                                <p> Phien ban {{cartItem.version.name}} </p>
+                                <p> Phiên bản {{cartItem.version.name}} </p>
                             </td>
 
                             <td class="price">{{cartItem.version.price}} VND</td>
@@ -62,26 +62,35 @@
         <div *ngIf="cartItems.length > 0" class="row justify-content-center mt-5 ">
             <div class="col-xl-10 ftco-animate fadeInUp ftco-animated">
                 <form [formGroup]="checkoutForm" class="billing-form">
-                    <h3 class="mb-4 billing-heading">Billing Details</h3>
+                    <h3 class="mb-4 billing-heading">Thông tin nhận hàng</h3>
                     <div class="row align-items-end">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Firt Name</label>
+                                <label>Họ <span class="text-danger" *ngIf="checkoutForm.get('firstname').invalid"
+                                                style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span></label>
                                 <input type="text" class="form-control" placeholder="Firt Name"
                                        formControlName="firstname">
                             </div>
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Last Name</label>
+                                <label>Tên
+                                    <span class="text-danger" *ngIf="checkoutForm.get('lastname').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <input type="text" class="form-control" placeholder="Last Name"
                                        formControlName="lastname">
                             </div>
+
                         </div>
                         <div class="w-100"></div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Province</label>
+                                <label>Tỉnh/Thành phố
+                                    <span class="text-danger" *ngIf="checkoutForm.get('provinceId').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control" formControlName="provinceId"
@@ -97,7 +106,10 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Province</label>
+                                <label>Quận/Huyện
+                                    <span class="text-danger" *ngIf="checkoutForm.get('districtId').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control" formControlName="districtId" (change)="loadWards()">
@@ -112,7 +124,10 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Province</label>
+                                <label>Tổ/Xã
+                                    <span class="text-danger" *ngIf="checkoutForm.get('wardId').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control" formControlName="wardId">
@@ -128,20 +143,29 @@
                         <div class="w-100"></div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Street Address</label>
+                                <label>Địa chỉ
+                                    <span class="text-danger" *ngIf="checkoutForm.get('address').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <input type="text" class="form-control" placeholder="Address" formControlName="address">
                             </div>
                         </div>
                         <div class="w-100"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Phone</label>
+                                <label>Điện thoại
+                                    <span class="text-danger" *ngIf="checkoutForm.get('phone').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Email Address</label>
+                                <label>Hòm thư
+                                    <span class="text-danger" *ngIf="checkoutForm.get('email').invalid"
+                                          style="margin-left: 10px; font-style: italic;font-size: 10px">(Vui lòng nhập thông tin)</span>
+                                </label>
                                 <input type="text" class="form-control" placeholder="Email" formControlName="email">
                             </div>
                         </div>
@@ -176,7 +200,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="cart-detail bg-light p-3 p-md-4">
-                            <h3 class="billing-heading mb-4">Payment Method</h3>
+                            <h3 class="billing-heading mb-4">Hình thức thanh toán
+                                <span class="text-danger" *ngIf="checkoutForm.get('paymentMethod').invalid"
+                                      style="margin-left: 10px; font-style: italic;font-size: 10px"><br>(Vui lòng nhập thông tin)</span>
+                            </h3>
                             <div class="form-group" *ngFor="let key of objectKeys(PAYMENT_METHOD)">
                                 <div class="col-md-12">
                                     <div class="radio">
@@ -187,7 +214,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <p><a (click)="addCheckout()" class="btn btn-primary py-3 px-4">Place an order</a></p>
+                            <p>
+                                <button [disabled]="checkoutForm.invalid" (click)="addCheckout()"
+                                        class="btn btn-primary py-3 px-4">Place an order
+                                </button>
+                            </p>
                         </div>
                     </div>
                 </div>

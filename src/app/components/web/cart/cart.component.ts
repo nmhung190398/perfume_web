@@ -48,16 +48,16 @@ export class CartComponent implements OnInit {
         this.userLogin = this.authenticationService.currentUserValue.user;
         console.log(this.userLogin);
         this.checkoutForm = this.fb.group({
-            firstname: [this.userLogin?.firstname],
-            lastname: [this.userLogin?.lastname],
-            address: [this.userLogin?.address],
-            email: [this.userLogin?.email],
-            phone: [this.userLogin?.phone],
+            firstname: [this.userLogin?.firstname, [Validators.required]],
+            lastname: [this.userLogin?.lastname, [Validators.required]],
+            address: [this.userLogin?.address, [Validators.required]],
+            email: [this.userLogin?.email, [Validators.required]],
+            phone: [this.userLogin?.phone, [Validators.required]],
             coupon: [null],
-            provinceId: [null],
-            districtId: [null],
-            wardId: [null],
-            paymentMethod: [null],
+            provinceId: [null, [Validators.required]],
+            districtId: [null, [Validators.required]],
+            wardId: [null, [Validators.required]],
+            paymentMethod: [null, [Validators.required]],
         });
         console.log(this.checkoutForm.value);
         this.loadAll();
@@ -148,6 +148,7 @@ export class CartComponent implements OnInit {
             console.log(res.body);
             if (res.body.status === 200) {
                 alert('Thành công! Vui lòng check mail ');
+                this.cartService.setCartItem([]);
                 this.router.navigate(['/checkout']);
             } else {
                 alert(res.body.msg);

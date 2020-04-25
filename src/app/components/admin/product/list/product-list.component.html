@@ -19,16 +19,16 @@
                             </select>
                         </div>
                         <div class="col-2 float-right">
-                            <div class="input-group " style="width: 100%">
-                                <input [(ngModel)]="txtSearch" type="text" class="form-control"
-                                       placeholder="search">
-                                <div class="input-group-append">
-                                    <button (click)="search()" class="btn btn-dark" type="button"
-                                            [disabled]="!isAcction">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            <!--<div class="input-group " style="width: 100%">-->
+                                <!--<input [(ngModel)]="txtSearch" type="text" class="form-control"-->
+                                       <!--placeholder="search">-->
+                                <!--<div class="input-group-append">-->
+                                    <!--<button (click)="search()" class="btn btn-dark" type="button"-->
+                                            <!--[disabled]="!isAcction">-->
+                                        <!--<i class="fa fa-search"></i>-->
+                                    <!--</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
 
                     </div>
@@ -75,7 +75,7 @@
                                 <td>
                                     <a style="box-shadow: none;" [href]="getImage(product.image)" target="_blank" class="image-popup prod-img-bg" >
                                         <img class="img-fluid img-product" style="width: 50px;" [src]="getImage(product.image)">
-                                    </a>   
+                                    </a>
                                 </td>
 
                                 <td>
