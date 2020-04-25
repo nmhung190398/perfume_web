@@ -9,9 +9,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {xoaDau} from '../../../comom/utils/base.utils';
 import {CHECKOUT_STATUS, PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
 import {__param} from 'tslib';
-import { AddressService } from "../../../service/address.service";
-import { Product } from 'src/app/model/product.model';
-import { ProductService } from 'src/app/service/product.service';
+import {AddressService} from '../../../service/address.service';
+import {Product} from 'src/app/model/product.model';
+import {ProductService} from 'src/app/service/product.service';
 
 @Component({
     selector: 'app-checkout',
@@ -24,7 +24,7 @@ export class CheckoutComponent implements OnInit {
     paging: IPaging = new Paging();
     checkoutFormGroup: FormGroup;
     selectedCheckout: Checkout;
-    txtSearch: string;
+    txtSearch: string = '';
     limits = PAGING_PER_PAGE;
     isAcction = true;
     isCustomUri = true;
@@ -62,7 +62,7 @@ export class CheckoutComponent implements OnInit {
                 rs = CHECKOUT_STATUS[value];
                 return true;
             }
-        })
+        });
 
         return rs;
     }
@@ -108,7 +108,11 @@ export class CheckoutComponent implements OnInit {
         //     limit: this.paging.limit
         // };
         const checkout: Checkout = {};
+        if (this.txtSearch.trim() !== '') {
+            checkout.description = this.txtSearch;
+        }
         checkout.status = this.checkoutStatus;
+        console.log(checkout);
         this.checkoutService.filter(this.paging, checkout).subscribe(res => {
             if (res.status === 200) {
                 this.checkouts = res.body.data;
@@ -150,7 +154,7 @@ export class CheckoutComponent implements OnInit {
                 rs = PAYMENT_METHOD[value].label;
                 return true;
             }
-        })
+        });
         return rs;
     }
 
@@ -170,7 +174,7 @@ export class CheckoutComponent implements OnInit {
             if (item.version) {
                 this.productService.find(item.version.productId).subscribe(res => {
                     if (res.body) this.products.push(res.body);
-                })
+                });
             }
         });
         this.modalService.open(modal, {
@@ -260,7 +264,7 @@ export class CheckoutComponent implements OnInit {
                         id: checkout.id,
                         status: CHECKOUT_STATUS.DELETED,
                         note: this.nodeDelete
-                    }
+                    };
                     this.checkoutService.update(tmp).subscribe(res => {
                         // control.removeAt(index);
                         if (res.status === 200) {
@@ -297,7 +301,7 @@ export class CheckoutComponent implements OnInit {
 
     pagingInfo = (paging) => {
         return `Show ${paging.offset + 1} to ${(paging.offset + this.checkouts.length)} of ${paging.total} entries`;
-    }
+    };
 
 
 }

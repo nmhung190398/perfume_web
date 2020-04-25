@@ -1,6 +1,6 @@
-import {User} from "./user";
-import {Version} from "./version.model";
-import {Address} from "./address.model";
+import {User} from './user';
+import {Version} from './version.model';
+import {Address} from './address.model';
 
 export class Checkout {
     id?: number;
@@ -21,4 +21,5 @@ export class Checkout {
     coupon?: any;
     total?: number;
     finalprice?: number;
+    description?: string;
 }
