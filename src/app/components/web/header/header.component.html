@@ -51,7 +51,7 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a [routerLink]="['/home']" class="nav-link">Home</a></li>
+                <li class="nav-item active"><a [routerLink]="['/home']" class="nav-link">Trang chủ</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>
@@ -60,9 +60,9 @@
                            [routerLink]="['/' + [CONSTANT_PATH.LIST_PRODUCT,category.code].join('/')]">{{category.name}}</a>
                     </div>
                 </li>
-                <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.ABOUT]" class="nav-link">About</a></li>
-                <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.BLOG]" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.CONTACT]" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.ABOUT]" class="nav-link">Về chúng tôi</a></li>
+                <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.BLOG]" class="nav-link">Tin tức</a></li>
+                <li class="nav-item"><a [routerLink]="['/' + CONSTANT_PATH.CONTACT]" class="nav-link">Liên hệ</a></li>
                 <li class="nav-item cta cta-colored"><a [routerLink]="['/' + CONSTANT_PATH.CART]" class="nav-link"><i
                         class="fa fa-lg fa-cart-arrow-down"></i>[{{lengthCartItem}}]</a></li>
 
@@ -74,7 +74,7 @@
 
 <ng-template #changePasswordModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-comfirm-save-title">Save</h4>
+        <h4 class="modal-title" id="modal-comfirm-save-title">Lưu</h4>
         <button
                 type="button"
                 class="close"

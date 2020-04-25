@@ -7,6 +7,8 @@ import {ProductService} from '../../../service/product.service';
 import {SERVER_API_URL, SERVER_URL} from '../../../app.constants';
 import {CartService} from 'src/app/service/cart.service';
 import {AuthenticationService} from 'src/app/service/authentication.service';
+import {Category} from '../../../model/category.model';
+import {CategoryService} from '../../../service/category.service';
 
 @Component({
     selector: 'app-list-product',
@@ -21,6 +23,7 @@ export class ListProductComponent implements OnInit {
     SERVER_URL = SERVER_URL;
     quantity = 1;
     filterProduct: ProductSearch = {};
+    category: Category;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -28,6 +31,7 @@ export class ListProductComponent implements OnInit {
         private cartService: CartService,
         private authenticationService: AuthenticationService,
         private router: Router,
+        private categoryService: CategoryService
     ) {
         // this.categoryCode = this.activatedRoute.snapshot.paramMap.get('category');
 
@@ -35,39 +39,23 @@ export class ListProductComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe(param => {
             this.categoryCode = param.get('category');
             this.paging = new Paging();
+            this.categoryService.filterAll({
+                code: this.categoryCode
+            }).subscribe(res => {
+                console.log(res.body);
+                if (res.status === 200 && res.body.length > 0) {
+                    this.category = res.body[0];
+                } else {
+                    this.router.navigate(['/404']);
+                }
+
+            });
             this.loadAll();
         });
     }
 
     ngOnInit(): void {
 
-    }
-
-    addCartItem(idVersion, buyNow = false) {
-        if (idVersion) {
-            if (this.authenticationService.currentUserValue) {
-                const user = this.authenticationService.currentUserValue.user;
-                this.cartService
-                    .create({
-                        user: user,
-                        version: {
-                            id: idVersion
-                        }
-                    })
-                    .subscribe(res => {
-                        this.cartService.findByUserLogin(user.id).subscribe(res1 => {
-
-                        });
-                        if (buyNow) {
-                            this.router.navigate(['/cart']);
-                        }
-                    });
-            } else {
-                alert(' bạn chưa đăng nhập vui lòng đăng nhập ');
-            }
-        } else {
-            alert(' Hết Hàng ');
-        }
     }
 
     loadAll() {
