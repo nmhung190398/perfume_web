@@ -2,14 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {Checkout} from '../../../model/checkout.model';
 import {IPaging, Paging} from '../../../model/base-respone.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PAGING_PER_PAGE} from '../../../comom/constant/base.constant';
+import {PAGING_PER_PAGE, getImg} from '../../../comom/constant/base.constant';
 import {CheckoutService} from '../../../service/checkout.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {xoaDau} from '../../../comom/utils/base.utils';
 import {CHECKOUT_STATUS, PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
 import {__param} from 'tslib';
-import {AddressService} from "../../../service/address.service";
+import { AddressService } from "../../../service/address.service";
+import { Product } from 'src/app/model/product.model';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
     selector: 'app-checkout',
@@ -28,12 +30,14 @@ export class CheckoutComponent implements OnInit {
     isCustomUri = true;
     checkoutStatus: number;
     nodeDelete;
+    products: Product[];
 
     constructor(public checkoutService: CheckoutService,
                 protected router: Router,
                 protected activatedRoute: ActivatedRoute,
                 private modalService: NgbModal,
                 private addressService: AddressService,
+                private productService: ProductService,
                 private fb: FormBuilder) {
         // this.activatedRoute.snapshot.paramMap.
         // router.events.subscribe(value => {
@@ -63,11 +67,13 @@ export class CheckoutComponent implements OnInit {
         return rs;
     }
 
+    getImage(img) {
+        return getImg(img);
+    }
 
     ngOnInit(): void {
         this.initTable();
     }
-
 
     initTable() {
         this.checkoutFormGroup = this.initForm();
@@ -156,6 +162,22 @@ export class CheckoutComponent implements OnInit {
             rs += `${checkout.address1.province.name}`;
         }
         return rs;
+    }
+
+    view(modal, checkout: Checkout) {
+        this.products = [];
+        checkout.checkoutItems.forEach(item => {
+            if (item.version) {
+                this.productService.find(item.version.productId).subscribe(res => {
+                    if (res.body) this.products.push(res.body);
+                })
+            }
+        });
+        this.modalService.open(modal, {
+            ariaLabelledBy: 'modal-basic-title',
+            size: 'xl',
+            backdrop: 'static'
+        });
     }
 
     // transition() {
