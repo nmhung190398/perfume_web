@@ -30,7 +30,7 @@ export class CartComponent implements OnInit {
     districts: District[] = [];
     provinces: Province[] = [];
     coupon;
-    percent = '0';
+    percent = 0;
     invalidCoupon = false;
     objectKeys = Object.keys;
 
@@ -126,7 +126,7 @@ export class CartComponent implements OnInit {
     }
 
     get total() {
-        const rs = (this.subtotal * (100 - parseInt(this.percent, 10))) / 100;
+        const rs = this.subtotal * (100 - this.percent) / 100;
         return rs;
     }
 
@@ -159,9 +159,10 @@ export class CartComponent implements OnInit {
         const code = this.checkoutForm.value.coupon;
         this.couponService.filterAll({code}).subscribe(res => {
             if (res.body.length > 0) {
-                this.percent = res.body[0]['percent'];
+                this.percent = res.body[0].percent;
                 this.invalidCoupon = false;
             } else {
+                this.percent = 0;
                 this.invalidCoupon = true;
             }
         });

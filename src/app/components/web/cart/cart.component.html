@@ -26,11 +26,14 @@
                         </thead>
                         <tbody>
                         <tr class="text-center" *ngFor="let cartItem of cartItems">
-                            <td class="product-remove"><a (click)="removeCartItem(cartItem.id)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                            <td class="product-remove"><a (click)="removeCartItem(cartItem.id)"><i class="fa fa-times"
+                                                                                                   aria-hidden="true"></i></a>
+                            </td>
 
                             <td class="image-prod">
                                 <div class="img">
-                                    <img style="width: 100%;height: 100%" [src]="getUrlBackground(cartItem.version.product?.image)">
+                                    <img style="width: 100%;height: 100%"
+                                         [src]="getUrlBackground(cartItem.version.product?.image)">
                                 </div>
 
                             </td>
@@ -44,7 +47,8 @@
 
                             <td class="quantity">
                                 <div class="input-group mb-3">
-                                    <input [(ngModel)]="cartItem.quantity" type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                    <input [(ngModel)]="cartItem.quantity" type="text" name="quantity"
+                                           class="quantity form-control input-number" value="1" min="1" max="100">
                                 </div>
                             </td>
 
@@ -63,24 +67,29 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Firt Name</label>
-                                <input type="text" class="form-control" placeholder="Firt Name" formControlName="firstname">
+                                <input type="text" class="form-control" placeholder="Firt Name"
+                                       formControlName="firstname">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label >Last Name</label>
-                                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastname">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name"
+                                       formControlName="lastname">
                             </div>
                         </div>
                         <div class="w-100"></div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label >Province</label>
+                                <label>Province</label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                    <select class="form-control" formControlName="provinceId" (change)="loadDistricts()">
+                                    <select class="form-control" formControlName="provinceId"
+                                            (change)="loadDistricts()">
                                         <option [value]="null" selected disabled>Province</option>
-                                        <option *ngFor="let province of provinces" [value]="province.id">{{province.name}}</option>
+                                        <option *ngFor="let province of provinces" [value]="province.id">
+                                            {{province.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -88,12 +97,14 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label >Province</label>
+                                <label>Province</label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control" formControlName="districtId" (change)="loadWards()">
                                         <option [value]="null" selected disabled>District</option>
-                                        <option *ngFor="let district of districts" [value]="district.id">{{district.prefix}} {{district.name}}</option>
+                                        <option *ngFor="let district of districts" [value]="district.id">
+                                            {{district.prefix}} {{district.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -101,12 +112,14 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label >Province</label>
+                                <label>Province</label>
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                    <select class="form-control" formControlName="wardId" >
+                                    <select class="form-control" formControlName="wardId">
                                         <option [value]="null" selected disabled>Ward</option>
-                                        <option *ngFor="let ward of wards" [value]="ward.id">{{ward.prefix}} {{ward.name}}</option>
+                                        <option *ngFor="let ward of wards" [value]="ward.id">{{ward.prefix}}
+                                            {{ward.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -122,7 +135,7 @@
                         <div class="w-100"></div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label >Phone</label>
+                                <label>Phone</label>
                                 <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
                             </div>
                         </div>
@@ -137,13 +150,13 @@
                 </form><!-- END -->
 
 
-
                 <div class="row mt-5 pt-3 d-flex">
                     <div class="col-md-6 d-flex">
                         <div class="cart-detail cart-total bg-light p-3 p-md-4">
                             <h3 class="billing-heading mb-4">Cart Total</h3>
                             <div class="d-flex">
-                                <input (keyup)="checkCoupon()" type="text" class="form-control" placeholder="Coupon" [formControl]="checkoutForm.get('coupon')">
+                                <input (keyup)="checkCoupon()" type="text" class="form-control" placeholder="Coupon"
+                                       [formControl]="checkoutForm.get('coupon')">
                                 <span *ngIf="invalidCoupon" class="ml-1 text-danger">Mã giảm giá không đúng</span>
                             </div>
                             <p class="d-flex mt-3">
@@ -151,12 +164,8 @@
                                 <span>{{subtotal}} VNĐ</span>
                             </p>
                             <p class="d-flex">
-                                <span>Delivery</span>
-                                <span>0 VNĐ</span>
-                            </p>
-                            <p class="d-flex">
                                 <span>Discount</span>
-                                <span></span>
+                                <span>{{percent != 0? percent + '%' : "Không có"}}</span>
                             </p>
                             <hr>
                             <p class="d-flex total-price">
@@ -173,7 +182,7 @@
                                     <div class="radio">
                                         <label><input type="radio"
                                                       [value]="PAYMENT_METHOD[key].value" name="optradio" class="mr-2"
-                                                        [formControl]="checkoutForm.get('paymentMethod')"
+                                                      [formControl]="checkoutForm.get('paymentMethod')"
                                         >{{PAYMENT_METHOD[key].label}}</label>
                                     </div>
                                 </div>
