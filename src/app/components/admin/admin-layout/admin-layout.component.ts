@@ -1,5 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
 import {INavData} from '@coreui/angular';
+import {AuthenticationService} from '../../../service/authentication.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -10,13 +11,20 @@ export class AdminLayoutComponent {
     public sidebarMinimized = false;
     public navItems = navItems;
 
-    constructor(private elRef: ElementRef) {
+    constructor(
+        private elRef: ElementRef,
+        public authenticationService: AuthenticationService
+    ) {
         const tmp = this.elRef.nativeElement.querySelector('link[tag="web"]');
         console.log(tmp);
     }
 
     toggleMinimize(e) {
         this.sidebarMinimized = e;
+    }
+
+    logout() {
+        this.authenticationService.logout();
     }
 }
 
@@ -37,7 +45,7 @@ export const navItems: INavData[] = [
     {
         name: 'Bài viết',
         url: '/admin/news',
-        icon: 'icon-user',
+        icon: 'icon-book-open',
     },
     {
         name: 'Tài khoản',
@@ -81,7 +89,7 @@ export const navItems: INavData[] = [
     {
         name: 'Tất cả',
         url: '/admin/checkout/all',
-        icon: 'cui-user-follow',
+        icon: 'icon-support',
     },
     {
         name: 'Đơn Mới',

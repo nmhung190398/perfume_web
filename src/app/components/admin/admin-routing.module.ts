@@ -16,6 +16,7 @@ import {AuthManagerGuard} from '../../comom/auth/authManager.guard';
 import {AuthAdminGuard} from '../../comom/auth/authAdmin.guard';
 import {NewsComponent} from './news/news.component';
 import {NewsDetailComponent} from './news/news-detail/news-detail.component';
+import {DisplayStaticComponent} from './display-static/display-static.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full',
+            },
+            {
+                path: 'display-static',
+                component: DisplayStaticComponent,
             },
             {
                 path: 'category',

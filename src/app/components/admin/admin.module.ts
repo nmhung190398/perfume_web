@@ -47,6 +47,8 @@ import {UserDetailComponent} from './user/user-detail/user-detail.component';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {NewsComponent} from './news/news.component';
 import {NewsDetailComponent} from './news/news-detail/news-detail.component';
+import { DisplayStaticComponent } from './display-static/display-static.component';
+import { ImageComponent } from './image/image.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -91,7 +93,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         UserComponent,
         UserDetailComponent,
         NewsComponent,
-        NewsDetailComponent
+        NewsDetailComponent,
+        DisplayStaticComponent,
+        ImageComponent
     ],
     providers: [
         {
