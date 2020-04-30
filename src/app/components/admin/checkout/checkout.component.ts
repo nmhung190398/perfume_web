@@ -7,11 +7,12 @@ import {CheckoutService} from '../../../service/checkout.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {xoaDau} from '../../../comom/utils/base.utils';
-import {CHECKOUT_STATUS, PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
+import {CHECKOUT_STATUS, PAYMENT_METHOD, CHECKOUT_STATUS_SELECT} from '../../../comom/constant/checkout.constant';
 import {__param} from 'tslib';
 import {AddressService} from '../../../service/address.service';
 import {Product} from 'src/app/model/product.model';
 import {ProductService} from 'src/app/service/product.service';
+import {District, Province, Ward} from '../../../model/address.model';
 
 @Component({
     selector: 'app-checkout',
@@ -24,13 +25,19 @@ export class CheckoutComponent implements OnInit {
     paging: IPaging = new Paging();
     checkoutFormGroup: FormGroup;
     selectedCheckout: Checkout;
-    txtSearch: string = '';
+    txtSearch = '';
     limits = PAGING_PER_PAGE;
     isAcction = true;
     isCustomUri = true;
     checkoutStatus: number;
     nodeDelete;
     products: Product[];
+    PAYMENT_METHOD = PAYMENT_METHOD;
+    CHECKOUT_STATUS_SELECT = CHECKOUT_STATUS_SELECT;
+    filterForm: FormGroup;
+    wards: Ward[] = [];
+    districts: District[] = [];
+    provinces: Province[] = [];
 
     constructor(public checkoutService: CheckoutService,
                 protected router: Router,
@@ -44,6 +51,7 @@ export class CheckoutComponent implements OnInit {
         //     this.checkoutStatus = this.getStatus(this.activatedRoute.snapshot.paramMap.get('status'));
         //     console.log(this.checkoutStatus);
         // });
+        this.initFilterForm();
         this.activatedRoute.paramMap.subscribe(param => {
             this.checkoutStatus = this.getStatus(param.get('status'));
             if (this.checkoutStatus === null) {
@@ -73,10 +81,25 @@ export class CheckoutComponent implements OnInit {
 
     ngOnInit(): void {
         this.initTable();
+
+        this.loadProvinces();
     }
 
     initTable() {
         this.checkoutFormGroup = this.initForm();
+
+    }
+
+    initFilterForm() {
+        this.filterForm = this.fb.group({
+            search: [''],
+            status: [null],
+            isCoupon: [null],
+            paymentMethod: [null],
+            provinceId: [null],
+            districtId: [null],
+            wardId: [null],
+        });
     }
 
     initForm() {
@@ -107,11 +130,10 @@ export class CheckoutComponent implements OnInit {
         //     page: this.paging.page,
         //     limit: this.paging.limit
         // };
-        const checkout: Checkout = {};
-        if (this.txtSearch.trim() !== '') {
-            checkout.description = this.txtSearch;
-        }
-        checkout.status = this.checkoutStatus;
+        const checkout: Checkout = {
+            ...this.filterForm.value,
+        };
+        checkout.status = this.checkoutStatus === CHECKOUT_STATUS.ALL ? this.filterForm.get('status').value : this.checkoutStatus;
         console.log(checkout);
         this.checkoutService.filter(this.paging, checkout).subscribe(res => {
             if (res.status === 200) {
@@ -228,13 +250,13 @@ export class CheckoutComponent implements OnInit {
     //     });
     // }
 
-    changeStatus(checkout) {
+    changeStatus(checkout: Checkout) {
         console.log('ahihi');
         console.log(checkout);
-        if (checkout.id && this.checkoutStatus >= CHECKOUT_STATUS.ACTIVE && this.checkoutStatus < CHECKOUT_STATUS.DONE) {
+        if (checkout.id && checkout.status >= CHECKOUT_STATUS.ACTIVE && checkout.status < CHECKOUT_STATUS.DONE) {
             const tmp: Checkout = {
                 id: checkout.id,
-                status: this.checkoutStatus + 1
+                status: checkout.status + 1
             };
             this.checkoutService.update(tmp).subscribe(res => {
                 // control.removeAt(index);
@@ -302,6 +324,50 @@ export class CheckoutComponent implements OnInit {
     pagingInfo = (paging) => {
         return `Show ${paging.offset + 1} to ${(paging.offset + this.checkouts.length)} of ${paging.total} entries`;
     };
+
+
+    loadProvinces() {
+        this.addressService.findProvince().subscribe(res => {
+            this.provinces = res.body;
+        });
+    }
+
+    loadDistricts() {
+        this.filterForm.get('districtId').setValue(null);
+        this.filterForm.get('wardId').setValue(null);
+        if (this.filterForm.get('provinceId').value) {
+            this.addressService.findDistrict(this.filterForm.get('provinceId').value).subscribe(res => {
+                this.districts = res.body;
+            });
+        }
+    }
+
+    loadWards() {
+        this.filterForm.get('wardId').setValue(null);
+        if (this.filterForm.get('districtId').value) {
+            this.addressService.findWard(this.filterForm.get('districtId').value).subscribe(res => {
+                this.wards = res.body;
+            });
+        }
+    }
+
+    clearFilter() {
+        this.filterForm.setValue({
+            search: '',
+            status: null,
+            isCoupon: null,
+            paymentMethod: null,
+            provinceId: null,
+            districtId: null,
+            wardId: null,
+        });
+        this.filter();
+    }
+
+    filter() {
+        this.paging.page = 1;
+        this.loadAll();
+    }
 
 
 }

@@ -153,6 +153,7 @@ export class CartComponent implements OnInit {
             } else {
                 alert(res.body.msg);
             }
+
         });
     }
 

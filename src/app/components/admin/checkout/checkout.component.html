@@ -1,6 +1,123 @@
 <div class="animated fadeIn">
     <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <!--<div class="card-header">Bộ lọc</div>-->
+                <div class="card-body">
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+                            <div class="form-group col-sm-4 row text-color">
+                                <label class="col-4 col-form-label text-right" for="province">Tỉnh/Thành phố</label>
+                                <div class="col-8">
+                                    <select formControlName="provinceId" class="form-control" id="province"
+                                            (change)="loadDistricts()">
+                                        <option [value]="null">==Chọn==</option>
+                                        <option *ngFor="let province of provinces" [value]="province.id">
+                                            {{province.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
 
+                            <div class="form-group col-sm-4 row text-color">
+                                <label class="col-4 col-form-label text-right" for="district">Quận/Huyện</label>
+                                <div class="col-8">
+                                    <select formControlName="districtId" class="form-control" id="district"
+                                            (change)="loadWards()">
+                                        <option [value]="null">==Chọn==</option>
+                                        <option *ngFor="let district of districts" [value]="district.id">
+                                            {{district.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-4 row text-color">
+                                <label class="col-4 col-form-label text-right" for="ward">Phường/Xã</label>
+                                <div class="col-8">
+                                    <select formControlName="wardId" class="form-control" id="ward">
+                                        <option [value]="null">==Chọn==</option>
+                                        <option *ngFor="let ward of wards" [value]="ward.id">
+                                            {{ward.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4 row text-color">
+                                <label class="col-4 col-form-label text-right" for="paymentMethod">Thanh toán</label>
+                                <div class="col-8">
+                                    <!--<input class="form-control ng-pristine ng-valid ng-touched"-->
+                                    <!--formcontrolname="requestCode" id="field_requestCode"-->
+                                    <!--placeholder="Mã yêu cầu">-->
+                                    <select class="form-control" id="paymentMethod" formControlName="paymentMethod">
+                                        <option [value]="null">==Chọn==</option>
+                                        <option [value]="PAYMENT_METHOD.COD.value">
+                                            {{PAYMENT_METHOD.COD.label}}
+                                        </option>
+                                        <option [value]="PAYMENT_METHOD.PAYPAL.value">
+                                            {{PAYMENT_METHOD.PAYPAL.label}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-4 row text-color">
+                                <label class="col-4 col-form-label text-right" for="coupon">Mã giảm giá</label>
+                                <div class="col-8">
+
+                                    <select formControlName="isCoupon" class="form-control" id="coupon">
+                                        <option [value]="null">==Chọn==</option>
+                                        <option [value]="true">Có</option>
+                                        <option [value]="false">Không có</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="form-group col-sm-4 row text-color">
+                                <label class="col-4 col-form-label text-right" for="search">Khách hàng</label>
+                                <div class="col-8">
+                                    <input class="form-control" formControlName="search" id="search"
+                                           placeholder="Tìm kiếm theo khách hàng">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-4 row text-color">
+                                <ng-container *ngIf="checkoutStatus === -1">
+                                    <label class="col-4 col-form-label text-right" for="status">Trang thái</label>
+                                    <div class="col-8">
+                                        <!--<input class="form-control ng-pristine ng-valid ng-touched"-->
+                                        <!--formcontrolname="requestCode" id="field_requestCode"-->
+                                        <!--placeholder="Mã yêu cầu">-->
+                                        <select formControlName="status" class="form-control" id="status">
+                                            <option [value]="null">==Chọn==</option>
+                                            <option [value]="item.value"
+                                                    *ngFor="let item of CHECKOUT_STATUS_SELECT">
+                                                {{item.label}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                            <div class="form-group col-sm-4 text-right">
+                                <div class="btn-group" style="padding-right: 30px">
+                                    <button (click)="filter()" class="btn btn-success">Tìm kiếm</button>
+                                    <button (click)="clearFilter()" class="btn btn-warning">Xóa tìm kiếm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
@@ -15,20 +132,21 @@
                             <select (change)="changeLimit()" [(ngModel)]="paging.limit" class="form-control float-left"
                                     style="max-width: 70px" [disabled]="!isAcction">
                                 <option *ngFor="let limitElement of limits"
-                                        value="{{limitElement.value}}">{{limitElement.label}}</option>
+                                        value="{{limitElement.value}}">{{limitElement.label}}
+                                </option>
                             </select>
                         </div>
                         <div class="col-2 float-right">
-                            <div class="input-group " style="width: 100%">
-                                <input [(ngModel)]="txtSearch" type="text" class="form-control"
-                                       placeholder="search">
-                                <div class="input-group-append">
-                                    <button (click)="search()" class="btn btn-dark" type="button"
-                                            [disabled]="!isAcction">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            <!--<div class="input-group " style="width: 100%">-->
+                            <!--<input [(ngModel)]="txtSearch" type="text" class="form-control"-->
+                            <!--placeholder="search">-->
+                            <!--<div class="input-group-append">-->
+                            <!--<button (click)="search()" class="btn btn-dark" type="button"-->
+                            <!--[disabled]="!isAcction">-->
+                            <!--<i class="fa fa-search"></i>-->
+                            <!--</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
                         </div>
 
                     </div>
@@ -56,6 +174,7 @@
                             </th>
                             <th> Giá cuối</th>
                             <th *ngIf="checkoutStatus === 0">Lý do hủy đơn</th>
+                            <th *ngIf="checkoutStatus === -1">Trang thái</th>
                             <th class="text-center" style="width: 200px">
                                 #
                             </th>
@@ -78,7 +197,7 @@
                                 <td>
                                     <span>{{checkout.address}}</span><br>
                                     <span *ngIf="checkout.address1">{{addressTrue(checkout)}}</span>
-<!--                                    <span>{{checkout.wardId}},{{checkout.wardId}},{{checkout.provinceId}}</span>-->
+                                    <!--                                    <span>{{checkout.wardId}},{{checkout.wardId}},{{checkout.provinceId}}</span>-->
                                 </td>
                                 <td>
                                     <span>{{paymentMethod(checkout)}}</span>
@@ -98,22 +217,27 @@
                                     <span>{{checkout.finalprice}} VND</span>
                                 </td>
                                 <td *ngIf="checkoutStatus === 0">{{checkout.note}}</td>
-
+                                <td *ngIf="checkoutStatus === -1">
+                                    <span *ngIf="checkout.status === 1" class="bg-success status-text">Đơn mới</span>
+                                    <span *ngIf="checkout.status === 2" class="bg-warning status-text">Vân chuyển</span>
+                                    <span *ngIf="checkout.status === 0" class="bg-danger status-text">Hủy</span>
+                                    <span *ngIf="checkout.status === 3" class="bg-info status-text">Hoàn thành</span>
+                                </td>
                                 <!--acction-->
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button (click)="changeStatus(checkout)"
-                                                *ngIf="checkoutStatus && checkoutStatus !== 0 && checkoutStatus !== 3"
+                                                *ngIf="checkout.status && checkout.status !== 0 && checkout.status !== 3"
                                                 type="submit"
                                                 class="btn btn-success btn-sm">
                                             <!--                                            <i class="icon-pencil"></i>-->
-                                            <span *ngIf="checkoutStatus === 1"
+                                            <span *ngIf="checkout.status === 1"
                                                   class="d-none d-md-inline">Vận chuyển</span>
-                                            <span *ngIf="checkoutStatus === 2"
+                                            <span *ngIf="checkout.status === 2"
                                                   class="d-none d-md-inline">Hoàn thành</span>
                                         </button>
                                         <button type="submit"
-                                                *ngIf="checkoutStatus && checkoutStatus !== 0 && checkoutStatus !== 3"
+                                                *ngIf="checkout.status && checkout.status !== 0 && checkout.status !== 3"
                                                 (click)="remove(deleteModal, checkout)"
                                                 class="btn btn-danger btn-sm">
                                             <i class="icon-trash"></i>
@@ -200,19 +324,20 @@
                 <tbody *ngFor="let product of products; let i=index">
                 <tr *ngIf="product">
                     <td>
-                        <a style="box-shadow: none;" [href]="getImage(product.image)" target="_blank" class="image-popup prod-img-bg" >
+                        <a style="box-shadow: none;" [href]="getImage(product.image)" target="_blank"
+                           class="image-popup prod-img-bg">
                             <img class="img-fluid img-product" style="width: 50px;" [src]="getImage(product.image)">
-                        </a>   
+                        </a>
                     </td>
 
                     <td>
-                          <a [href]="'/product/' + product.code" target="_blank">
+                        <a [href]="'/product/' + product.code" target="_blank">
                             {{product?.name}}
-                          </a>
+                        </a>
                     </td>
 
                     <td>
-                          {{product?.category?.name}}
+                        {{product?.category?.name}}
                     </td>
                     <td>
                         {{product?.producer?.name}}

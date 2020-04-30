@@ -79,6 +79,11 @@ export const navItems: INavData[] = [
         name: 'Đơn Hàng',
     },
     {
+        name: 'Tất cả',
+        url: '/admin/checkout/all',
+        icon: 'cui-user-follow',
+    },
+    {
         name: 'Đơn Mới',
         url: '/admin/checkout/active',
         icon: 'cui-user-follow',

@@ -5,6 +5,9 @@ export const getImg = (img) => {
     return `${SERVER_API_IMAGE}${img}`;
 };
 
+export const formatCurency = (value) => {
+    return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + '₫';
+};
 export const PAGING_PER_PAGE = [
     {label: 5, value: 5},
     {label: 10, value: 10},

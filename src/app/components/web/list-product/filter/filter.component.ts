@@ -13,6 +13,7 @@ import {Fragrant} from '../../../../model/fragrant.model';
 import {Amount} from '../../../../model/amount.model';
 import {Target} from '../../../../model/target.model';
 import {TargetService} from '../../../../service/target.service';
+import {formatCurency} from '../../../../comom/constant/base.constant';
 
 const FILTER_CONST = {
     minPrice: 0,
@@ -78,11 +79,11 @@ export class FilterComponent implements OnInit {
         translate: (value: number, label: LabelType): string => {
             switch (label) {
                 case LabelType.Low:
-                    return '<b>Min price:</b>' + value + 'VNĐ';
+                    return formatCurency(value);
                 case LabelType.High:
-                    return '<b>Max price:</b>' + value + 'VNĐ';
+                    return formatCurency(value);
                 default:
-                    return value + 'VNĐ';
+                    return formatCurency(value);
             }
         }
     };

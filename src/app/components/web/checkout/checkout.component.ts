@@ -9,8 +9,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {xoaDau} from '../../../comom/utils/base.utils';
 import {CHECKOUT_STATUS, PAYMENT_METHOD} from '../../../comom/constant/checkout.constant';
 import {__param} from 'tslib';
-import { AddressService } from "../../../service/address.service";
-import { AuthenticationService } from '../../../service/authentication.service';
+import {AddressService} from '../../../service/address.service';
+import {AuthenticationService} from '../../../service/authentication.service';
 import {User} from '../../../model/user';
 
 @Component({
@@ -36,8 +36,8 @@ export class CheckoutComponent implements OnInit {
                 protected router: Router,
                 protected activatedRoute: ActivatedRoute,
                 private modalService: NgbModal,
-        private addressService: AddressService,
-        public authenticationService: AuthenticationService,
+                private addressService: AddressService,
+                public authenticationService: AuthenticationService,
                 private fb: FormBuilder) {
         this.authenticationService.currentUser.subscribe(value => {
             if (value) {
@@ -46,7 +46,7 @@ export class CheckoutComponent implements OnInit {
             } else {
                 this.userLogin = null;
             }
-        })
+        });
     }
 
     getStatus(statusName: string) {
@@ -57,8 +57,8 @@ export class CheckoutComponent implements OnInit {
                 rs = CHECKOUT_STATUS[value];
                 return true;
             }
-        })
-
+        });
+        console.log(rs);
         return rs;
     }
 
@@ -101,7 +101,7 @@ export class CheckoutComponent implements OnInit {
         //     limit: this.paging.limit
         // };
         const checkout: Checkout = {};
-        checkout.user = { id: this.userLogin.id };
+        checkout.user = {id: this.userLogin.id};
         this.checkoutService.filter(this.paging, checkout).subscribe(res => {
             if (res.status === 200) {
                 this.checkouts = res.body.data;
@@ -143,7 +143,7 @@ export class CheckoutComponent implements OnInit {
                 rs = PAYMENT_METHOD[value].label;
                 return true;
             }
-        })
+        });
         return rs;
     }
 
@@ -171,7 +171,7 @@ export class CheckoutComponent implements OnInit {
                         id: checkout.id,
                         status: CHECKOUT_STATUS.DELETED,
                         note: this.nodeDelete
-                    }
+                    };
                     this.checkoutService.update(tmp).subscribe(res => {
                         // control.removeAt(index);
                         if (res.status === 200) {
@@ -208,7 +208,7 @@ export class CheckoutComponent implements OnInit {
 
     pagingInfo = (paging) => {
         return `Show ${paging.offset + 1} to ${(paging.offset + this.checkouts.length)} of ${paging.total} entries`;
-    }
+    };
 
 
 }

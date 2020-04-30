@@ -22,4 +22,6 @@ export class Checkout {
     total?: number;
     finalprice?: number;
     description?: string;
+    isCoupon?: boolean;
+    search?: string;
 }
