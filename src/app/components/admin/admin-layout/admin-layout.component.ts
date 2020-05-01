@@ -83,6 +83,16 @@ export const navItems: INavData[] = [
         icon: 'cui-rss',
     },
     {
+        name: 'Trang tĩnh',
+        url: '/admin/display-static',
+        icon: 'icon-book-open',
+    },
+    {
+        name: 'Album',
+        url: '/admin/album',
+        icon: 'icon-book-open',
+    },
+    {
         title: true,
         name: 'Đơn Hàng',
     },

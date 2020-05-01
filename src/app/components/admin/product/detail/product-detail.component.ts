@@ -237,7 +237,7 @@ export class ProductDetailComponent implements OnInit {
             fragrant: [null, [Validators.required]],
             targets: [null, [Validators.required]],
             imageBase64: [],
-            year: [null, [Validators.required]],
+            year: [2020, [Validators.required]],
         });
     }
 

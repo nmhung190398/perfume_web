@@ -17,6 +17,7 @@ import {AuthAdminGuard} from '../../comom/auth/authAdmin.guard';
 import {NewsComponent} from './news/news.component';
 import {NewsDetailComponent} from './news/news-detail/news-detail.component';
 import {DisplayStaticComponent} from './display-static/display-static.component';
+import {ImageComponent} from './image/image.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,10 @@ const routes: Routes = [
             {
                 path: 'display-static',
                 component: DisplayStaticComponent,
+            },
+            {
+                path: 'album',
+                component: ImageComponent,
             },
             {
                 path: 'category',
