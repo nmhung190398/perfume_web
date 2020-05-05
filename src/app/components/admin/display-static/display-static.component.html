@@ -30,10 +30,9 @@
                     displayStaticFormGroup.get("isUpdate").value ? "edit" : "add"
                   }}</span>
                                 </button>
-                                <button type="submit" class="btn btn-danger btn-sm">
+                                <button (click)="displayStaticFormGroup.get('isShow').setValue(false)" type="submit" class="btn btn-danger btn-sm">
                                     <i class="icon-trash"></i>
-                                    <span
-                                            (click)="displayStaticFormGroup.get('isShow').setValue(false)"
+                                    <span     
                                             class="d-none d-md-inline"
                                     >cancel</span
                                     >

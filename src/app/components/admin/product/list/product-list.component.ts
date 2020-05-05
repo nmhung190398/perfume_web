@@ -104,10 +104,8 @@ export class ProductListComponent implements OnInit {
             }).result.then(
             result => {
                 if (result === 'delete') {
-                    console.log('delete');
                     if (product.id) {
                         this.productService.delete(product.id).subscribe(res => {
-                            // control.removeAt(index);
                             if (res.status === 200) {
                                 if (
                                     this.paging.offset +
@@ -116,12 +114,10 @@ export class ProductListComponent implements OnInit {
                                     1 &&
                                     this.paging.page !== 1
                                 ) {
-                                    this.paging.page = this.paging.page - 1;
-                                    this.loadAll();
-                                } else {
-                                    this.loadAll();
-                                }
+                                    this.paging.page = this.paging.page - 1;    
+                                }            
                             }
+                            this.loadAll();
                         });
                     } else {
                     }

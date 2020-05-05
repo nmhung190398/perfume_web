@@ -7,7 +7,7 @@
                         <div class="col-2">
                             <input (focusout)="isCodeValidate()" [formControl]="couponFormGroup.get('code')" type="text"
                                    class="form-control">
-                            <span *ngIf="!couponFormGroup.get('code').valid" class="text-danger">Mã chỉ chứa a-z, A-Z, 0-9 và có tối thiểu 3 ký tự tối đa 15</span>
+                            <span *ngIf="couponFormGroup.get('code').invalid" class="text-danger">Mã chỉ chứa a-z, A-Z, 0-9 và có tối thiểu 3 ký tự tối đa 15</span>
                             <br>
                             <span *ngIf="validateCode" class="text-danger">Mã Trùng</span>
                         </div>
@@ -19,6 +19,7 @@
                                    class="form-control" name="field_startDate" id="field_startDateBegin"
                                    [formControl]="couponFormGroup.get('startDate')"/>
                             <owl-date-time #dt1></owl-date-time>
+                            <span *ngIf="couponFormGroup.get('startDate').invalid" class="text-danger">Chưa nhập ngày</span>
                         </div>
 
                         <div class="col-3">
@@ -28,13 +29,16 @@
                                    class="form-control" name="field_startDate" id="field_startDateEnd"
                                    [formControl]="couponFormGroup.get('endDate')"/>
                             <owl-date-time #dt2></owl-date-time>
+                            <span *ngIf="couponFormGroup.get('endDate').invalid" class="text-danger">Chưa nhập ngày</span>
                         </div>
 
                         <div class="col-2"><input [formControl]="couponFormGroup.get('total')" placeholder="amount" type="number"
                         class="form-control">
+                        <span *ngIf="couponFormGroup.get('total').invalid" class="text-danger">Số lượng phải > 0</span>
                         <br><span class="text-info">Số lượng</span></div>
                         <div class="col-2"><input [formControl]="couponFormGroup.get('percent')" placeholder="percent" type="number"
                         class="form-control">
+                        <span *ngIf="couponFormGroup.get('percent').invalid" class="text-danger">% phải > 0 và < 100</span>
                         <br><span class="text-info">Giảm theo %</span></div>
 
                         <div class="col-12 mt-3 text-right">

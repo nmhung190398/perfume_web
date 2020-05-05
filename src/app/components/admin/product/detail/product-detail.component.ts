@@ -74,16 +74,16 @@ export class ProductDetailComponent implements OnInit {
         this.productFormGroup = this.initForm();
         this.versionFromGroup = this.fb.group({
             id: [null],
-            name: [''],
-            total: [0],
-            price: [0],
+            name: ['', Validators.required],
+            total: [0, [Validators.required, Validators.min(1)]],
+            price: [0, [Validators.required, Validators.min(1)]],
             isUpdate: [false]
         });
         this.versionUpdateGroup = this.fb.group({
             id: [null],
-            name: [''],
-            total: [0],
-            price: [0],
+            name: ['', Validators.required],
+            total: [0, [Validators.required, Validators.min(1)]],
+            price: [0, [Validators.required, Validators.min(1)]],
             isUpdate: [false]
         });
         if (!this.isUpdate && !this.isImageSaved) {

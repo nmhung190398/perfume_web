@@ -50,8 +50,8 @@ export class CouponComponent implements OnInit {
             startDate: [null, [Validators.required]],
             endDate: [null, [Validators.required]],
             code: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]],
-            total: [0, [Validators.required]],
-            percent: [0, [Validators.required]],
+            total: [0, [Validators.required, Validators.min(1)]],
+            percent: [0, [Validators.required, Validators.min(1), Validators.max(100)]],
             isUpdate: [true],
             isShow: [false]
         });

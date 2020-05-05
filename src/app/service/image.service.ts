@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {SERVER_API_URL} from '../app.constants';
-import {Image} from '../model/image.model';
+// import {Image} from '../model/image.model';
 import {Observable} from 'rxjs';
 import {createRequestOption} from '../utils/request.utils';
 import {IPaging} from '../model/base-respone.model';
@@ -29,13 +29,13 @@ export class ImageService {
             filter = {};
         }
         return this.http
-            .post<Image[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
+            .post<any[]>(`${this.resourceUrl}/filter`, filter, {observe: 'response'});
     }
 
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<Image>(`${this.resourceUrl}/${id}`, {observe: 'response'});
+            .get<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
     filter(paging: IPaging, filter: any): Observable<HttpResponse<any>> {
@@ -47,12 +47,12 @@ export class ImageService {
     }
 
 
-    create(image: Image): Observable<HttpResponse<any>> {
+    create(image: any): Observable<HttpResponse<any>> {
         return this.http
             .post<any>(this.resourceUrl, image, {observe: 'response'});
     }
 
-    update(image: Image): Observable<HttpResponse<any>> {
+    update(image: any): Observable<HttpResponse<any>> {
         return this.http
             .put<any>(`${this.resourceUrl}/${image.id}`, image, {observe: 'response'});
     }

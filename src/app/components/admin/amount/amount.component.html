@@ -60,7 +60,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-globe"></i>Mail Sender
+          <i class="fa fa-globe"></i>Amount
           <span class="float-right">
             <button
               (click)="addAmount()"
@@ -90,26 +90,6 @@
                   >{{ limitElement.label }}</option
                 >
               </select>
-            </div>
-            <div class="col-2 float-right">
-              <div class="input-group " style="width: 100%">
-                <input
-                  [(ngModel)]="txtSearch"
-                  type="text"
-                  class="form-control"
-                  placeholder="search"
-                />
-                <div class="input-group-append">
-                  <button
-                    (click)="search()"
-                    class="btn btn-dark"
-                    type="button"
-                    [disabled]="!isAcction"
-                  >
-                    <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
           <table class="table table-bordered table-sort-icon">
