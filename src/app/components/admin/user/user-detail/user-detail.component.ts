@@ -103,7 +103,7 @@ export class UserDetailComponent implements OnInit {
             firstname: [null, [Validators.required]],
             lastname: [null, [Validators.required]],
             password: [],
-            email: [null, [Validators.required]],
+            email: [null, [Validators.required, Validators.email]],
             phone: [null, [Validators.required]],
             address: [null, [Validators.required]],
             imageBase64: []

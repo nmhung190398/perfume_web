@@ -1,6 +1,9 @@
 import {Component, ElementRef} from '@angular/core';
 import {INavData} from '@coreui/angular';
 import {AuthenticationService} from '../../../service/authentication.service';
+import {getImg} from '../../../comom/constant/base.constant';
+import {User} from '../../../model/user';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
@@ -10,14 +13,24 @@ import {AuthenticationService} from '../../../service/authentication.service';
 export class AdminLayoutComponent {
     public sidebarMinimized = false;
     public navItems = navItems;
+    userLogin: User;
 
     constructor(
         private elRef: ElementRef,
-        public authenticationService: AuthenticationService
+        public authenticationService: AuthenticationService,
+        protected router: Router,
     ) {
         const tmp = this.elRef.nativeElement.querySelector('link[tag="web"]');
         console.log(tmp);
+        this.authenticationService.currentUser.subscribe(value => {
+            if (value) {
+                this.userLogin = value.user;
+            } else {
+                this.userLogin = null;
+            }
+        });
     }
+
 
     toggleMinimize(e) {
         this.sidebarMinimized = e;
@@ -25,6 +38,15 @@ export class AdminLayoutComponent {
 
     logout() {
         this.authenticationService.logout();
+        this.router.navigate(['/home']);
+    }
+
+    getAvatar() {
+        if (this.userLogin != null) {
+            return getImg(this.userLogin.image);
+        }
+        return 'assets/img/avatars/6.jpg';
+
     }
 }
 
