@@ -23,6 +23,10 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
+    public nextValue(value) {
+        this.currentUserSubject.next(value);
+    }
+
     login(username, password) {
         return this.http.post<any>(`${SERVER_API_URL}/login`, {username, password})
             .pipe(map(user => {

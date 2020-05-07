@@ -32,6 +32,7 @@ const routes: Routes = [
             {
                 path: 'display-static',
                 component: DisplayStaticComponent,
+                canActivate: [AuthAdminGuard],
             },
             {
                 path: 'album',
@@ -95,6 +96,7 @@ const routes: Routes = [
             {
                 path: 'coupon',
                 component: CouponComponent,
+                canActivate: [AuthAdminGuard],
             },
             {
                 path: 'checkout/:status',

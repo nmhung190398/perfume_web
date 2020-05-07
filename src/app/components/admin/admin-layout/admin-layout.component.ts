@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 })
 export class AdminLayoutComponent {
     public sidebarMinimized = false;
-    public navItems = navItems;
+    public navItems = navItemsEmploy;
     userLogin: User;
 
     constructor(
@@ -25,6 +25,15 @@ export class AdminLayoutComponent {
         this.authenticationService.currentUser.subscribe(value => {
             if (value) {
                 this.userLogin = value.user;
+                if (this.authenticationService.isAdmin) {
+                    const tmp: INavData[] = [
+                        ...navItemsAdmin,
+                        ...navItemsEmploy,
+                    ];
+                    this.navItems = tmp;
+                } else {
+                    this.navItems = navItemsEmploy;
+                }
             } else {
                 this.userLogin = null;
             }
@@ -50,7 +59,28 @@ export class AdminLayoutComponent {
     }
 }
 
-export const navItems: INavData[] = [
+export const navItemsAdmin: INavData[] = [
+    {
+        title: true,
+        name: 'Admin',
+    },
+    {
+        name: 'Tài khoản',
+        url: '/admin/user',
+        icon: 'icon-user',
+    },
+    {
+        name: 'Mã Giảm Giá',
+        url: '/admin/coupon',
+        icon: 'cui-code',
+    },
+    {
+        name: 'Trang tĩnh',
+        url: '/admin/display-static',
+        icon: 'icon-book-open',
+    },
+];
+export const navItemsEmploy: INavData[] = [
     {
         name: 'Dashboard',
         url: '/admin/dashboard',
@@ -62,22 +92,12 @@ export const navItems: INavData[] = [
     },
     {
         title: true,
-        name: 'Admin',
+        name: 'Nhân viên',
     },
     {
         name: 'Bài viết',
         url: '/admin/news',
         icon: 'icon-book-open',
-    },
-    {
-        name: 'Tài khoản',
-        url: '/admin/user',
-        icon: 'icon-user',
-    },
-    {
-        name: 'Mã Giảm Giá',
-        url: '/admin/coupon',
-        icon: 'cui-code',
     },
     {
         name: 'Thể loại',
@@ -103,11 +123,6 @@ export const navItems: INavData[] = [
         name: 'Mùi hương',
         url: '/admin/fragrant',
         icon: 'cui-rss',
-    },
-    {
-        name: 'Trang tĩnh',
-        url: '/admin/display-static',
-        icon: 'icon-book-open',
     },
     {
         name: 'Album',
