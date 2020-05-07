@@ -37,7 +37,7 @@
                                         class="btn btn-danger btn-sm">
                                     <i class="icon-trash"></i>
                                     <span (click)="categoryFormGroup.get('isShow').setValue(false)"
-                                          class="d-none d-md-inline">cancel</span>
+                                          class="d-none d-md-inline">hủy bỏ</span>
                                 </button>
 
                             </div>
@@ -124,7 +124,7 @@
                                                 (click)="remove(deleteModal, category)"
                                                 class="btn btn-danger btn-sm">
                                             <i class="icon-trash"></i>
-                                            <span class="d-none d-md-inline">delete</span>
+                                            <span class="d-none d-md-inline">xóa</span>
                                         </button>
 
                                     </div>
@@ -161,7 +161,7 @@
 <ng-template #deleteModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title"
-            id="modal-comfirm-delete-title">Delete</h4>
+            id="modal-comfirm-delete-title">Xóa</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>

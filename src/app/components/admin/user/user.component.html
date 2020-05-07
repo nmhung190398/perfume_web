@@ -71,7 +71,7 @@
                                       </span>
                                 </td>
                                 <td>
-                                      <span *ngFor="let role of user.roles">{{role.name}}&nbsp;&nbsp;&nbsp;</span>
+                                    <span *ngFor="let role of user.roles">{{role.name}}&nbsp;&nbsp;&nbsp;</span>
                                 </td>
 
                                 <!--acction-->
@@ -87,7 +87,7 @@
                                                 class="btn btn-danger btn-sm"
                                                 (click)="remove(deleteModal, user)">
                                             <i class="icon-trash"></i>
-                                            <span class="d-none d-md-inline">delete</span>
+                                            <span class="d-none d-md-inline">xóa</span>
                                         </button>
 
                                     </div>
@@ -124,7 +124,7 @@
 <ng-template #deleteModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title"
-            id="modal-comfirm-delete-title">Delete</h4>
+            id="modal-comfirm-delete-title">Xóa</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -133,7 +133,7 @@
         Delete {{entitySelected.username}}
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close('delete')">Delete
+        <button type="button" class="btn btn-danger" (click)="modal.close('delete')">Xóa
         </button>
         <button type="button" class="btn btn-secondary" (click)="modal.close('Close')">Close
         </button>
