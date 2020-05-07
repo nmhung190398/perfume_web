@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit {
         this.authenticationService.currentUser.subscribe(value => {
             if (value) {
                 this.userLogin = value.user;
+                this.findByUsername(this.userLogin.id);
                 this.changePasswordForm.get('username').setValue(this.userLogin.username);
                 this.cartService.findByUserLogin(this.userLogin.id).subscribe(res => {
                     console.log(res.body);
@@ -122,7 +123,6 @@ export class HeaderComponent implements OnInit {
     }
 
     changeInfo(modal) {
-        this.addUserEdit(this.userLogin);
         this.modalService
             .open(modal, {
                 ariaLabelledBy: 'modal-basic-title',
@@ -130,8 +130,31 @@ export class HeaderComponent implements OnInit {
                 backdrop: 'static'
             })
             .result.then(result => {
-            if (result === 'save') {
+                if (result === 'save') {
+                this.isUpdate = true;
                 this.save();
+                } else {
+                this.findByUsername(this.userLogin.id);
+            }
+        });
+    }
+
+    findByUsername(id: number) {
+        if (!id) {
+            return;
+        }
+        this.userService.find(id).subscribe(res => {
+            console.log('fff', res.body);
+            if (res.body) {
+                this.userEdit = res.body;
+            }
+            this.isUpdate = this.userEdit !== null;
+            if (this.userEdit != null) {
+                this.selectedItems = this.userEdit.roles;
+                this.addValueInForm();
+                this.imageDefault = getImg(this.userEdit.image);
+            } else {
+                // this.router.navigate(['404']);
             }
         });
     }
@@ -146,7 +169,7 @@ export class HeaderComponent implements OnInit {
         if (this.isUpdate) {
             this.userService.update(tmp).subscribe(res => {
                 if (res.status === 200) {
-                    
+                    this.findByUsername(tmp.id);
                 } else {
                     alert('eror');
                 }
@@ -156,16 +179,6 @@ export class HeaderComponent implements OnInit {
 
     getAvatar(url) {
         return getImg(url);
-    }
-
-    addUserEdit(user: User) {
-        this.userEdit = user;
-        console.log('fdsgfg', user);
-        if (this.userEdit != null) {
-            this.selectedItems = this.userEdit.roles;
-            this.addValueInForm();
-            this.imageDefault = getImg(this.userEdit.image);
-        }
     }
 
     addValueInForm() {
