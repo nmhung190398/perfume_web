@@ -7,7 +7,9 @@ import {CategoryService} from '../../../service/category.service';
 import {Category} from '../../../model/category.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../../service/user.service';
+import { UserService } from '../../../service/user.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-header',
@@ -21,12 +23,36 @@ export class HeaderComponent implements OnInit {
     categories: Array<Category>;
     changePasswordForm: FormGroup;
 
+    //img
+    imageDefault = 'http://placehold.it/380x500';
+    imageError: string;
+    isImageSaved: boolean;
+    cardImageBase64: string;
+
+    //mutil select
+    dropdownList = [];
+    selectedItems = [];
+    dropdownSettings: IDropdownSettings = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'name',
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 3,
+        allowSearchFilter: true
+    };
+
+    userFormGroup: FormGroup;
+    userEdit: User = null;
+    isUpdate = false;
+
     constructor(public authenticationService: AuthenticationService, private cartService: CartService,
                 private modalService: NgbModal,
                 private categoryService: CategoryService,
                 private userService: UserService,
                 private fb: FormBuilder) {
         this.initForm();
+        this.userFormGroup = this.initUserForm();
     }
 
     get isManager() {
@@ -41,7 +67,6 @@ export class HeaderComponent implements OnInit {
                 this.cartService.findByUserLogin(this.userLogin.id).subscribe(res => {
                     console.log(res.body);
                 });
-
             } else {
                 this.userLogin = null;
             }
@@ -97,6 +122,7 @@ export class HeaderComponent implements OnInit {
     }
 
     changeInfo(modal) {
+        this.addUserEdit(this.userLogin);
         this.modalService
             .open(modal, {
                 ariaLabelledBy: 'modal-basic-title',
@@ -105,13 +131,130 @@ export class HeaderComponent implements OnInit {
             })
             .result.then(result => {
             if (result === 'save') {
-                console.log('ahihi');
+                this.save();
             }
         });
+    }
+
+    save() {
+        const tmp: User = this.userFormGroup.value;
+        tmp.roles = this.selectedItems;
+        if (this.isImageSaved) {
+            tmp.image = this.cardImageBase64;
+        }
+        console.log(tmp);
+        if (this.isUpdate) {
+            this.userService.update(tmp).subscribe(res => {
+                if (res.status === 200) {
+                    
+                } else {
+                    alert('eror');
+                }
+            });
+        }
     }
 
     getAvatar(url) {
         return getImg(url);
     }
 
+    addUserEdit(user: User) {
+        this.userEdit = user;
+        console.log('fdsgfg', user);
+        if (this.userEdit != null) {
+            this.selectedItems = this.userEdit.roles;
+            this.addValueInForm();
+            this.imageDefault = getImg(this.userEdit.image);
+        }
+    }
+
+    addValueInForm() {
+        this.userFormGroup.setValue({
+            id: this.userEdit.id,
+            username: this.userEdit.username,
+            firstname: this.userEdit.firstname,
+            lastname: this.userEdit.lastname,
+            email: this.userEdit.email,
+            phone: this.userEdit.phone,
+            address: this.userEdit.address,
+            imageBase64: this.userEdit.image
+        });
+    }
+
+    initUserForm() {
+        return this.fb.group({
+            id: [],
+            username: [null, [Validators.required]],
+            firstname: [null, [Validators.required]],
+            lastname: [null, [Validators.required]],
+            email: [null, [Validators.required, Validators.email]],
+            phone: [null, [Validators.required]],
+            address: [null, [Validators.required]],
+            imageBase64: []
+        });
+    }
+
+    fileChangeEvent(fileInput: any) {
+        this.imageError = null;
+        if (fileInput.target.files && fileInput.target.files[0]) {
+            // Size Filter Bytes
+            const max_size = 20971520;
+            const allowed_types = ['image/png', 'image/jpeg'];
+            const max_height = 1000;
+            const max_width = 1000;
+
+            if (fileInput.target.files[0].size > max_size) {
+                this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+                return false;
+            }
+
+            if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+                this.imageError = 'Only Images are allowed ( JPG | PNG )';
+                return false;
+            }
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                const image = new Image();
+                image.src = e.target.result;
+                image.onload = rs => {
+                    const img_height = rs.currentTarget['height'];
+                    const img_width = rs.currentTarget['width'];
+
+                    console.log(img_height, img_width);
+
+                    if (img_height > max_height && img_width > max_width) {
+                        this.imageError =
+                            'Maximum dimentions allowed ' +
+                            max_height +
+                            '*' +
+                            max_width +
+                            'px';
+                        return false;
+                    } else {
+                        const imgBase64Path = e.target.result;
+                        this.cardImageBase64 = imgBase64Path;
+                        this.isImageSaved = true;
+                        // console.log(this.cardImageBase64);
+                        // this.previewImagePath = imgBase64Path;
+                    }
+                };
+            };
+            reader.readAsDataURL(fileInput.target.files[0]);
+        }
+    }
+
+    removeImage() {
+        this.cardImageBase64 = null;
+        this.isImageSaved = false;
+    }
+
+    onItemSelect($event) {
+        console.log(this.selectedItems);
+    }
+
+    onSelectAll($event) {
+        this.selectedItems = $event;
+        console.log(this.selectedItems);
+    }
 }
