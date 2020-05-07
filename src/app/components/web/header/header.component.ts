@@ -7,8 +7,8 @@ import {CategoryService} from '../../../service/category.service';
 import {Category} from '../../../model/category.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { UserService } from '../../../service/user.service';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {UserService} from '../../../service/user.service';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
 import * as _ from 'lodash';
 
 @Component({
@@ -146,7 +146,7 @@ export class HeaderComponent implements OnInit {
         if (this.isUpdate) {
             this.userService.update(tmp).subscribe(res => {
                 if (res.status === 200) {
-                    
+
                 } else {
                     alert('eror');
                 }

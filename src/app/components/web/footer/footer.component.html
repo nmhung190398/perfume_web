@@ -1,66 +1,24 @@
-<!--<section class="ftco-gallery">-->
-<!--<div class="container">-->
-<!--<div class="row justify-content-center">-->
-<!--<div class="col-md-8 heading-section text-center mb-4 ">-->
-<!--<h2 class="mb-4">Follow Us On Instagram</h2>-->
-<!--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live-->
-<!--the blind texts. Separated they live in</p>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="container-fluid px-0">-->
-<!--<div class="row no-gutters">-->
-<!--<div class="col-md-4 col-lg-2 ">-->
-<!--<a href="assets/images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center"-->
-<!--style="background-image: url(assets/images/gallery-1.jpg);">-->
-<!--<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
-<!--<span class="icon-instagram"></span>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="col-md-4 col-lg-2 ">-->
-<!--<a href="assets/images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center"-->
-<!--style="background-image: url(assets/images/gallery-2.jpg);">-->
-<!--<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
-<!--<span class="icon-instagram"></span>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="col-md-4 col-lg-2 ">-->
-<!--<a href="assets/images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center"-->
-<!--style="background-image: url(assets/images/gallery-3.jpg);">-->
-<!--<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
-<!--<span class="icon-instagram"></span>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="col-md-4 col-lg-2 ">-->
-<!--<a href="assets/images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center"-->
-<!--style="background-image: url(assets/images/gallery-4.jpg);">-->
-<!--<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
-<!--<span class="icon-instagram"></span>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="col-md-4 col-lg-2 ">-->
-<!--<a href="assets/images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center"-->
-<!--style="background-image: url(assets/images/gallery-5.jpg);">-->
-<!--<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
-<!--<span class="icon-instagram"></span>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="col-md-4 col-lg-2 ">-->
-<!--<a href="assets/images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center"-->
-<!--style="background-image: url(assets/images/gallery-6.jpg);">-->
-<!--<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
-<!--<span class="icon-instagram"></span>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</section>-->
+<section class="ftco-gallery" *ngIf="isShow" style="padding-top: 10px">
+    <!--<div class="container">-->
+    <!--<div class="row justify-content-center">-->
+    <!--<div class="col-md-8 heading-section text-center mb-4 ">-->
+    <!--<h2 class="mb-4">Sản phẩm gợi ý cho bạn</h2>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="container-fluid px-0">
+        <div class="row no-gutters">
+            <div class="col-md-4 col-lg-2 " *ngFor="let product of products">
+                <a [routerLink]="['/product/' + product.code]" class="gallery image-popup img d-flex align-items-center"
+                   [style]="'background-image: url(' + getImage(product.image) + ');'">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <footer class="ftco-footer ftco-section">
     <div class="container">
