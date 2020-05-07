@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
         this.authenticationService.currentUser.subscribe(value => {
             if (value) {
                 this.userLogin = value.user;
-                this.findByUsername(this.userLogin.id);
+                this.findByUsername(this.userLogin.id, true);
                 this.changePasswordForm.get('username').setValue(this.userLogin.username);
                 this.cartService.findByUserLogin(this.userLogin.id).subscribe(res => {
                     console.log(res.body);
@@ -130,16 +130,16 @@ export class HeaderComponent implements OnInit {
                 backdrop: 'static'
             })
             .result.then(result => {
-                if (result === 'save') {
+            if (result === 'save') {
                 this.isUpdate = true;
                 this.save();
-                } else {
+            } else {
                 this.findByUsername(this.userLogin.id);
             }
         });
     }
 
-    findByUsername(id: number) {
+    findByUsername(id: number, isLoadUser = false) {
         if (!id) {
             return;
         }
@@ -153,6 +153,15 @@ export class HeaderComponent implements OnInit {
                 this.selectedItems = this.userEdit.roles;
                 this.addValueInForm();
                 this.imageDefault = getImg(this.userEdit.image);
+                // this.isImageSaved = false;
+                // this.cardImageBase64 = null;
+                // this.removeImage();
+                if (!isLoadUser) {
+                    this.userLogin = this.userEdit;
+                    // const tmp = this.authenticationService.currentUserValue;
+                    // tmp.user = this.userEdit;
+                    // this.authenticationService.nextValue(tmp);
+                }
             } else {
                 // this.router.navigate(['404']);
             }
@@ -169,7 +178,8 @@ export class HeaderComponent implements OnInit {
         if (this.isUpdate) {
             this.userService.update(tmp).subscribe(res => {
                 if (res.status === 200) {
-                    this.findByUsername(tmp.id);
+                    // this.findByUsername(tmp.id);
+                    window.location.reload();
                 } else {
                     alert('eror');
                 }
@@ -178,6 +188,7 @@ export class HeaderComponent implements OnInit {
     }
 
     getAvatar(url) {
+        console.log(url);
         return getImg(url);
     }
 
