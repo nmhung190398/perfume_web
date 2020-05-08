@@ -124,11 +124,11 @@ export const navItemsEmploy: INavData[] = [
         url: '/admin/fragrant',
         icon: 'cui-rss',
     },
-    {
-        name: 'Album',
-        url: '/admin/album',
-        icon: 'icon-book-open',
-    },
+    // {
+    //     name: 'Album',
+    //     url: '/admin/album',
+    //     icon: 'icon-book-open',
+    // },
     {
         title: true,
         name: 'Đơn Hàng',
