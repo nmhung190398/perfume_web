@@ -17,6 +17,7 @@ import {ContactComponent} from './contact/contact.component';
 import {PermissionComponent} from './permission/permission.component';
 import {Paging} from '../../model/base-respone.model';
 import {BlogSingleComponent} from './blog-single/blog-single.component';
+import {ConfirmAccountComponent} from './confirm-account/confirm-account.component';
 
 const routes: Routes = [
 
@@ -29,10 +30,15 @@ const routes: Routes = [
                 component: HomeWebComponent,
 
             },
+
             {
                 path: '',
                 redirectTo: CONSTANT_PATH.HOME,
                 pathMatch: 'full'
+            },
+            {
+                path: 'confirm-account',
+                component: ConfirmAccountComponent,
             },
             {
                 path: CONSTANT_PATH.ABOUT,

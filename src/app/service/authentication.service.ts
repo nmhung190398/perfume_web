@@ -49,6 +49,19 @@ export class AuthenticationService {
         return this.http.post<ResponseMsg>(`${SERVER_API_URL}/register`, user, {observe: 'response'});
     }
 
+    resetPassword(user): Observable<HttpResponse<ResponseMsg>> {
+        return this.http.post<ResponseMsg>(`${SERVER_API_URL}/forgot-password`, user, {observe: 'response'});
+    }
+
+    confirmAccount(token): Observable<HttpResponse<ResponseMsg>> {
+        const req = {
+            token: token
+        };
+        const options = createRequestOption(req);
+        return this.http
+            .get<ResponseMsg>(`${SERVER_API_URL}/confirm-account`, {params: options, observe: 'response'});
+    }
+
     public get isAdmin() {
         if (this.currentUserValue) {
             return this.currentUserValue.user.roles.some(role => {

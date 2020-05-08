@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../../../service/product.service';
 import {CommentService} from '../../../../service/comment.service';
 import {SERVER_API_IMAGE} from '../../../../app.constants';
-import {CONSTANT_PATH} from '../../../../comom/constant/base.constant';
+import {CONSTANT_PATH, formatCurency} from '../../../../comom/constant/base.constant';
 
 @Component({
     selector: 'app-item-product',
@@ -21,6 +21,10 @@ export class ItemProductComponent implements OnInit {
     CONSTANT_PATH = CONSTANT_PATH;
     isNew = false;
     isHot = false;
+
+    formatMoney(money) {
+        return formatCurency(money);
+    }
 
     constructor(private activatedRoute: ActivatedRoute,
                 private productService: ProductService,

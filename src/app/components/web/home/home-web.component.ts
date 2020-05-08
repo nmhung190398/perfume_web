@@ -53,7 +53,7 @@ export class HomeWebComponent implements OnInit {
 
     loadProductNew() {
         this.productService.filter({
-            limit: 12,
+            limit: 8,
             page: 1
         }, {highlights: [HIGHLIGHT.NEW]}).subscribe(res => {
             this.productNews = res.body.data;
@@ -62,7 +62,7 @@ export class HomeWebComponent implements OnInit {
 
     loadProductTopSold() {
         this.productService.filter({
-            limit: 12,
+            limit: 8,
             page: 1
         }, {
             oderBy: {
@@ -76,7 +76,7 @@ export class HomeWebComponent implements OnInit {
 
     loadProductHot() {
         this.productService.filter({
-            limit: 12,
+            limit: 8,
             page: 1
         }, {highlights: [HIGHLIGHT.HOT]}).subscribe(res => {
             this.productHots = res.body.data;

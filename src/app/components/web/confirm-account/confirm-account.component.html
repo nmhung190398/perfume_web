@@ -2,12 +2,9 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span>Về Chúng tôi</span></p>
+                <p class="breadcrumbs" *ngIf="!msg"><span>Mật khẩu được đổi thành</span></p>
+                <h1 style="text-transform: none" class="mb-0 bread">{{msg?msg : password}}</h1>
             </div>
         </div>
     </div>
 </div>
-
-<section class="ftco-section">
-    <div class="container" [innerHTML]="content | safeHtml"></div>
-</section>
