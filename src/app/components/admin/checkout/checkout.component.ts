@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Checkout} from '../../../model/checkout.model';
 import {IPaging, Paging} from '../../../model/base-respone.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PAGING_PER_PAGE, getImg} from '../../../comom/constant/base.constant';
+import {PAGING_PER_PAGE, getImg, formatCurency} from '../../../comom/constant/base.constant';
 import {CheckoutService} from '../../../service/checkout.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -169,6 +169,10 @@ export class CheckoutComponent implements OnInit {
         }
     }
 
+    formatMoney(money) {
+        return formatCurency(money);
+    }
+
     paymentMethod(checkout: Checkout) {
         let rs = 'Không xác định';
         Object.keys(PAYMENT_METHOD).some(value => {
@@ -190,12 +194,21 @@ export class CheckoutComponent implements OnInit {
         return rs;
     }
 
+    checkoutSl: Checkout;
+
     view(modal, checkout: Checkout) {
+        this.checkoutSl = null;
         this.products = [];
+        this.checkoutSl = checkout;
+        console.log('ahihi');
+        console.log(checkout.checkoutItems);
         checkout.checkoutItems.forEach(item => {
             if (item.version) {
                 this.productService.find(item.version.productId).subscribe(res => {
-                    if (res.body) this.products.push(res.body);
+                    if (res.body) {
+                        item.version.product = res.body;
+                        this.products.push(res.body);
+                    }
                 });
             }
         });

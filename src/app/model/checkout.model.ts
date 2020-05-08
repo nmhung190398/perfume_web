@@ -24,4 +24,9 @@ export class Checkout {
     description?: string;
     isCoupon?: boolean;
     search?: string;
+
+    createdAt?: Date;
+    createdBy?: number;
+    updatedAt?: Date;
+    lastModifiedBy?: string;
 }
