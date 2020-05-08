@@ -39,6 +39,7 @@ export class ListProductComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe(param => {
             this.categoryCode = param.get('category');
             this.paging = new Paging();
+            this.paging.limit = 12;
             this.categoryService.filterAll({
                 code: this.categoryCode
             }).subscribe(res => {
@@ -61,13 +62,19 @@ export class ListProductComponent implements OnInit {
     loadAll() {
         this.filterProduct.categoryCode = this.categoryCode;
         console.log(this.filterProduct);
-        this.productService.filterAll(this.filterProduct).subscribe(res => {
-            this.products = res.body;
+        // this.filterProduct = {};
+        this.productService.filter(this.paging, this.filterProduct).subscribe(res => {
+            this.products = res.body.data;
+            this.paging.total = res.body.paging.total;
+            // this.paging.offset = res.body.paging.offset;
         });
     }
 
-    loadPage(page) {
-        console.log(page);
+    loadPage(page: number) {
+        if (page !== this.paging.previousPage) {
+            this.paging.previousPage = page;
+            this.loadAll();
+        }
     }
 
     filter($event) {
