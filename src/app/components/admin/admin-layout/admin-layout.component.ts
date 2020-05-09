@@ -4,6 +4,10 @@ import {AuthenticationService} from '../../../service/authentication.service';
 import {getImg} from '../../../comom/constant/base.constant';
 import {User} from '../../../model/user';
 import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserService} from '../../../service/user.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-dashboard',
@@ -14,17 +18,34 @@ export class AdminLayoutComponent {
     public sidebarMinimized = false;
     public navItems = navItemsEmploy;
     userLogin: User;
+    userFormGroup: FormGroup;
+
+    //img
+    imageDefault = 'http://placehold.it/380x500';
+    imageError: string;
+    isImageSaved: boolean;
+    cardImageBase64: string;
+
 
     constructor(
         private elRef: ElementRef,
         public authenticationService: AuthenticationService,
+        private modalService: NgbModal,
         protected router: Router,
+        private fb: FormBuilder,
+        private userService: UserService,
     ) {
         const tmp = this.elRef.nativeElement.querySelector('link[tag="web"]');
         console.log(tmp);
+
         this.authenticationService.currentUser.subscribe(value => {
             if (value) {
-                this.userLogin = value.user;
+                this.userService.find(value.user.id).subscribe(res => {
+                    this.userLogin = res.body;
+                    this.userFormGroup = this.initUserForm();
+                    this.imageDefault = this.getAvatar();
+                });
+
                 if (this.authenticationService.isAdmin) {
                     const tmp: INavData[] = [
                         ...navItemsAdmin,
@@ -37,6 +58,19 @@ export class AdminLayoutComponent {
             } else {
                 this.userLogin = null;
             }
+        });
+    }
+
+    initUserForm() {
+        return this.fb.group({
+            id: [this.userLogin.id],
+            username: [this.userLogin.username, [Validators.required]],
+            firstname: [this.userLogin.firstname, [Validators.required]],
+            lastname: [this.userLogin.lastname, [Validators.required]],
+            email: [this.userLogin.email, [Validators.required, Validators.email]],
+            phone: [this.userLogin.phone, [Validators.required]],
+            address: [this.userLogin.address, [Validators.required]],
+            imageBase64: []
         });
     }
 
@@ -57,6 +91,92 @@ export class AdminLayoutComponent {
         return 'assets/img/avatars/6.jpg';
 
     }
+
+    changeInfo(modal) {
+        this.modalService
+            .open(modal, {
+                ariaLabelledBy: 'modal-basic-title',
+                size: 'lg',
+                backdrop: 'static'
+            })
+            .result.then(result => {
+            if (result === 'save') {
+                this.save();
+            }
+        });
+    }
+
+    removeImage() {
+        this.cardImageBase64 = null;
+        this.isImageSaved = false;
+    }
+
+    fileChangeEvent(fileInput: any) {
+        this.imageError = null;
+        if (fileInput.target.files && fileInput.target.files[0]) {
+            // Size Filter Bytes
+            const max_size = 20971520;
+            const allowed_types = ['image/png', 'image/jpeg'];
+            const max_height = 1000;
+            const max_width = 1000;
+
+            if (fileInput.target.files[0].size > max_size) {
+                this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+                return false;
+            }
+
+            if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+                this.imageError = 'Only Images are allowed ( JPG | PNG )';
+                return false;
+            }
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                const image = new Image();
+                image.src = e.target.result;
+                image.onload = rs => {
+                    const img_height = rs.currentTarget['height'];
+                    const img_width = rs.currentTarget['width'];
+
+                    console.log(img_height, img_width);
+
+                    if (img_height > max_height && img_width > max_width) {
+                        this.imageError =
+                            'Maximum dimentions allowed ' +
+                            max_height +
+                            '*' +
+                            max_width +
+                            'px';
+                        return false;
+                    } else {
+                        const imgBase64Path = e.target.result;
+                        this.cardImageBase64 = imgBase64Path;
+                        this.isImageSaved = true;
+                        // console.log(this.cardImageBase64);
+                        // this.previewImagePath = imgBase64Path;
+                    }
+                };
+            };
+            reader.readAsDataURL(fileInput.target.files[0]);
+        }
+    }
+
+    save() {
+        const tmp: User = this.userFormGroup.value;
+        if (this.isImageSaved) {
+            tmp.image = this.cardImageBase64;
+        }
+        console.log(tmp);
+        this.userService.update(tmp).subscribe(res => {
+            if (res.status === 200) {
+                window.location.reload();
+            } else {
+                alert('eror');
+            }
+        });
+
+    }
+
 }
 
 export const navItemsAdmin: INavData[] = [
