@@ -49,6 +49,8 @@ import {NewsComponent} from './news/news.component';
 import {NewsDetailComponent} from './news/news-detail/news-detail.component';
 import { DisplayStaticComponent } from './display-static/display-static.component';
 import { ImageComponent } from './image/image.component';
+import { AdminFilterProductComponent } from './product/admin-filter-product/admin-filter-product.component';
+import {Ng5SliderModule} from 'ng5-slider';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -77,7 +79,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CKEditorModule,
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
-        NgMultiSelectDropDownModule.forRoot()
+        NgMultiSelectDropDownModule.forRoot(),
+        Ng5SliderModule,
     ],
     declarations: [
         AdminLayoutComponent,
@@ -95,7 +98,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         NewsComponent,
         NewsDetailComponent,
         DisplayStaticComponent,
-        ImageComponent
+        ImageComponent,
+        AdminFilterProductComponent
     ],
     providers: [
         {

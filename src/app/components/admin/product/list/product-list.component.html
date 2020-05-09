@@ -2,6 +2,15 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-body">
+                    <app-admin-filter-product (filter)="changeFilter($event)"></app-admin-filter-product>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
                 <div class="card-header">
                     <i class="fa fa-globe"></i>Quản lý sản phẩm
                     <span class="float-right">

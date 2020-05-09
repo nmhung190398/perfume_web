@@ -12,8 +12,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-5 ftco-animate fadeInUp ftco-animated">
-                <a [href]="getImg(this.product.image)" class="image-popup prod-img-bg"><img style="width: 100%"
-                                                                                             [src]="getImg(this.product.image)"
+                <a [href]="getImg(this.product?.image)" class="image-popup prod-img-bg"><img style="width: 100%"
+                                                                                             [src]="getImg(this.product?.image)"
                                                                                              class="img-fluid img-product"
                                                                                              alt="Colorlib Template"></a>
             </div>
@@ -32,7 +32,7 @@
                         <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
                     </p>
                     <p class="text-left">
-                        <a href="#" class="mr-2" style="color: #000;">{{product.totalSold? product.totalSold : 0}}<span
+                        <a href="#" class="mr-2" style="color: #000;">{{product?.totalSold? product.totalSold : 0}}<span
                                 style="color: #bbb;"> sản phẩm đã bán</span></a>
                     </p>
                 </div>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="w-100"></div>
                     <div class="col-md-12">
-                        <p style="color: #000;">{{versionSelect.totalSold? versionSelect.totalSold : 0}} phiển bản {{versionSelect.name}} đã bán</p>
+                        <p style="color: #000;">{{versionSelect?.totalSold? versionSelect?.totalSold : 0}} phiển bản {{versionSelect?.name}} đã bán</p>
                     </div>
                 </div>
                 <p><a style="color:#fff" (click)="addCartItem()" class="btn btn-black py-3 px-5 mr-2">Thêm vào giỏ hàng</a>
@@ -141,7 +141,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
-                        <app-show-comment [postId]="product.id" [type]="COMMENT_TYPE.PRODUCT"></app-show-comment>
+                        <app-show-comment [postId]="product?.id" [type]="COMMENT_TYPE.PRODUCT"></app-show-comment>
                     </div>
                 </div>
             </div>

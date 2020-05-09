@@ -1,35 +1,28 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Options, LabelType} from 'ng5-slider';
+import {ProductSearch} from '../../../../model/product.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {CategoryService} from '../../../../service/category.service';
-import {ProducerService} from '../../../../service/producer.service';
+import {LabelType, Options} from 'ng5-slider';
+import {formatCurency} from '../../../../comom/constant/base.constant';
+import {Target} from '../../../../model/target.model';
 import {Category} from '../../../../model/category.model';
 import {Producer} from '../../../../model/producer.model';
-import {ProductSearch} from '../../../../model/product.model';
-import {OderBy} from '../../../../model/base-respone.model';
-import {AmountService} from '../../../../service/amount.service';
-import {FragrantService} from '../../../../service/fragrant.service';
 import {Fragrant} from '../../../../model/fragrant.model';
 import {Amount} from '../../../../model/amount.model';
-import {Target} from '../../../../model/target.model';
+import {CategoryService} from '../../../../service/category.service';
+import {ProducerService} from '../../../../service/producer.service';
+import {AmountService} from '../../../../service/amount.service';
+import {FragrantService} from '../../../../service/fragrant.service';
 import {TargetService} from '../../../../service/target.service';
-import {formatCurency} from '../../../../comom/constant/base.constant';
-
-const FILTER_CONST = {
-    minPrice: 0,
-    maxPrice: 1000000,
-};
-
+import {OderBy} from '../../../../model/base-respone.model';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
 
 @Component({
-    selector: 'app-filter',
-    templateUrl: './filter.component.html',
-    styleUrls: ['./filter.component.scss']
+    selector: 'app-admin-filter-product',
+    templateUrl: './admin-filter-product.component.html',
+    styleUrls: ['./admin-filter-product.component.scss']
 })
-export class FilterComponent implements OnInit {
+export class AdminFilterProductComponent implements OnInit {
 
-    @Input()
-    test;
 
     oderBys: OderByView[] = [
         {
@@ -58,6 +51,29 @@ export class FilterComponent implements OnInit {
             }
         }
     ];
+
+    //mutil select
+    dropdownList = [
+        {
+            id: 'HOT',
+            name: 'Hàng Hot'
+        },
+        {
+            id: 'NEW',
+            name: 'Hàng New'
+        },
+    ];
+    selectedItems = [];
+    dropdownSettings: IDropdownSettings = {
+        singleSelection: false,
+        idField: 'name',
+        textField: 'name',
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 3,
+        allowSearchFilter: true
+    };
+
     @Output()
     filter: EventEmitter<ProductSearch> = new EventEmitter<ProductSearch>();
 
@@ -69,7 +85,8 @@ export class FilterComponent implements OnInit {
         amount: [null],
         fragrant: [null],
         target: [null],
-        oderBy: [this.oderBys[0]]
+        search: [null],
+        oderBy: [this.oderBys[0]],
     });
     minPrice = FILTER_CONST.minPrice;
     maxPrice = FILTER_CONST.maxPrice;
@@ -98,13 +115,21 @@ export class FilterComponent implements OnInit {
                 private producerService: ProducerService,
                 private amountService: AmountService,
                 private fragrantService: FragrantService,
-                private targetService: TargetService
+                private targetService: TargetService,
     ) {
     }
 
     ngOnInit(): void {
-        console.log(this.test);
         this.loadAll();
+    }
+
+    onItemSelect($event) {
+        console.log(this.selectedItems);
+    }
+
+    onSelectAll($event) {
+        this.selectedItems = $event;
+        console.log(this.selectedItems);
     }
 
     loadAll() {
@@ -132,10 +157,12 @@ export class FilterComponent implements OnInit {
         this.output.minPrice = this.minPrice;
         this.output.oderBy = this.filterFormGroup.get('oderBy').value?.value;
 
+
         this.output.producerId = this.filterFormGroup.get('producer')?.value?.id;
         this.output.fragrantId = this.filterFormGroup.get('fragrant')?.value?.id;
         this.output.amountId = this.filterFormGroup.get('amount')?.value?.id;
-
+        this.output.categoryId = this.filterFormGroup.get('category')?.value?.id;
+        this.output.search = this.filterFormGroup.get('search')?.value;
         if (this.filterFormGroup.get('target')?.value) {
             this.output.targetIds = [];
             this.output.targetIds.push(this.filterFormGroup.get('target').value.id);
@@ -169,10 +196,6 @@ export class FilterComponent implements OnInit {
         return this.maxPrice !== FILTER_CONST.maxPrice || this.minPrice !== FILTER_CONST.minPrice;
     }
 
-    formatMoney(money) {
-        return formatCurency(money);
-    }
-
     clearFilterPrice() {
         this.maxPrice = FILTER_CONST.maxPrice;
         this.minPrice = FILTER_CONST.minPrice;
@@ -182,10 +205,18 @@ export class FilterComponent implements OnInit {
         this.filterFormGroup.get(key).setValue(null);
     }
 
+    formatMoney(money) {
+        return formatCurency(money);
+    }
 }
 
-
-export class OderByView {
+class OderByView {
     name: string;
     value: OderBy;
 }
+
+const FILTER_CONST = {
+    minPrice: 0,
+    maxPrice: 10000000,
+};
+

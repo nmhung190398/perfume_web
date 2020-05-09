@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from "../../../../model/product.model";
-import {IPaging, Paging} from "../../../../model/base-respone.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {PAGING_PER_PAGE, getImg} from "../../../../comom/constant/base.constant";
-import {ProductService} from "../../../../service/product.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Product, ProductSearch} from '../../../../model/product.model';
+import {IPaging, Paging} from '../../../../model/base-respone.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {PAGING_PER_PAGE, getImg} from '../../../../comom/constant/base.constant';
+import {ProductService} from '../../../../service/product.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-view',
@@ -24,6 +24,9 @@ export class ProductListComponent implements OnInit {
     txtSearch: string;
     limits = PAGING_PER_PAGE;
     isAcction = true;
+
+    productSearch: ProductSearch = {};
+
 
     constructor(public productService: ProductService,
                 protected router: Router,
@@ -68,11 +71,8 @@ export class ProductListComponent implements OnInit {
 
     loadAll() {
         console.log('loadAll');
-        const parameters = {
-            page: this.paging.page,
-            limit: this.paging.limit
-        };
-        this.productService.query(parameters).subscribe(res => {
+
+        this.productService.filter(this.paging, this.productSearch).subscribe(res => {
             if (res.status === 200) {
                 this.products = res.body.data;
                 console.log(res.body.paging);
@@ -82,7 +82,7 @@ export class ProductListComponent implements OnInit {
                 // this.paging.offset = res.body.paging.offset;
                 this.paging.total = res.body.paging.total;
             } else {
-                console.warn("can not load mail sender");
+                console.warn('can not load mail sender');
             }
         });
     }
@@ -114,8 +114,8 @@ export class ProductListComponent implements OnInit {
                                     1 &&
                                     this.paging.page !== 1
                                 ) {
-                                    this.paging.page = this.paging.page - 1;    
-                                }            
+                                    this.paging.page = this.paging.page - 1;
+                                }
                             }
                             this.loadAll();
                         });
@@ -169,7 +169,6 @@ export class ProductListComponent implements OnInit {
     }
 
 
-
     openViewCertPopup(modal, product) {
         this.selectedProduct = product;
         this.modalService.open(modal, {
@@ -188,6 +187,12 @@ export class ProductListComponent implements OnInit {
 
     pagingInfo = (paging) => {
         return `Show ${paging.offset + 1} to ${(paging.offset + this.products.length)} of ${paging.total} entries`;
+    };
+
+    changeFilter($event) {
+        console.log($event);
+        this.productSearch = $event;
+        this.loadAll();
     }
 
 }

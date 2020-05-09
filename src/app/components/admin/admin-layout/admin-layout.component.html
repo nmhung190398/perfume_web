@@ -21,22 +21,23 @@
         [asideMenuToggler]="'lg'"
 >
     <ul class="nav navbar-nav d-md-down-none">
-        <li class="nav-item px-3">
-            <a class="nav-link" [routerLink]="['/admin/dashboard']">Dashboard</a>
-        </li>
-        <li class="nav-item px-3">
-            <a class="nav-link" [routerLink]="['/admin/user']">Users</a>
-        </li>
+        <!--<li class="nav-item px-3">-->
+        <!--<a class="nav-link" [routerLink]="['/admin/dashboard']">Dashboard</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item px-3">-->
+        <!--<a class="nav-link" [routerLink]="['/admin/user']">Users</a>-->
+        <!--</li>-->
     </ul>
     <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item dropdown" dropdown placement="bottom right">
+        <li class="nav-item dropdown d-flex align-items-baseline" dropdown placement="bottom right">
+            <span style="padding-right: 5px">{{userLogin?.lastname}} {{userLogin?.firstname}}</span>
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
                dropdownToggle (click)="false">
                 <img [src]="getAvatar()" class="img-avatar" alt="admin@bootstrapmaster.com"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
                 <a class="dropdown-item" [routerLink]="['/home']"><i class="fa fa-home"></i>Trang chủ</a>
-                <a class="dropdown-item" (click)="changeInfo(changeInfoModal)" ><i class="fa fa-user"></i>Profile</a>
+                <a class="dropdown-item" (click)="changeInfo(changeInfoModal)"><i class="fa fa-user"></i>Profile</a>
                 <a class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i>Đăng xuất</a>
             </div>
         </li>
@@ -83,7 +84,6 @@
     <span><a href="https://coreui.io">Perfume</a> &copy; 2018 creativeLabs.</span>
     <span class="ml-auto">Hệ thống được phát triển bởi <a href="https://coreui.io/angular">Perfume dev</a></span>
 </app-footer>
-
 
 
 <ng-template #changeInfoModal let-modal>

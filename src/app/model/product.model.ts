@@ -43,5 +43,6 @@ export class ProductSearch {
     oderBy?: OderBy;
     year?: number;
     targetIds?: number[];
+    search?: string;
 }
 
